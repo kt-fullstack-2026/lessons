@@ -1,0 +1,145 @@
+/* 풀스택 과정 교안 — 화면용 스타일
+   구성: 상단바 / 본문 / 절 이동 / 장 내 절 칩 / 본문 요소 / 교안 전용 상자 / 목차 / 푸터 */
+:root{
+  --accent:#1f6feb; --accent-soft:#e7f0ff; --ink:#1c1c1e; --muted:#5b6b7b;
+  --line:#d9dde3; --code-bg:#f6f8fa; --bar:#0f1b2d; --bar-acc:#4493f8;
+  --core:#1f6feb; --core-bg:#eef4ff;      /* 핵심 개념 */
+  --impl:#1a8f45; --impl-bg:#ebf8f0;      /* 직접 구현 */
+  --more:#7a4bd6; --more-bg:#f4efff;      /* 더 알아보기 */
+  --mono:"D2Coding","Nanum Gothic Coding","NanumGothicCoding","Noto Sans Mono CJK KR",Consolas,"Courier New",monospace;
+}
+*{ box-sizing:border-box; }
+body{ margin:0; background:#eef2f6; color:var(--ink); line-height:1.75; font-size:16px;
+  font-family:"Pretendard","Apple SD Gothic Neo","Malgun Gothic","맑은 고딕","Noto Sans KR",-apple-system,sans-serif; }
+a{ color:var(--accent); text-decoration:none; } a:hover{ text-decoration:underline; }
+
+/* 상단바 */
+.topbar{ position:sticky; top:0; z-index:10; background:var(--bar); color:#fff;
+  padding:12px 22px; display:flex; align-items:center; gap:16px; flex-wrap:wrap; }
+.topbar .home{ color:#fff; font-weight:800; }
+.topbar .ch{ color:var(--bar-acc); font-weight:600; }
+.topbar .meta{ margin-left:auto; color:#9fb3c8; font-size:13px; }
+.topbar .nav-btns{ display:flex; gap:6px; }
+.topbar .brand{ color:#fff; font-weight:700; font-size:14px; white-space:nowrap; }
+.topbar .btn{ padding:5px 13px; border:1px solid #33475f; border-radius:8px; color:#dbe7f5;
+  font-size:13px; font-weight:600; white-space:nowrap; }
+.topbar .btn:hover{ border-color:var(--bar-acc); color:#fff; text-decoration:none; }
+.topbar .btn.disabled{ opacity:.32; pointer-events:none; }
+
+/* 본문 */
+.wrap{ max-width:980px; margin:0 auto; padding:0 0 70px; background:#fff;
+  box-shadow:0 0 30px rgba(0,0,0,.06); min-height:100vh; }
+.content{ padding:26px 44px 10px; }
+
+/* 절 이동 */
+.pager{ display:flex; gap:10px; padding:18px 44px 30px; }
+.pager > a, .pager > span{ flex:1; border:1px solid var(--line); border-radius:10px;
+  padding:12px 16px; background:#fbfdff; color:#234; font-size:14px; }
+.pager a:hover{ border-color:var(--accent); text-decoration:none; box-shadow:0 4px 14px rgba(31,111,235,.12); }
+.pager .nxt{ text-align:right; } .pager .lbl{ display:block; font-size:11px; color:var(--muted); margin-bottom:3px; }
+.pager .off{ opacity:.4; }
+
+/* 장 안의 절 칩 */
+.chip-nav{ background:#f3f7fb; border:1px solid #dce6f0; border-radius:10px; padding:12px 16px; margin:0 0 22px; }
+.chip-nav b{ display:block; color:var(--accent); font-size:13px; margin-bottom:6px; }
+.chip-nav a{ display:inline-block; margin:3px 8px 3px 0; padding:4px 10px; background:#fff;
+  border:1px solid #cfe0f0; border-radius:14px; font-size:13px; color:#234; }
+.chip-nav a:hover{ background:var(--bar-acc); color:#fff; text-decoration:none; }
+.chip-nav a.cur{ background:var(--accent); color:#fff; border-color:var(--accent); font-weight:700; }
+
+/* 본문 요소 */
+.md h1{ font-size:27px; color:var(--accent); border-bottom:3px solid var(--accent); padding-bottom:8px; margin:6px 0 18px; }
+.md h2{ font-size:21px; margin:1.5em 0 .6em; padding:6px 12px; border-left:5px solid var(--accent); background:var(--accent-soft); }
+.md h3{ font-size:17.5px; color:#20303f; margin:1.3em 0 .5em; }
+.md .chapter-name{ color:var(--muted); font-size:14px; font-weight:600; margin:0 0 2px; }
+.md pre{ position:relative; background:var(--code-bg); border:1px solid var(--line); border-radius:8px;
+  padding:14px 16px; font-size:13.5px; line-height:1.6; overflow-x:auto; }
+.md code{ font-family:var(--mono); }
+.md :not(pre)>code{ background:var(--code-bg); border:1px solid var(--line); border-radius:4px; padding:1px 6px; font-size:13.5px; color:#b3261e; }
+.md table{ border-collapse:collapse; width:100%; margin:14px 0; font-size:14.5px; }
+.md th,.md td{ border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top; }
+.md th{ background:var(--accent-soft); } .md tr:nth-child(even) td{ background:#fafbfc; }
+.md .table-scroll{ overflow-x:auto; }
+.md blockquote{ margin:14px 0; padding:10px 16px; border-left:4px solid #f0b400; background:#fff8e1; color:#5c4400; border-radius:0 8px 8px 0; }
+.md hr{ border:none; border-top:1px dashed var(--line); margin:22px 0; }
+.md ul,.md ol{ padding-left:24px; }
+.md img{ max-width:100%; height:auto; display:block; margin:18px auto; }
+.md details{ margin:10px 0 18px; border:1px solid #dce6f0; border-radius:8px; background:#f8fbff; padding:8px 16px; }
+.md details summary{ cursor:pointer; font-weight:700; color:var(--accent); }
+.md details[open] summary{ margin-bottom:6px; }
+.md pre .prompt{ color:#8a97a6; user-select:none; -webkit-user-select:none; }
+.copy-btn{ position:absolute; top:8px; right:8px; border:1px solid var(--line); background:#fff; color:var(--muted);
+  border-radius:6px; padding:2px 9px; font-size:12px; font-family:inherit; cursor:pointer; opacity:0; transition:opacity .15s; }
+.md pre:hover .copy-btn, .copy-btn:focus-visible{ opacity:1; }
+.copy-btn:hover{ color:var(--accent); border-color:var(--accent); }
+
+/* ── 교안 전용 ───────────────────────────────────────── */
+/* 절 머리 정보: 블록·시간·개념 지도·코드 태그 */
+.lesson-meta{ display:flex; flex-wrap:wrap; gap:6px 8px; margin:0 0 18px; }
+.lesson-meta span{ font-size:12.5px; padding:3px 10px; border-radius:12px; background:#f1f4f8; color:#33475f; border:1px solid #e1e7ee; }
+.lesson-meta span b{ color:var(--muted); font-weight:600; margin-right:4px; }
+
+/* 핵심 개념 / 직접 구현 / 더 알아보기 상자 */
+.box{ margin:16px 0; padding:12px 16px 4px; border-radius:10px; border:1px solid; }
+.box::before{ display:inline-block; font-size:12px; font-weight:800; letter-spacing:.04em; padding:1px 9px; border-radius:10px; color:#fff; margin-bottom:6px; }
+.box.core{ background:var(--core-bg); border-color:#c9dbff; } .box.core::before{ content:"핵심 개념"; background:var(--core); }
+.box.impl{ background:var(--impl-bg); border-color:#bfe6cd; } .box.impl::before{ content:"직접 구현"; background:var(--impl); }
+.box.more{ background:var(--more-bg); border-color:#dccdfb; } .box.more::before{ content:"더 알아보기"; background:var(--more); }
+
+/* 신호등 체크포인트 */
+.signal{ display:flex; gap:12px; align-items:flex-start; margin:18px 0; padding:12px 16px; border-radius:10px;
+  background:#0f1b2d; color:#e6eef8; }
+.signal .lights{ font-size:18px; line-height:1.4; white-space:nowrap; }
+.signal p{ margin:0; font-size:15px; } .signal code{ color:#ffd479 !important; background:#1c2b40 !important; border-color:#2c3f58 !important; }
+
+/* 기본 / 필수 / 도전 과제 */
+.levels{ display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:10px; margin:16px 0; }
+.level{ border:1px solid var(--line); border-radius:10px; padding:10px 14px 2px; background:#fff; }
+.level::before{ display:block; font-weight:800; font-size:14px; margin-bottom:4px; }
+.level.basic::before{ content:"기본 · 따라 치기"; color:#5b6b7b; }
+.level.must::before{ content:"필수 · 혼자 풀기"; color:var(--accent); }
+.level.challenge::before{ content:"도전 · 응용"; color:var(--more); }
+.level p,.level li{ font-size:15px; }
+
+/* 도식 */
+.figure{ margin:20px 0; text-align:center; } .figure figcaption{ font-size:13px; color:var(--muted); margin-top:-6px; }
+
+/* 목차 */
+.cover{ padding:34px 2px 28px; border-bottom:3px solid var(--bar); }
+.cover h1{ font-size:40px; font-weight:800; letter-spacing:-.03em; line-height:1.25; margin:0; color:var(--bar); border:none; padding:0; }
+.cover .sub{ color:var(--muted); font-size:17px; margin-top:14px; }
+.cover .meta{ color:var(--muted); font-size:14px; margin-top:16px; }
+.legend{ display:flex; flex-wrap:wrap; gap:8px; margin:18px 0 0; font-size:13px; color:var(--muted); }
+.legend i{ font-style:normal; padding:2px 9px; border-radius:10px; color:#fff; font-weight:700; }
+.part{ margin:34px 0 4px; padding:0 2px; }
+.part .no{ color:var(--accent); font-weight:800; font-size:13px; letter-spacing:.04em; }
+.part .t{ font-size:20px; font-weight:800; }
+.lesson{ border:1px solid #dce6f0; border-radius:12px; margin:12px 0; overflow:hidden; }
+.lesson-head{ background:#f3f7fb; padding:12px 18px; border-bottom:1px solid #dce6f0; }
+.lesson-head .no{ color:var(--accent); font-weight:800; font-size:13px; }
+.lesson-head .no small{ color:var(--muted); font-weight:600; margin-left:8px; }
+.lesson-head .t{ font-size:18px; font-weight:700; } .lesson-head .t a{ color:inherit; }
+.sec-list{ list-style:none; margin:0; padding:8px 10px; display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:4px; }
+.sec-list a{ display:block; padding:8px 12px; border-radius:8px; color:#1c2733; font-size:14.5px; }
+.sec-list a:hover{ background:var(--accent-soft); text-decoration:none; }
+.sec-list a .sno{ color:var(--accent); font-weight:700; font-variant-numeric:tabular-nums; margin-right:6px; }
+
+/* 푸터·저자 */
+.foot{ margin:26px 44px 0; padding:26px 0 8px; border-top:1.5px solid var(--line); text-align:center; color:var(--muted); font-size:13px; }
+.foot b{ display:block; font-weight:800; color:var(--bar); }
+
+/* 라이브 강의 화면 공유용: P 키로 글자 크게 */
+body.present{ font-size:19px; } body.present .md p, body.present .md li{ font-size:19px; }
+body.present .md pre{ font-size:16px; } body.present .wrap{ max-width:1180px; }
+
+@media (max-width:640px){
+  .content{ padding:20px 16px; } .pager{ padding:14px 16px; flex-direction:column; }
+  .topbar{ padding:10px 16px; gap:8px; } .topbar .meta, .topbar .ch{ display:none; }
+  .topbar .nav-btns{ margin-left:auto; } .sec-list{ grid-template-columns:1fr; } .cover h1{ font-size:30px; }
+  .foot{ margin:20px 16px 0; }
+}
+@media print{ .topbar,.pager,.chip-nav,.copy-btn{ display:none; } .md details{ display:block; } }
+
+/* 목차: 아직 쓰지 않은 장 */
+.lesson.planned{ border-style:dashed; opacity:.6; }
+.lesson.planned .lesson-head{ border-bottom:none; background:#fafbfc; }

@@ -1,0 +1,128 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>올리면 안 되는 것과 되돌리기 — .gitignore · restore · revert — 풀스택 개발 과정</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&display=swap">
+<link rel="stylesheet" href="../assets/style.css">
+</head><body data-prev="10_GitHub-Organizations-우리-팀-저장소.html" data-next="12_강사-코드-태그로-따라잡기.html">
+<div class="topbar"><a class="home" href="../index.html">풀스택 개발 과정</a><span class="ch">1장 · Git과 GitHub로 협업하기</span><span class="meta">11 / 14</span><span class="nav-btns"><a class="btn" href="10_GitHub-Organizations-우리-팀-저장소.html">← 이전</a><a class="btn" href="../index.html">목차</a><a class="btn" href="12_강사-코드-태그로-따라잡기.html">다음 →</a></span><span class="brand">Fullstack Lab</span></div><div class="wrap"><div class="content"><div class="chip-nav"><b>1장 · Git과 GitHub로 협업하기</b><a class="" href="01_이-장에서-배우는-것.html">Git과 GitHub는 왜 첫 장인가</a><a class="" href="02_용어-정리.html">용어 정리 — 이 장에서 처음 만나는 말</a><a class="" href="03_설치와-첫-설정.html">설치와 첫 설정 — Git Bash와 GitHub 계정</a><a class="" href="04_커밋은-사진-한-장-세-영역.html">커밋은 사진 한 장 — 작업 폴더 · 스테이징 · 저장소</a><a class="" href="05_따라하기-첫-저장소와-첫-커밋.html">따라하기 — 첫 저장소와 첫 커밋</a><a class="" href="06_브랜치는-이름표.html">브랜치는 이름표 — switch와 merge</a><a class="" href="07_GitHub와-원격-저장소.html">GitHub와 원격 저장소 — push · clone · fetch · pull</a><a class="" href="08_따라하기-충돌-해결.html">따라하기 — 충돌은 고장이 아니라 대화 요청</a><a class="" href="09_Pull-Request와-GitHub-Flow.html">Pull Request와 GitHub Flow — 합쳐 달라는 요청서</a><a class="" href="10_GitHub-Organizations-우리-팀-저장소.html">GitHub Organizations — 우리 과정의 팀 저장소</a><a class="cur" href="11_올리면-안-되는-것과-되돌리기.html">올리면 안 되는 것과 되돌리기 — .gitignore · restore · revert</a><a class="" href="12_강사-코드-태그로-따라잡기.html">강사 코드 태그로 따라잡기 — clone · tag · switch --detach</a><a class="" href="13_정리와-체크리스트.html">정리와 체크리스트</a><a class="" href="14_실습문제와-힌트.html">실습문제와 힌트 — 기본 · 필수 · 도전</a></div><div class="md"><p class="chapter-name">1장. Git과 GitHub로 협업하기</p><h1>올리면 안 되는 것과 되돌리기 — .gitignore · restore · revert</h1><div class="lesson-meta"><span>준비</span><span><b>시간</b>1시간</span><span><b>개념 지도</b>작업 폴더 → 원격 저장소 전체</span></div><h2>한 줄 요약</h2>
+<p><strong>한 번 올린 것은 지워도 기록에 남습니다.</strong> 그래서 비밀번호, 키, 빌드 결과물은 <code>.gitignore</code>로 <strong>처음부터 안 올립니다.</strong> 이미 올린 커밋을 취소할 때는 기록을 지우지 않고 <strong>"취소하는 새 커밋"(<code>revert</code>)</strong>을 찍습니다.</p>
+<hr />
+<h2>1. <code>.gitignore</code> — Git이 모른 척할 목록</h2>
+<p>저장소 맨 위에 <code>.gitignore</code> 파일을 두면, 거기 적힌 파일은 <code>git status</code>에도 안 나오고 <code>git add .</code>를 해도 들어가지 않습니다.</p>
+<pre><code class="language-text"># 빌드 결과물
+build/
+out/
+node_modules/
+dist/
+
+# IDE 설정
+.idea/
+.vscode/
+*.iml
+
+# 비밀 정보
+.env
+application-secret.yml
+*.pem
+</code></pre>
+<p>팀 프로젝트 저장소에는 강사가 이 파일을 미리 넣어 둡니다. 새 도구를 쓰기 시작하면 팀이 함께 목록을 늘립니다.</p>
+<div class="box core">
+<p><strong>비밀번호·API 키는 한 번 커밋해 올리면 지워도 기록(과거 사진)에 남습니다.</strong> 올렸다면 지우는 것으로 끝나지 않고, 그 키를 <strong>즉시 폐기하고 새로 발급</strong>해야 합니다.</p>
+</div>
+<blockquote>
+<p>GitHub는 2024년 3월부터 개인 계정의 새 공개 저장소에서 비밀 정보 푸시 차단(push protection)을 기본으로 켭니다(조직 저장소는 강사가 켭니다). 하지만 모든 비밀을 잡지는 못합니다. <code>.gitignore</code>가 먼저입니다. (<a href="https://github.blog/changelog/2024-03-11-secret-scanning-and-push-protection-are-enabled-by-default-on-new-public-repositories/">GitHub Changelog 2024-03-11</a>)</p>
+</blockquote>
+<hr />
+<h2>2. 상황별 되돌리기</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>상황</th>
+<th>명령</th>
+<th>결과</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>고친 파일을 마지막 커밋 상태로</td>
+<td><code>git restore 파일</code></td>
+<td>수정이 사라진다 (되찾을 수 없음)</td>
+</tr>
+<tr>
+<td><code>add</code>한 것을 다시 빼기</td>
+<td><code>git restore --staged 파일</code></td>
+<td>수정은 남고, 상자에서만 꺼낸다</td>
+</tr>
+<tr>
+<td>이미 <strong>push한</strong> 커밋 취소</td>
+<td><code>git revert 커밋번호</code></td>
+<td>그 커밋을 취소하는 <strong>새 커밋</strong>이 생긴다</td>
+</tr>
+<tr>
+<td>이미 커밋한 파일을 추적에서만 빼기</td>
+<td><code>git rm --cached 파일</code></td>
+<td>내 PC의 파일은 남고, Git만 더 이상 추적하지 않는다</td>
+</tr>
+</tbody>
+</table></div>
+<h3>따라하기 — <code>git rm --cached</code></h3>
+<p><code>.gitignore</code>에 적어도 <strong>이미 추적 중인 파일은 계속 추적됩니다.</strong> <code>.env</code>를 먼저 커밋해 버리고 뒤늦게 <code>.gitignore</code>에 <code>.env</code>를 적었다면, 추적에서 따로 빼야 합니다. 그 상황을 <code>my-first-repo</code>에서 만들어 봅니다.</p>
+<pre><code class="language-bash"><span class="prompt">$ </span>echo &quot;DB_PASSWORD=test1234&quot; &gt; .env
+<span class="prompt">$ </span>git add .env
+<span class="prompt">$ </span>git commit -m &quot;chore: 설정 파일 추가&quot;
+<span class="prompt">$ </span>echo &quot;.env&quot; &gt; .gitignore
+<span class="prompt">$ </span>git status
+</code></pre>
+<p><strong>실행 결과</strong></p>
+<pre><code class="language-text">On branch main
+Untracked files:
+  (use &quot;git add &lt;file&gt;...&quot; to include in what will be committed)
+        .gitignore
+
+nothing added to commit but untracked files present (use &quot;git add&quot; to track)
+</code></pre>
+<p><code>.gitignore</code>에 적었는데도 <code>.env</code>에 대해서는 아무 말이 없습니다. 이미 추적 중이라 그대로 추적된다는 뜻입니다. 추적에서 빼야 합니다.</p>
+<pre><code class="language-bash"><span class="prompt">$ </span>git rm --cached .env
+<span class="prompt">$ </span>git status
+</code></pre>
+<p><strong>실행 결과</strong></p>
+<pre><code class="language-text">rm '.env'
+On branch main
+Changes to be committed:
+  (use &quot;git restore --staged &lt;file&gt;...&quot; to unstage)
+        deleted:    .env
+
+Untracked files:
+  (use &quot;git add &lt;file&gt;...&quot; to include in what will be committed)
+        .gitignore
+</code></pre>
+<p><code>deleted:</code>는 Git 기록에서만 빠진다는 뜻이고, 폴더의 <code>.env</code> 파일은 그대로 있습니다. <code>git add .gitignore</code> → <code>git commit -m "chore: .env 추적 제외"</code>로 마무리하면 그 뒤로는 <code>.env</code>가 <code>git status</code>에 나오지 않습니다. 이미 push한 커밋에는 내용이 남아 있다는 점은 1절과 같습니다.</p>
+<h3>따라하기 — <code>revert</code></h3>
+<pre><code class="language-bash"><span class="prompt">$ </span>printf '특기: 없음\n' &gt;&gt; README.md
+<span class="prompt">$ </span>git commit -am &quot;docs: 특기 추가&quot;
+<span class="prompt">$ </span>git revert --no-edit HEAD
+<span class="prompt">$ </span>git log --oneline
+</code></pre>
+<p><strong>실행 결과</strong></p>
+<pre><code class="language-text">[main a77a94a] Revert &quot;docs: 특기 추가&quot;
+ 1 file changed, 1 deletion(-)
+a77a94a (HEAD -&gt; main) Revert &quot;docs: 특기 추가&quot;
+2ee6451 docs: 특기 추가
+56b15e6 merge: 목표 충돌 해결
+</code></pre>
+<p><code>HEAD</code>는 "지금 브랜치의 가장 최근 커밋"입니다. <code>--no-edit</code>는 메시지 편집 창을 띄우지 않고 기본 메시지를 쓰라는 옵션입니다.</p>
+<hr />
+<h2>3. <code>reset</code>은 왜 쓰지 않나</h2>
+<p>인터넷에서 <code>git reset --hard</code>를 자주 보게 됩니다. <code>reset</code>은 <strong>기록 자체를 지웁니다.</strong> 내 PC에만 있는 커밋이라면 괜찮지만, 이미 팀원이 받아 간 커밋을 지우면 팀원의 기록과 어긋나 큰 혼란이 생깁니다.</p>
+<div class="box core">
+<p><strong>공유한 커밋은 <code>revert</code>로 취소한다.</strong> 기록은 그대로 두고 "취소했다"는 사진을 하나 더 찍는 방식이라 팀원 기록이 망가지지 않습니다.</p>
+</div>
+<hr />
+<h2>핵심 정리</h2>
+<ul>
+<li><code>.gitignore</code>로 빌드 결과물, IDE 설정, 비밀 정보를 처음부터 막는다.</li>
+<li>비밀을 올렸다면 지우는 게 아니라 폐기·재발급이다.</li>
+<li>커밋 전 수정 버리기는 <code>restore</code>, 공유한 커밋 취소는 <code>revert</code>, 이미 커밋한 파일을 추적에서만 빼기는 <code>rm --cached</code>.</li>
+<li><code>reset --hard</code>는 공유한 커밋에 쓰지 않는다.</li>
+</ul></div></div><div class="pager"><a class="prv" href="10_GitHub-Organizations-우리-팀-저장소.html"><span class="lbl">← 이전 절</span>GitHub Organizations — 우리 과정의 팀 저장소</a><a class="nxt" href="12_강사-코드-태그로-따라잡기.html"><span class="lbl">다음 절 →</span>강사 코드 태그로 따라잡기 — clone · tag · switch --detach</a></div><footer class="foot"><b>Fullstack Lab</b></footer></div><script src="../assets/app.js"></script></body></html>

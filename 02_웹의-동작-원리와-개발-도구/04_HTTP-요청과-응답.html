@@ -1,0 +1,268 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HTTP 요청과 응답 — 상태 코드 맛보기 — 풀스택 개발 과정</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&display=swap">
+<link rel="stylesheet" href="../assets/style.css">
+</head><body data-prev="03_인터넷-브라우저-서버-URL.html" data-next="05_따라하기-VS-Code-기본-조작.html">
+<div class="topbar"><a class="home" href="../index.html">풀스택 개발 과정</a><span class="ch">2장 · 웹의 동작 원리와 개발 도구</span><span class="meta">4 / 7</span><span class="nav-btns"><a class="btn" href="03_인터넷-브라우저-서버-URL.html">← 이전</a><a class="btn" href="../index.html">목차</a><a class="btn" href="05_따라하기-VS-Code-기본-조작.html">다음 →</a></span><span class="brand">Fullstack Lab</span></div><div class="wrap"><div class="content"><div class="chip-nav"><b>2장 · 웹의 동작 원리와 개발 도구</b><a class="" href="01_이-장에서-배우는-것.html">웹은 어떻게 동작하나</a><a class="" href="02_용어-정리.html">용어 정리</a><a class="" href="03_인터넷-브라우저-서버-URL.html">인터넷 · 브라우저 · 서버 · URL — 주소를 치면 일어나는 일</a><a class="cur" href="04_HTTP-요청과-응답.html">HTTP 요청과 응답 — 상태 코드 맛보기</a><a class="" href="05_따라하기-VS-Code-기본-조작.html">따라하기 — VS Code 기본 조작과 첫 HTML 파일</a><a class="" href="06_정리와-체크리스트.html">정리와 체크리스트</a><a class="" href="07_실습문제와-힌트.html">실습문제와 힌트 — 기본 · 필수 · 도전</a></div><div class="md"><p class="chapter-name">2장. 웹의 동작 원리와 개발 도구</p><h1>HTTP 요청과 응답 — 상태 코드 맛보기</h1><div class="lesson-meta"><span>1단계 핵심</span><span><b>시간</b>1시간</span><span><b>개념 지도</b>② 요청 · ③ 응답</span></div><h2>한 줄 요약</h2>
+<p><strong>HTTP</strong>는 브라우저와 서버가 대화하는 약속입니다. 요청은 "무엇을(메서드) 어디에(경로)", 응답은 "결과가 어떤지(상태 코드)와 내용(본문)"을 담습니다.</p>
+<hr />
+<h2>1. 요청과 응답의 모양</h2>
+<figure class="figure">
+<p><img alt="HTTP 요청은 시작 줄·헤더·본문, HTTP 응답은 상태 줄·헤더·본문으로 이루어진다" src="img/http_message.svg" /></p>
+</figure>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>부분</th>
+<th>요청</th>
+<th>응답</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>첫 줄</td>
+<td><strong>메서드 + 경로 + 버전</strong> <code>GET /index.html HTTP/1.1</code></td>
+<td><strong>버전 + 상태 코드 + 설명</strong> <code>HTTP/1.1 200 OK</code></td>
+</tr>
+<tr>
+<td>헤더</td>
+<td>서버 이름(<code>Host</code>), 받고 싶은 형식(<code>Accept</code>) 등</td>
+<td>내용 종류(<code>Content-Type</code>), 길이 등</td>
+</tr>
+<tr>
+<td>본문</td>
+<td>보낼 데이터 (GET은 보통 비어 있음)</td>
+<td>HTML, 이미지, JSON 등 실제 내용</td>
+</tr>
+</tbody>
+</table></div>
+<p>HTTP는 <strong>글자로 된 메시지</strong>입니다. 사람이 읽을 수 있으므로, 직접 보내 보고 읽어 볼 수 있습니다.</p>
+<p>출처: <a href="https://developer.mozilla.org/ko/docs/Web/HTTP/Guides/Overview">MDN — HTTP 개요</a></p>
+<hr />
+<h2>2. 실제 응답 읽어 보기</h2>
+<p>브라우저 주소창에 <code>http://example.com</code>을 입력하면, 서버는 아래와 같은 글자 응답을 돌려줍니다. (일부만 옮겼습니다. 헤더의 값과 순서는 때에 따라 다릅니다)</p>
+<pre><code class="language-text">HTTP/1.1 200 OK
+Content-Type: text/html
+...
+
+&lt;!doctype html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;Example Domain&lt;/title&gt;
+...
+</code></pre>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>줄</th>
+<th>읽는 법</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>HTTP/1.1 200 OK</code></td>
+<td>HTTP 1.1 규칙으로, <strong>200(성공)</strong> 응답</td>
+</tr>
+<tr>
+<td><code>Content-Type: text/html</code></td>
+<td>본문은 HTML 문서다</td>
+</tr>
+<tr>
+<td>빈 줄</td>
+<td>여기까지 헤더, 아래부터 본문</td>
+</tr>
+<tr>
+<td><code>&lt;!doctype html&gt;</code> ...</td>
+<td>브라우저가 화면으로 그릴 HTML 본문</td>
+</tr>
+</tbody>
+</table></div>
+<div class="box core">
+<p><strong>브라우저가 하는 일도 이것과 같습니다.</strong> 브라우저는 이 글자 응답을 받아 화면으로 그려 줄 뿐입니다. 본문의 <code>&lt;title&gt;Example Domain&lt;/title&gt;</code>이 브라우저 탭의 제목으로 보이는 것으로 확인할 수 있습니다.</p>
+</div>
+<blockquote>
+<p><code>example.com</code>은 문서 예시용으로 예약된 도메인입니다. 브라우저로 직접 열어 봐도 됩니다. (<a href="https://www.iana.org/help/example-domains">IANA — Example Domains</a>)</p>
+</blockquote>
+<hr />
+<h2>3. 메서드 — 무엇을 하려는가</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>메서드</th>
+<th>뜻</th>
+<th>게시판 예</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>GET</code></td>
+<td>가져오기(조회)</td>
+<td>글 목록 보기, 글 하나 보기</td>
+</tr>
+<tr>
+<td><code>POST</code></td>
+<td>새로 만들기</td>
+<td>글 쓰기</td>
+</tr>
+<tr>
+<td><code>PUT</code></td>
+<td>통째로 바꾸기</td>
+<td>글 전체 수정</td>
+</tr>
+<tr>
+<td><code>PATCH</code></td>
+<td>일부만 바꾸기</td>
+<td>제목만 수정</td>
+</tr>
+<tr>
+<td><code>DELETE</code></td>
+<td>지우기</td>
+<td>글 삭제</td>
+</tr>
+</tbody>
+</table></div>
+<p>주소창에 URL을 치거나 링크를 누르면 <strong>항상 GET</strong>입니다. POST · PUT · DELETE는 폼(3장)이나 JavaScript(7장)로 보냅니다. 10장에서 Spring으로 GET · POST · PUT · DELETE를 만듭니다.</p>
+<p>출처: <a href="https://developer.mozilla.org/ko/docs/Web/HTTP/Reference/Methods">MDN — HTTP 요청 메서드</a></p>
+<hr />
+<h2>4. 상태 코드 — 결과가 어떤가</h2>
+<p>상태 코드는 <strong>첫 자리 숫자</strong>로 크게 나뉩니다.</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>범위</th>
+<th>뜻</th>
+<th>한 줄로</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1xx</td>
+<td>정보</td>
+<td>처리 중 (거의 볼 일 없음)</td>
+</tr>
+<tr>
+<td><strong>2xx</strong></td>
+<td><strong>성공</strong></td>
+<td>잘 됐다</td>
+</tr>
+<tr>
+<td>3xx</td>
+<td>리다이렉션</td>
+<td>다른 곳으로 가라 / 가진 것 그대로 써라</td>
+</tr>
+<tr>
+<td><strong>4xx</strong></td>
+<td><strong>클라이언트 오류</strong></td>
+<td><strong>요청한 쪽</strong>이 잘못했다</td>
+</tr>
+<tr>
+<td><strong>5xx</strong></td>
+<td><strong>서버 오류</strong></td>
+<td><strong>서버 쪽</strong>이 잘못했다</td>
+</tr>
+</tbody>
+</table></div>
+<p>자주 보는 코드입니다. 이것만 기억해도 충분합니다.</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>코드</th>
+<th>이름</th>
+<th>언제 보나</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>200</code></td>
+<td>OK</td>
+<td>정상 응답</td>
+</tr>
+<tr>
+<td><code>201</code></td>
+<td>Created</td>
+<td>POST로 새로 만들기 성공 (10장)</td>
+</tr>
+<tr>
+<td><code>301</code> · <code>302</code></td>
+<td>Moved</td>
+<td>주소가 옮겨졌으니 새 주소로 가라</td>
+</tr>
+<tr>
+<td><code>304</code></td>
+<td>Not Modified</td>
+<td>바뀐 게 없으니 브라우저가 가진 것(캐시)을 써라</td>
+</tr>
+<tr>
+<td><code>400</code></td>
+<td>Bad Request</td>
+<td>요청 형식이 틀렸다 (필수 값 빠짐 등)</td>
+</tr>
+<tr>
+<td><code>401</code></td>
+<td>Unauthorized</td>
+<td>로그인이 필요하다</td>
+</tr>
+<tr>
+<td><code>403</code></td>
+<td>Forbidden</td>
+<td>로그인은 했지만 권한이 없다</td>
+</tr>
+<tr>
+<td><code>404</code></td>
+<td>Not Found</td>
+<td>그런 주소(자원)가 없다</td>
+</tr>
+<tr>
+<td><code>500</code></td>
+<td>Internal Server Error</td>
+<td>서버 코드에서 오류가 났다</td>
+</tr>
+</tbody>
+</table></div>
+<p>출처: <a href="https://developer.mozilla.org/ko/docs/Web/HTTP/Reference/Status">MDN — HTTP 상태 코드</a>, <a href="https://www.rfc-editor.org/rfc/rfc9110#section-15">RFC 9110 15절</a></p>
+<div class="box core">
+<p><strong>4xx면 요청을, 5xx면 서버를 먼저 의심합니다.</strong> 앞으로 화면이 안 나오면 상태 코드부터 봅니다. 404면 주소 오타, 500이면 서버 로그를 확인합니다. 이 습관이 디버깅 시간을 가장 많이 줄여 줍니다.</p>
+</div>
+<hr />
+<h2>5. HTTP는 기억하지 않는다</h2>
+<p>HTTP는 <strong>요청 하나하나가 독립적</strong>입니다. 서버는 기본적으로 "방금 그 사람이 또 왔다"는 것을 기억하지 않습니다. 이것을 <strong>무상태(stateless)</strong>라고 합니다.</p>
+<p>그런데 로그인한 상태는 유지됩니다. 매 요청마다 <strong>"나 아까 로그인한 사람"이라는 표시(쿠키나 토큰)를 헤더에 붙여 보내기</strong> 때문입니다. 로그인은 18장에서 직접 만듭니다.</p>
+<hr />
+<h2>6. HTTP와 HTTPS</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>구분</th>
+<th>HTTP</th>
+<th>HTTPS</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>내용</td>
+<td>그대로 전송</td>
+<td><strong>암호화</strong>해서 전송</td>
+</tr>
+<tr>
+<td>기본 포트</td>
+<td>80</td>
+<td>443</td>
+</tr>
+<tr>
+<td>주소창</td>
+<td>"주의 요함" 표시</td>
+<td>자물쇠(또는 설정) 아이콘</td>
+</tr>
+</tbody>
+</table></div>
+<p>지금 대부분의 사이트는 HTTPS를 씁니다. 다만 <strong>내 PC 안에서 개발할 때</strong>(<code>localhost</code>)는 HTTP를 써도 됩니다. 데이터가 내 PC 밖으로 나가지 않기 때문입니다.</p>
+<hr />
+<h2>핵심 정리</h2>
+<ul>
+<li>요청 = 메서드 + 경로 + 헤더 + (본문), 응답 = 상태 코드 + 헤더 + 본문.</li>
+<li>GET 조회, POST 생성, PUT · PATCH 수정, DELETE 삭제.</li>
+<li>2xx 성공, 4xx 요청 쪽 문제, 5xx 서버 쪽 문제. 200 · 404 · 500은 꼭 기억한다.</li>
+<li>HTTP는 기억하지 않는다. 로그인 유지는 매 요청에 표시를 붙여 해결한다.</li>
+</ul></div></div><div class="pager"><a class="prv" href="03_인터넷-브라우저-서버-URL.html"><span class="lbl">← 이전 절</span>인터넷 · 브라우저 · 서버 · URL — 주소를 치면 일어나는 일</a><a class="nxt" href="05_따라하기-VS-Code-기본-조작.html"><span class="lbl">다음 절 →</span>따라하기 — VS Code 기본 조작과 첫 HTML 파일</a></div><footer class="foot"><b>Fullstack Lab</b></footer></div><script src="../assets/app.js"></script></body></html>

@@ -1,0 +1,265 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>정리와 실습 — 설치 확인 체크리스트 — 풀스택 개발 과정</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&display=swap">
+<link rel="stylesheet" href="../assets/style.css">
+</head><body data-prev="08_PostgreSQL-17-설치와-pgAdmin.html" data-next="../01_Git과-GitHub로-협업하기/01_이-장에서-배우는-것.html">
+<div class="topbar"><a class="home" href="../index.html">풀스택 개발 과정</a><span class="ch">0장 · 환경설정 — 과정 전체 개발 도구 설치</span><span class="meta">9 / 9</span><span class="nav-btns"><a class="btn" href="08_PostgreSQL-17-설치와-pgAdmin.html">← 이전</a><a class="btn" href="../index.html">목차</a><a class="btn" href="../01_Git과-GitHub로-협업하기/01_이-장에서-배우는-것.html">다음 →</a></span><span class="brand">Fullstack Lab</span></div><div class="wrap"><div class="content"><div class="chip-nav"><b>0장 · 환경설정 — 과정 전체 개발 도구 설치</b><a class="" href="01_이-장에서-배우는-것.html">도구는 한 번에 다 설치하지 않고, 쓰기 직전에 하나씩</a><a class="" href="02_용어-정리.html">용어 정리</a><a class="" href="03_설치-전-확인.html">설치 전 확인 — 확장자, 작업 폴더</a><a class="" href="04_VS-Code와-확장.html">VS Code와 확장 설치</a><a class="" href="05_Node.js-24-LTS-설치와-확인.html">Node.js 24 LTS 설치와 node -v · npm -v 확인</a><a class="" href="06_JDK-21과-IntelliJ-IDEA-설치.html">JDK 21(Eclipse Temurin)과 IntelliJ IDEA 설치</a><a class="" href="07_Docker-Desktop-설치와-hello-world.html">Docker Desktop(WSL 2) 설치와 docker run hello-world 확인</a><a class="" href="08_PostgreSQL-17-설치와-pgAdmin.html">PostgreSQL 17 설치판과 pgAdmin 4</a><a class="cur" href="09_정리와-실습-설치-확인-체크리스트.html">정리와 실습 — 설치 확인 체크리스트</a></div><div class="md"><p class="chapter-name">0장. 환경설정 — 과정 전체 개발 도구 설치</p><h1>정리와 실습 — 설치 확인 체크리스트</h1><div class="lesson-meta"><span>준비</span><span><b>시간</b>30분</span><span><b>개념 지도</b>09 설치 확인</span></div><h2>0장에서 한 것</h2>
+<ul>
+<li><strong>설치 전 확인(03절)</strong> — 파일 확장명 · 숨긴 항목 보이기, 한글 · 빈칸 없는 <code>D:\workspace</code>.</li>
+<li><strong>VS Code(04절)</strong> — User 설치, Prettier · ESLint · Live Share 확장, 저장할 때 정리, Live Share 세션 참여 3단계(온라인 수업 때).</li>
+<li><strong>Node.js 24 LTS(05절)</strong> — <code>.msi</code> 기본값 설치, 새 터미널에서 <code>node -v</code> · <code>npm -v</code>, 실행 정책 오류 풀기.</li>
+<li><strong>JDK 21 · IntelliJ IDEA(06절)</strong> — Temurin 21 설치 중 Set JAVA_HOME 켜기, 하나로 합쳐진 IntelliJ, JDK 목록에 21 확인.</li>
+<li><strong>Docker Desktop(07절)</strong> — WSL 2 방식, 처음 켤 때 약관 Accept, <code>docker run hello-world</code>, 안 쓸 때 Quit.</li>
+<li><strong>PostgreSQL 17 · pgAdmin 4(08절)</strong> — 비밀번호를 정해 적어 두기, 포트 5432, 서비스 실행 중, pgAdmin 접속.</li>
+</ul>
+<hr />
+<h2>한눈에 보는 핵심</h2>
+<blockquote>
+<p><strong>도구는 쓰기 직전에 하나씩 설치한다</strong></p>
+<p><strong>설치가 끝나면 터미널을 새로 연다 — 열려 있던 터미널은 바뀐 PATH를 모른다</strong></p>
+<p><strong>큰 번호만 맞춘다 — Node 24, JDK 21, PostgreSQL 17</strong></p>
+</blockquote>
+<hr />
+<h2>1. 버전 명령 한 번에</h2>
+<p>설치를 하나 끝낼 때마다, 그리고 수업 중 "명령을 못 찾는다"는 오류가 날 때마다 아래를 칩니다. VS Code를 다시 켜고 새 터미널(<code>Ctrl + `</code>)에 <strong>한 줄로</strong> 붙여 넣습니다. PowerShell에서 <code>;</code>는 "앞 명령이 끝나면 다음 명령"이라는 뜻입니다.</p>
+<pre><code class="language-text">git --version; node -v; npm -v; java -version; docker --version; docker compose version
+</code></pre>
+<p>모든 도구를 설치한 뒤라면 아래와 같은 모양이 나옵니다. 숫자의 뒷자리는 받은 때에 따라 다릅니다.</p>
+<pre><code class="language-text">git version 2.….windows.1
+v24.22.1
+11.19.1
+openjdk version &quot;21.0.12.1&quot; 2026-08-18 LTS
+OpenJDK Runtime Environment Temurin-21.0.12.1+1 (build 21.0.12.1+1-LTS)
+OpenJDK 64-Bit Server VM Temurin-21.0.12.1+1 (build 21.0.12.1+1-LTS, mixed mode, sharing)
+Docker version 29.8.2, build 7fc2dff
+Docker Compose version v5.6.0
+</code></pre>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>명령</th>
+<th>맞는 모양</th>
+<th>설치한 곳</th>
+<th>필요해지는 때</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>git --version</code></td>
+<td><code>git version 2.</code></td>
+<td>1장 03절</td>
+<td>1장</td>
+</tr>
+<tr>
+<td><code>node -v</code></td>
+<td><strong><code>v24.</code></strong>으로 시작</td>
+<td>05절</td>
+<td>2장 첫 수업 전</td>
+</tr>
+<tr>
+<td><code>npm -v</code></td>
+<td>숫자가 나온다</td>
+<td>05절 (Node와 함께)</td>
+<td>2장 첫 수업 전</td>
+</tr>
+<tr>
+<td><code>java -version</code></td>
+<td><strong><code>"21.</code></strong>과 <strong><code>Temurin</code></strong></td>
+<td>06절</td>
+<td>10장 직전</td>
+</tr>
+<tr>
+<td><code>docker --version</code></td>
+<td><code>Docker version</code></td>
+<td>07절</td>
+<td>14장 직전</td>
+</tr>
+<tr>
+<td><code>docker compose version</code></td>
+<td><code>Docker Compose version v2.</code> 이상</td>
+<td>07절 (Docker와 함께)</td>
+<td>14장 직전</td>
+</tr>
+</tbody>
+</table></div>
+<p>아직 설치할 때가 안 된 도구(예: 2장 전이면 <code>java</code>, <code>docker</code>)는 "인식되지 않습니다"가 나오는 것이 정상입니다. 그 줄은 그 장 직전에 다시 봅니다.</p>
+<p>PostgreSQL은 명령 대신 <strong>화면으로</strong> 확인합니다. <strong>서비스</strong> 앱에서 <code>postgresql-x64-17</code>이 <strong>실행 중</strong>이고, pgAdmin 4에서 <strong>Servers → PostgreSQL 17</strong>에 접속되면 됩니다(08절 3 · 4).</p>
+<hr />
+<h2>2. 막혔을 때 먼저 볼 표</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>보이는 것</th>
+<th>대부분의 원인</th>
+<th>할 일</th>
+<th>자세히</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>'…' 용어가 cmdlet, 함수, 스크립트 파일 또는 실행할 수 있는 프로그램 이름으로 인식되지 않습니다</code></td>
+<td>설치 전에 연 터미널이다</td>
+<td>VS Code를 완전히 껐다 켠다. 그래도 같으면 컴퓨터를 다시 시작한다</td>
+<td>05 · 06절</td>
+</tr>
+<tr>
+<td><code>npm.ps1 파일을 로드할 수 없습니다</code></td>
+<td>PowerShell 실행 정책</td>
+<td><code>Set-ExecutionPolicy -Scope CurrentUser RemoteSigned</code></td>
+<td>05절</td>
+</tr>
+<tr>
+<td><code>node -v</code>가 <code>v20.</code> · <code>v22.</code></td>
+<td>예전 Node가 남아 있다</td>
+<td>설치된 앱에서 지우고 다시 설치한다</td>
+<td>05절</td>
+</tr>
+<tr>
+<td><code>java -version</code>이 <code>1.8</code> · <code>17.</code></td>
+<td>예전 Java가 먼저 잡힌다</td>
+<td>설치된 앱에서 예전 Java를 지운다</td>
+<td>06절</td>
+</tr>
+<tr>
+<td><code>$env:JAVA_HOME</code>이 비어 있다</td>
+<td>Set JAVA_HOME 칸을 빠뜨렸다</td>
+<td><code>.msi</code> 다시 실행 → Change → 그 칸 켜기</td>
+<td>06절</td>
+</tr>
+<tr>
+<td><code>docker</code>가 <code>error during connect</code></td>
+<td>Docker Desktop이 꺼져 있다</td>
+<td>켜고 <strong>Engine running</strong>까지 기다린다</td>
+<td>07절</td>
+</tr>
+<tr>
+<td>Docker Desktop이 가상화 · WSL 오류로 멈춘다</td>
+<td>가상화 꺼짐, WSL이 낡음</td>
+<td>가상화는 07절 4의 표대로 BIOS(UEFI)에서 켠다, WSL은 07절 2 <code>wsl --update</code></td>
+<td>07절</td>
+</tr>
+<tr>
+<td>pgAdmin에서 <code>password authentication failed</code></td>
+<td>비밀번호가 틀렸다</td>
+<td>적어 둔 비밀번호, 한/영 · Caps Lock 확인</td>
+<td>08절</td>
+</tr>
+<tr>
+<td>10장에서 <code>Connection to localhost:5432 refused</code></td>
+<td>PostgreSQL 서비스가 꺼져 있다</td>
+<td>서비스 앱에서 <code>postgresql-x64-17</code> 시작</td>
+<td>08절</td>
+</tr>
+</tbody>
+</table></div>
+<div class="box core">
+<p><strong>문의가 있을 때는 "안 돼요" 대신 세 가지를 보냅니다.</strong> ① 친 명령, ② 나온 글자 전체(복사해서 붙여 넣기), ③ 1절 버전 명령의 결과. 이 셋이 있으면 원인의 대부분을 바로 찾습니다.</p>
+</div>
+<hr />
+<h2>3. 따로 설치하지 않는 것</h2>
+<p>교안에서 이름은 자주 나오지만, 이 장에서 <strong>설치 프로그램으로 설치하지 않는</strong> 것들입니다. 각 장에서 명령이나 파일로 저절로 받아집니다.</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>이름</th>
+<th>어떻게 생기나</th>
+<th>처음 나오는 곳</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>npm 라이브러리 (React, Vite, Express, Next.js 등)</td>
+<td>프로젝트 폴더에서 <code>npm install</code> · <code>npm create vite@latest</code></td>
+<td>5 · 8 · 9 · 26장</td>
+</tr>
+<tr>
+<td>Gradle</td>
+<td>Spring 프로젝트에 들어 있는 <code>gradlew</code>가 처음 실행할 때 받는다</td>
+<td>10장</td>
+</tr>
+<tr>
+<td>Spring Boot · Spring 라이브러리</td>
+<td>start.spring.io에서 받은 프로젝트의 <code>build.gradle</code></td>
+<td>10장</td>
+</tr>
+<tr>
+<td>PostgreSQL · Redis · Kafka 컨테이너</td>
+<td><code>docker compose up</code>이 이미지를 받는다</td>
+<td>14 · 21 · 22장</td>
+</tr>
+<tr>
+<td>VS Code REST Client 확장</td>
+<td>9장 07절에서 설치한다</td>
+<td>9장</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2>4. 계정 — 그 장에서 만든다</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>계정</th>
+<th>만드는 때</th>
+<th>쓰는 곳</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GitHub</td>
+<td>1장 03절</td>
+<td>1장부터 모든 과제 · 팀 저장소, 15장 GitHub Actions</td>
+</tr>
+<tr>
+<td>Docker Hub (Docker ID)</td>
+<td>15장 05절 전</td>
+<td>15장에서 이미지 올리기. 07절의 Docker Desktop 로그인은 하지 않아도 된다</td>
+</tr>
+<tr>
+<td>AWS</td>
+<td>15장 06절 전</td>
+<td>15장 클라우드 서버, 28장 서버리스(소개만)</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2>핵심 정리</h2>
+<ul>
+<li>새 터미널에서 <code>git --version; node -v; npm -v; java -version; docker --version; docker compose version</code>을 한 줄로 친다.</li>
+<li>큰 번호를 본다: Node <code>v24.</code>, Java <code>"21.</code> · <code>Temurin</code>. PostgreSQL은 서비스 앱과 pgAdmin 접속으로 본다.</li>
+<li>"인식되지 않습니다"는 대부분 터미널을 새로 열지 않아서다. 아직 설치할 때가 안 된 도구라면 정상이다.</li>
+<li>Gradle · Spring · npm 라이브러리 · 컨테이너 이미지는 따로 설치하지 않는다.</li>
+<li>막히면 명령 · 나온 글자 전체 · 버전 명령 결과를 함께 보낸다.</li>
+</ul>
+<hr />
+<h2>실습문제와 힌트</h2>
+<h3>문제 1. 설치 확인 화면 제출하기</h3>
+<p>2장 첫 수업 전에 VS Code 터미널에서 1절의 버전 명령을 치고, <strong>VS Code 창 전체</strong>가 보이게 화면을 캡처해 제출합니다. 캡처에는 아래 셋이 보여야 합니다.</p>
+<ul>
+<li>터미널 맨 앞의 경로 <code>PS D:\workspace&gt;</code> (D 드라이브가 없으면 <code>PS C:\workspace&gt;</code>)</li>
+<li><code>node -v</code>의 <code>v24.</code></li>
+<li>왼쪽 Extensions의 <strong>Installed</strong> 목록에 Prettier · ESLint · Live Share</li>
+</ul>
+<p>10장 직전과 14장 직전에도 같은 명령을 다시 쳐서, <code>java</code> · <code>docker</code> 줄까지 나온 화면을 한 장씩 더 제출합니다.</p>
+<details>
+<summary>힌트 보기</summary>
+<ul>
+<li><strong>방향</strong>: 명령은 1절의 한 줄을 그대로 복사해 붙여 넣습니다. 아직 설치하지 않은 도구의 오류 줄은 있어도 됩니다.</li>
+<li><strong>볼 곳</strong>: 경로가 <code>D:\workspace</code>가 아니면 04절 4처럼 <strong>폴더를 오른쪽 클릭 → Code(으)로 열기</strong>로 다시 엽니다.</li>
+<li><strong>함정</strong>: 설치하고 VS Code를 다시 켜지 않으면 <code>node</code>를 못 찾습니다. 화면 캡처는 <code>Windows 키 + Shift + S</code>로 합니다.</li>
+<li><strong>확인</strong>: 캡처를 열어 경로 · <code>v24.</code> · 확장 세 개가 모두 읽히는지 봅니다.</li>
+</ul>
+</details>
+<h3>문제 2. pgAdmin 접속과 비밀번호 확인하기</h3>
+<p>9장 직전에, pgAdmin 4에서 <strong>Servers → PostgreSQL 17 → Databases → postgres</strong>까지 펼친 화면을 캡처해 제출합니다. 그리고 08절에서 정한 비밀번호를 <strong>어디에 적어 두었는지</strong>를 한 줄로 적습니다(비밀번호 자체는 적지 않습니다).</p>
+<details>
+<summary>힌트 보기</summary>
+<ul>
+<li><strong>방향</strong>: 08절 4의 순서를 그대로 따라갑니다.</li>
+<li><strong>볼 곳</strong>: 접속이 안 되면 먼저 <strong>서비스</strong> 앱의 <code>postgresql-x64-17</code> 상태를 봅니다.</li>
+<li><strong>함정</strong>: 비밀번호 창에서 한/영 키가 한글로 되어 있으면 맞는 비밀번호도 틀린 것이 됩니다.</li>
+<li><strong>확인</strong>: <strong>Databases</strong> 아래에 <code>postgres</code>가 보이고, Save Password를 체크했다면 pgAdmin을 다시 열어도 비밀번호를 묻지 않습니다.</li>
+</ul>
+</details></div></div><div class="pager"><a class="prv" href="08_PostgreSQL-17-설치와-pgAdmin.html"><span class="lbl">← 이전 절</span>PostgreSQL 17 설치판과 pgAdmin 4</a><a class="nxt" href="../01_Git과-GitHub로-협업하기/01_이-장에서-배우는-것.html"><span class="lbl">다음 절 →</span>Git과 GitHub는 왜 첫 장인가</a></div><footer class="foot"><b>Fullstack Lab</b></footer></div><script src="../assets/app.js"></script></body></html>

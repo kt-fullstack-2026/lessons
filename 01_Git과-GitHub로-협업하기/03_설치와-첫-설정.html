@@ -1,0 +1,110 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>설치와 첫 설정 — Git Bash와 GitHub 계정 — 풀스택 개발 과정</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&display=swap">
+<link rel="stylesheet" href="../assets/style.css">
+</head><body data-prev="02_용어-정리.html" data-next="04_커밋은-사진-한-장-세-영역.html">
+<div class="topbar"><a class="home" href="../index.html">풀스택 개발 과정</a><span class="ch">1장 · Git과 GitHub로 협업하기</span><span class="meta">3 / 14</span><span class="nav-btns"><a class="btn" href="02_용어-정리.html">← 이전</a><a class="btn" href="../index.html">목차</a><a class="btn" href="04_커밋은-사진-한-장-세-영역.html">다음 →</a></span><span class="brand">Fullstack Lab</span></div><div class="wrap"><div class="content"><div class="chip-nav"><b>1장 · Git과 GitHub로 협업하기</b><a class="" href="01_이-장에서-배우는-것.html">Git과 GitHub는 왜 첫 장인가</a><a class="" href="02_용어-정리.html">용어 정리 — 이 장에서 처음 만나는 말</a><a class="cur" href="03_설치와-첫-설정.html">설치와 첫 설정 — Git Bash와 GitHub 계정</a><a class="" href="04_커밋은-사진-한-장-세-영역.html">커밋은 사진 한 장 — 작업 폴더 · 스테이징 · 저장소</a><a class="" href="05_따라하기-첫-저장소와-첫-커밋.html">따라하기 — 첫 저장소와 첫 커밋</a><a class="" href="06_브랜치는-이름표.html">브랜치는 이름표 — switch와 merge</a><a class="" href="07_GitHub와-원격-저장소.html">GitHub와 원격 저장소 — push · clone · fetch · pull</a><a class="" href="08_따라하기-충돌-해결.html">따라하기 — 충돌은 고장이 아니라 대화 요청</a><a class="" href="09_Pull-Request와-GitHub-Flow.html">Pull Request와 GitHub Flow — 합쳐 달라는 요청서</a><a class="" href="10_GitHub-Organizations-우리-팀-저장소.html">GitHub Organizations — 우리 과정의 팀 저장소</a><a class="" href="11_올리면-안-되는-것과-되돌리기.html">올리면 안 되는 것과 되돌리기 — .gitignore · restore · revert</a><a class="" href="12_강사-코드-태그로-따라잡기.html">강사 코드 태그로 따라잡기 — clone · tag · switch --detach</a><a class="" href="13_정리와-체크리스트.html">정리와 체크리스트</a><a class="" href="14_실습문제와-힌트.html">실습문제와 힌트 — 기본 · 필수 · 도전</a></div><div class="md"><p class="chapter-name">1장. Git과 GitHub로 협업하기</p><h1>설치와 첫 설정 — Git Bash와 GitHub 계정</h1><div class="lesson-meta"><span>준비</span><span><b>시간</b>사전학습</span><span><b>개념 지도</b>내 PC</span></div><h2>목표</h2>
+<p>내 PC에 Git을 설치하고, Git Bash에서 <strong>처음 한 번만 하는 설정</strong>을 끝냅니다. 그리고 GitHub 계정을 만듭니다.</p>
+<hr />
+<h2>1. Git for Windows 설치</h2>
+<ol>
+<li><a href="https://git-scm.com/downloads">git-scm.com</a>에서 Windows용 Git을 내려받아 설치합니다.</li>
+<li>설치 화면은 대부분 <strong>기본값 그대로</strong> 둡니다. 아래 두 화면만 확인합니다.</li>
+</ol>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>설치 화면</th>
+<th>고를 것</th>
+<th>이유</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Choosing the default editor</td>
+<td><strong>VS Code</strong>가 설치되어 있으면 VS Code, 아니면 <strong>Notepad</strong></td>
+<td>기본값 Vim은 입문자가 빠져나오기 어렵습니다</td>
+</tr>
+<tr>
+<td>Adjusting the name of the initial branch</td>
+<td><strong>Override … <code>main</code></strong></td>
+<td>GitHub의 기본 브랜치 이름과 맞춥니다</td>
+</tr>
+</tbody>
+</table></div>
+<ol>
+<li>설치가 끝나면 시작 메뉴에서 <strong>Git Bash</strong>를 엽니다. 검은 창이 뜨면 성공입니다.</li>
+</ol>
+<blockquote>
+<p>Git Bash는 윈도우에서 리눅스식 명령(<code>ls</code>, <code>cd</code>, <code>pwd</code>)을 쓸 수 있게 해 주는 터미널입니다. 이 과정의 모든 Git 실습은 Git Bash에서 합니다.</p>
+</blockquote>
+<hr />
+<h2>2. 처음 한 번만 하는 설정</h2>
+<p>Git Bash에 아래를 <strong>한 줄씩</strong> 입력합니다. 이름과 이메일은 본인 것으로 바꿉니다. 이메일은 GitHub 가입에 쓸 이메일과 같게 합니다.</p>
+<pre><code class="language-bash"><span class="prompt">$ </span>git config --global user.name &quot;나학생&quot;
+<span class="prompt">$ </span>git config --global user.email &quot;student@example.com&quot;
+<span class="prompt">$ </span>git config --global init.defaultBranch main
+<span class="prompt">$ </span>git config --global pull.rebase false
+<span class="prompt">$ </span>git config --global core.quotepath false
+</code></pre>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>설정</th>
+<th>뜻</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>user.name</code>, <code>user.email</code></td>
+<td>커밋에 찍히는 "누가 찍었나" 정보</td>
+</tr>
+<tr>
+<td><code>init.defaultBranch main</code></td>
+<td>새 저장소의 첫 브랜치 이름을 <code>main</code>으로</td>
+</tr>
+<tr>
+<td><code>pull.rebase false</code></td>
+<td><code>pull</code>할 때 합치는 방식을 merge로 정해 둔다 (아래 상자에서 이유를 봅니다)</td>
+</tr>
+<tr>
+<td><code>core.quotepath false</code></td>
+<td>한글 파일 이름이 <code>\354\236\220</code>처럼 깨져 보이지 않게</td>
+</tr>
+</tbody>
+</table></div>
+<p>설정이 잘 들어갔는지 확인합니다.</p>
+<pre><code class="language-bash"><span class="prompt">$ </span>git config --global --list
+</code></pre>
+<p><strong>실행 결과</strong></p>
+<pre><code class="language-text">user.name=나학생
+user.email=student@example.com
+init.defaultbranch=main
+pull.rebase=false
+core.quotepath=false
+</code></pre>
+<div class="box core">
+<p><code>pull.rebase false</code>를 빼먹으면, 나중에 팀원과 동시에 작업한 뒤 <code>git pull</code>을 할 때 <strong>"You have divergent branches and need to specify how to reconcile them."</strong>라는 안내와 함께 멈춥니다. 미리 정해 두면 이 문제를 피할 수 있습니다.</p>
+</div>
+<hr />
+<h2>3. GitHub 계정 만들기</h2>
+<ol>
+<li><a href="https://github.com">github.com</a>에서 가입합니다. 아이디는 <strong>포트폴리오에 그대로 쓰일 이름</strong>으로 정합니다.</li>
+<li><strong>2단계 인증(2FA)</strong>을 켭니다. GitHub가 강력히 권장하고, 과정 Organization에서 요구할 수 있습니다. (<a href="https://docs.github.com/en/authentication/securing-your-account-with-two-factor-authentication-2fa/about-mandatory-two-factor-authentication">GitHub Docs</a>)</li>
+</ol>
+<hr />
+<h2>4. 사전학습 제출물</h2>
+<p>아래 두 화면을 캡처해 제출하면 Git 과제 완료입니다.</p>
+<ol>
+<li><code>git --version</code> 결과</li>
+<li><code>git config --global --list</code> 결과</li>
+</ol>
+<hr />
+<h2>핵심 정리</h2>
+<ul>
+<li>실습은 Git Bash에서 한다.</li>
+<li>설정은 처음 한 번, <code>--global</code>로 한다.</li>
+<li>이메일은 GitHub 계정과 같게, 기본 브랜치는 <code>main</code>, <code>pull.rebase false</code>를 넣는다.</li>
+</ul></div></div><div class="pager"><a class="prv" href="02_용어-정리.html"><span class="lbl">← 이전 절</span>용어 정리 — 이 장에서 처음 만나는 말</a><a class="nxt" href="04_커밋은-사진-한-장-세-영역.html"><span class="lbl">다음 절 →</span>커밋은 사진 한 장 — 작업 폴더 · 스테이징 · 저장소</a></div><footer class="foot"><b>Fullstack Lab</b></footer></div><script src="../assets/app.js"></script></body></html>

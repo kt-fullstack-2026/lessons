@@ -1,0 +1,220 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GitHub와 원격 저장소 — push · clone · fetch · pull — 풀스택 개발 과정</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&display=swap">
+<link rel="stylesheet" href="../assets/style.css">
+</head><body data-prev="06_브랜치는-이름표.html" data-next="08_따라하기-충돌-해결.html">
+<div class="topbar"><a class="home" href="../index.html">풀스택 개발 과정</a><span class="ch">1장 · Git과 GitHub로 협업하기</span><span class="meta">7 / 14</span><span class="nav-btns"><a class="btn" href="06_브랜치는-이름표.html">← 이전</a><a class="btn" href="../index.html">목차</a><a class="btn" href="08_따라하기-충돌-해결.html">다음 →</a></span><span class="brand">Fullstack Lab</span></div><div class="wrap"><div class="content"><div class="chip-nav"><b>1장 · Git과 GitHub로 협업하기</b><a class="" href="01_이-장에서-배우는-것.html">Git과 GitHub는 왜 첫 장인가</a><a class="" href="02_용어-정리.html">용어 정리 — 이 장에서 처음 만나는 말</a><a class="" href="03_설치와-첫-설정.html">설치와 첫 설정 — Git Bash와 GitHub 계정</a><a class="" href="04_커밋은-사진-한-장-세-영역.html">커밋은 사진 한 장 — 작업 폴더 · 스테이징 · 저장소</a><a class="" href="05_따라하기-첫-저장소와-첫-커밋.html">따라하기 — 첫 저장소와 첫 커밋</a><a class="" href="06_브랜치는-이름표.html">브랜치는 이름표 — switch와 merge</a><a class="cur" href="07_GitHub와-원격-저장소.html">GitHub와 원격 저장소 — push · clone · fetch · pull</a><a class="" href="08_따라하기-충돌-해결.html">따라하기 — 충돌은 고장이 아니라 대화 요청</a><a class="" href="09_Pull-Request와-GitHub-Flow.html">Pull Request와 GitHub Flow — 합쳐 달라는 요청서</a><a class="" href="10_GitHub-Organizations-우리-팀-저장소.html">GitHub Organizations — 우리 과정의 팀 저장소</a><a class="" href="11_올리면-안-되는-것과-되돌리기.html">올리면 안 되는 것과 되돌리기 — .gitignore · restore · revert</a><a class="" href="12_강사-코드-태그로-따라잡기.html">강사 코드 태그로 따라잡기 — clone · tag · switch --detach</a><a class="" href="13_정리와-체크리스트.html">정리와 체크리스트</a><a class="" href="14_실습문제와-힌트.html">실습문제와 힌트 — 기본 · 필수 · 도전</a></div><div class="md"><p class="chapter-name">1장. Git과 GitHub로 협업하기</p><h1>GitHub와 원격 저장소 — push · clone · fetch · pull</h1><div class="lesson-meta"><span>준비</span><span><b>시간</b>1시간 30분</span><span><b>개념 지도</b>로컬 저장소 ↔ 원격 저장소</span></div><h2>한 줄 요약</h2>
+<p>내 PC의 저장소(로컬)를 GitHub의 저장소(원격)와 연결해 <strong>올리고(push) 받습니다(pull)</strong>. 팀원이 같은 원격 저장소를 쓰면 협업이 됩니다.</p>
+<hr />
+<h2>1. 네 가지 명령</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>명령</th>
+<th>방향</th>
+<th>하는 일</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>git clone 주소</code></td>
+<td>원격 → 내 PC</td>
+<td>원격 저장소를 기록째 처음 받는다 (5절에서 자세히)</td>
+</tr>
+<tr>
+<td><code>git push</code></td>
+<td>내 PC → 원격</td>
+<td>내 커밋을 올린다</td>
+</tr>
+<tr>
+<td><code>git fetch</code></td>
+<td>원격 → 내 PC</td>
+<td>원격의 새 커밋을 <strong>받기만</strong> 한다. 내 파일은 바뀌지 않는다</td>
+</tr>
+<tr>
+<td><code>git pull</code></td>
+<td>원격 → 내 PC</td>
+<td>받아서 <strong>내 브랜치에 합친다</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p><code>origin</code>은 원격 저장소의 <strong>별명</strong>입니다. 보통 GitHub 주소를 가리킵니다.</p>
+<div class="box core">
+<p><code>pull</code> = <code>fetch</code>(받기) + <code>merge</code>(합치기). 받기만 하고 싶으면 <code>fetch</code>를 씁니다.</p>
+</div>
+<hr />
+<h2>2. 따라하기 — 내 저장소를 GitHub에 올리기</h2>
+<h3>(1) GitHub에 빈 저장소 만들기</h3>
+<p>GitHub 오른쪽 위 <strong>+ → New repository</strong>에서 이름을 <code>my-first-repo</code>로 하고, <strong>README 추가는 체크하지 않고</strong> 만듭니다. 이미 내 PC에 README가 있기 때문입니다.</p>
+<h3>(2) 연결하고 올리기</h3>
+<p>GitHub 화면에 나오는 주소를 복사해 씁니다.</p>
+<pre><code class="language-bash"><span class="prompt">$ </span>git remote add origin https://github.com/내아이디/my-first-repo.git
+<span class="prompt">$ </span>git remote -v
+<span class="prompt">$ </span>git push -u origin main
+</code></pre>
+<p><strong>실행 결과</strong> (진행 상황을 알리는 <code>Enumerating objects...</code> 같은 줄은 생략)</p>
+<pre><code class="language-text">origin  https://github.com/내아이디/my-first-repo.git (fetch)
+origin  https://github.com/내아이디/my-first-repo.git (push)
+To https://github.com/내아이디/my-first-repo.git
+ * [new branch]      main -&gt; main
+branch 'main' set up to track 'origin/main'.
+</code></pre>
+<p><code>-u</code>는 "앞으로 이 브랜치는 <code>origin/main</code>과 짝"이라고 정해 두는 옵션입니다. 한 번 하면 다음부터는 <code>git push</code>만 쳐도 됩니다.</p>
+<h3>(3) 처음 push할 때 로그인 창</h3>
+<p>처음 <code>push</code>하면 <strong>Git Credential Manager</strong> 창이 뜹니다. <strong>Sign in with your browser</strong>를 눌러 GitHub에 로그인합니다. 한 번 로그인하면 윈도우가 기억합니다.</p>
+<blockquote>
+<p>GitHub는 2021년 8월 13일부터 Git 작업에 <strong>계정 비밀번호를 받지 않습니다.</strong> 터미널에 비밀번호를 쳐도 실패합니다. 브라우저 로그인이나 토큰을 씁니다. (<a href="https://github.blog/changelog/2021-08-12-git-password-authentication-is-shutting-down/">GitHub Changelog</a>)</p>
+</blockquote>
+<hr />
+<h2>3. 팀원이 올린 것 받기</h2>
+<p>팀원이 같은 저장소를 받아(<code>clone</code>) 한 줄을 추가해 올렸다고 합시다. 나는 먼저 확인만 합니다.</p>
+<pre><code class="language-bash"><span class="prompt">$ </span>git fetch
+<span class="prompt">$ </span>git status
+</code></pre>
+<p><strong>실행 결과</strong></p>
+<pre><code class="language-text">On branch main
+Your branch is behind 'origin/main' by 1 commit, and can be fast-forwarded.
+  (use &quot;git pull&quot; to update your local branch)
+
+nothing to commit, working tree clean
+</code></pre>
+<p>"원격보다 1커밋 뒤에 있다"는 뜻입니다. 받아서 합칩니다.</p>
+<pre><code class="language-bash"><span class="prompt">$ </span>git pull
+</code></pre>
+<pre><code class="language-text">Updating 73ed024..2fa25f9
+Fast-forward
+ README.md | 1 +
+ 1 file changed, 1 insertion(+)
+</code></pre>
+<hr />
+<h2>4. push가 거절될 때</h2>
+<p>팀원이 먼저 올린 상태에서 내가 <code>push</code>하면 거절됩니다.</p>
+<p><strong>실행 결과</strong></p>
+<pre><code class="language-text">To https://github.com/내아이디/my-first-repo.git
+ ! [rejected]        main -&gt; main (fetch first)
+error: failed to push some refs to 'https://github.com/내아이디/my-first-repo.git'
+hint: Updates were rejected because the remote contains work that you do not
+hint: have locally. This is usually caused by another repository pushing to
+hint: the same ref. If you want to integrate the remote changes, use
+hint: 'git pull' before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+</code></pre>
+<div class="box core">
+<p><strong>"원격에 내가 없는 커밋이 있으니, 먼저 <code>pull</code>로 받아서 합친 다음 다시 <code>push</code>하라"</strong>는 뜻입니다. 고장이 아닙니다. <code>git pull</code> → (충돌이 나면 해결) → <code>git push</code> 순서로 합니다.</p>
+</div>
+<hr />
+<h2>5. <code>git clone 주소</code>와 <code>git clone 주소 .</code>의 차이</h2>
+<p><code>clone</code>은 원격 저장소를 내 PC로 복사합니다. 주소 뒤에 <strong><code>.</code>을 붙이느냐</strong>에 따라 파일이 들어가는 위치가 달라집니다. <code>.</code>은 "지금 이 폴더"라는 뜻입니다(2절).</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>명령</th>
+<th>파일이 들어가는 곳</th>
+<th>조건</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>git clone 주소</code></td>
+<td>현재 위치 아래에 <strong>저장소 이름으로 새 폴더</strong>를 만들고 그 안에</td>
+<td>없음</td>
+</tr>
+<tr>
+<td><code>git clone 주소 .</code></td>
+<td><strong>지금 이 폴더</strong>에 바로</td>
+<td>지금 폴더가 <strong>비어 있어야</strong> 함</td>
+</tr>
+<tr>
+<td><code>git clone 주소 폴더이름</code></td>
+<td>현재 위치 아래에 <strong>지정한 이름의 새 폴더</strong>를 만들고 그 안에</td>
+<td>없음</td>
+</tr>
+</tbody>
+</table></div>
+<pre><code class="language-bash"><span class="prompt">$ </span>cd /d/workspace
+<span class="prompt">$ </span>git clone https://github.com/내아이디/my-first-repo.git
+</code></pre>
+<p><strong>실행 결과</strong> (앞부분)</p>
+<pre><code class="language-text">Cloning into 'my-first-repo'...
+</code></pre>
+<p><code>/d/workspace/my-first-repo</code> 폴더가 새로 생깁니다. 다음 명령을 치기 전에 <code>cd my-first-repo</code>로 들어가야 합니다.</p>
+<pre><code class="language-bash"><span class="prompt">$ </span>mkdir /d/workspace/team-project
+<span class="prompt">$ </span>cd /d/workspace/team-project
+<span class="prompt">$ </span>git clone https://github.com/내아이디/my-first-repo.git .
+</code></pre>
+<p><strong>실행 결과</strong> (앞부분)</p>
+<pre><code class="language-text">Cloning into '.'...
+</code></pre>
+<p>새 폴더 없이 <code>team-project</code> 폴더에 바로 파일과 <code>.git</code>이 들어옵니다. 폴더 안에 파일이 하나라도 있으면 아래처럼 거절됩니다.</p>
+<pre><code class="language-text">fatal: destination path '.' already exists and is not an empty directory.
+</code></pre>
+<div class="box core">
+<p><strong>처음에는 <code>git clone 주소</code>(점 없이)를 씁니다.</strong> 폴더가 새로 생기므로 다른 파일과 섞이지 않습니다. <code>.</code>은 IntelliJ 등으로 <strong>빈 폴더를 미리 만들어 둔 경우</strong>에만 씁니다. clone 뒤에는 <code>cd</code>로 그 폴더에 들어갔는지 <code>pwd</code>로 확인합니다.</p>
+</div>
+<hr />
+<h2>6. 내 PC의 Git 설정과 로그인 정보 지우기</h2>
+<p>공용 PC를 쓸 때, 다른 GitHub 계정으로 바꿀 때, 과정이 끝나 PC를 정리할 때 씁니다. 개인 PC를 계속 쓴다면 할 필요가 없습니다.</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>지울 것</th>
+<th>명령 또는 방법</th>
+<th>영향 범위</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>사용자 이름·이메일</td>
+<td><code>git config --global --unset</code></td>
+<td>이 PC의 <strong>모든 저장소</strong></td>
+</tr>
+<tr>
+<td>원격 연결(<code>origin</code>)</td>
+<td><code>git remote rm origin</code></td>
+<td>명령을 친 <strong>저장소 하나</strong></td>
+</tr>
+<tr>
+<td>GitHub 로그인 정보</td>
+<td>Windows 자격 증명 관리자</td>
+<td>이 PC의 <strong>GitHub 로그인</strong></td>
+</tr>
+</tbody>
+</table></div>
+<h3>(1) 사용자 이름과 이메일 지우기</h3>
+<pre><code class="language-bash"><span class="prompt">$ </span>git config --global --unset user.name
+<span class="prompt">$ </span>git config --global --unset user.email
+<span class="prompt">$ </span>git config --global --list
+</code></pre>
+<p><code>--list</code> 결과에 <code>user.name</code>, <code>user.email</code>이 없으면 지워진 것입니다. 이미 지운 값을 다시 지우면 아무 메시지 없이 끝납니다.</p>
+<h3>(2) 원격 저장소 연결 끊기</h3>
+<p><strong>저장소 폴더 안에서</strong> 칩니다.</p>
+<pre><code class="language-bash"><span class="prompt">$ </span>git remote -v
+<span class="prompt">$ </span>git remote rm origin
+<span class="prompt">$ </span>git remote -v
+</code></pre>
+<p>마지막 <code>git remote -v</code>에 아무것도 나오지 않으면 연결이 끊긴 것입니다. 내 PC의 파일과 커밋, GitHub의 저장소는 <strong>그대로 남습니다.</strong> <code>rm</code>은 <code>remove</code>의 줄임말이라 <code>git remote remove origin</code>과 같습니다.</p>
+<h3>(3) GitHub 로그인 정보(자격 증명) 지우기</h3>
+<p>2-(3)에서 브라우저로 로그인한 정보는 Windows의 <strong>자격 증명 관리자</strong>에 저장되어 있습니다.</p>
+<ol>
+<li>시작 메뉴에서 <strong>자격 증명 관리자</strong>를 검색해 엽니다.</li>
+<li><strong>Windows 자격 증명</strong>을 누릅니다.</li>
+<li>일반 자격 증명 목록에서 <code>git:https://github.com</code>을 펼쳐 <strong>제거</strong>를 누릅니다.</li>
+</ol>
+<p>명령으로 지울 수도 있습니다.</p>
+<pre><code class="language-bash"><span class="prompt">$ </span>printf &quot;protocol=https\nhost=github.com\n\n&quot; | git credential reject
+</code></pre>
+<p>다음에 <code>push</code>하면 로그인 창이 다시 뜹니다. 다른 계정으로 로그인하면 됩니다.</p>
+<div class="box core">
+<p><strong>명령을 복사해 붙여 넣을 때 보이지 않는 글자를 조심합니다.</strong> 웹 문서나 메신저에서 복사한 명령에는 눈에 안 보이는 글자가 섞일 수 있고, 그러면 <code>error: invalid key: user.email</code>, <code>error: No such remote: 'origin'</code>처럼 이름이 맞는데도 오류가 납니다. 이럴 때는 명령을 직접 다시 칩니다.</p>
+</div>
+<hr />
+<h2>핵심 정리</h2>
+<ul>
+<li><code>clone</code>은 처음 한 번, <code>push</code>는 올리기, <code>fetch</code>는 확인만, <code>pull</code>은 받아서 합치기.</li>
+<li>처음 <code>push</code>는 <code>git push -u origin main</code>, 로그인은 브라우저로.</li>
+<li><code>push</code>가 거절되면 <code>pull</code> 먼저.</li>
+<li>처음에는 <code>git clone 주소</code>(새 폴더), 빈 폴더가 있을 때만 <code>git clone 주소 .</code>.</li>
+<li>PC를 정리할 때는 사용자 정보 · 원격 연결 · 자격 증명을 지운다.</li>
+</ul></div></div><div class="pager"><a class="prv" href="06_브랜치는-이름표.html"><span class="lbl">← 이전 절</span>브랜치는 이름표 — switch와 merge</a><a class="nxt" href="08_따라하기-충돌-해결.html"><span class="lbl">다음 절 →</span>따라하기 — 충돌은 고장이 아니라 대화 요청</a></div><footer class="foot"><b>Fullstack Lab</b></footer></div><script src="../assets/app.js"></script></body></html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>강사 코드 태그로 따라잡기 — clone · tag · switch --detach — 풀스택 개발 과정</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&display=swap">
+<link rel="stylesheet" href="../assets/style.css">
+</head><body data-prev="11_올리면-안-되는-것과-되돌리기.html" data-next="13_정리와-체크리스트.html">
+<div class="topbar"><a class="home" href="../index.html">풀스택 개발 과정</a><span class="ch">1장 · Git과 GitHub로 협업하기</span><span class="meta">12 / 14</span><span class="nav-btns"><a class="btn" href="11_올리면-안-되는-것과-되돌리기.html">← 이전</a><a class="btn" href="../index.html">목차</a><a class="btn" href="13_정리와-체크리스트.html">다음 →</a></span><span class="brand">Fullstack Lab</span></div><div class="wrap"><div class="content"><div class="chip-nav"><b>1장 · Git과 GitHub로 협업하기</b><a class="" href="01_이-장에서-배우는-것.html">Git과 GitHub는 왜 첫 장인가</a><a class="" href="02_용어-정리.html">용어 정리 — 이 장에서 처음 만나는 말</a><a class="" href="03_설치와-첫-설정.html">설치와 첫 설정 — Git Bash와 GitHub 계정</a><a class="" href="04_커밋은-사진-한-장-세-영역.html">커밋은 사진 한 장 — 작업 폴더 · 스테이징 · 저장소</a><a class="" href="05_따라하기-첫-저장소와-첫-커밋.html">따라하기 — 첫 저장소와 첫 커밋</a><a class="" href="06_브랜치는-이름표.html">브랜치는 이름표 — switch와 merge</a><a class="" href="07_GitHub와-원격-저장소.html">GitHub와 원격 저장소 — push · clone · fetch · pull</a><a class="" href="08_따라하기-충돌-해결.html">따라하기 — 충돌은 고장이 아니라 대화 요청</a><a class="" href="09_Pull-Request와-GitHub-Flow.html">Pull Request와 GitHub Flow — 합쳐 달라는 요청서</a><a class="" href="10_GitHub-Organizations-우리-팀-저장소.html">GitHub Organizations — 우리 과정의 팀 저장소</a><a class="" href="11_올리면-안-되는-것과-되돌리기.html">올리면 안 되는 것과 되돌리기 — .gitignore · restore · revert</a><a class="cur" href="12_강사-코드-태그로-따라잡기.html">강사 코드 태그로 따라잡기 — clone · tag · switch --detach</a><a class="" href="13_정리와-체크리스트.html">정리와 체크리스트</a><a class="" href="14_실습문제와-힌트.html">실습문제와 힌트 — 기본 · 필수 · 도전</a></div><div class="md"><p class="chapter-name">1장. Git과 GitHub로 협업하기</p><h1>강사 코드 태그로 따라잡기 — clone · tag · switch --detach</h1><div class="lesson-meta"><span>준비</span><span><b>시간</b>40분</span><span><b>개념 지도</b>원격 저장소 → 내 PC</span></div><h2>한 줄 요약</h2>
+<p>이 수업은 <strong>녹화가 없습니다.</strong> 수업 중에 놓치면 강사 저장소의 <strong>태그</strong>로 그 시점의 코드를 바로 받아 이어서 따라갑니다. 태그는 <strong>"움직이지 않는 이름표"</strong>입니다.</p>
+<hr />
+<h2>1. 태그는 고정된 이름표</h2>
+<p><strong>태그란?</strong> 특정 커밋에 붙이는 <strong>고정된 이름</strong>입니다. 6절의 브랜치는 새 커밋을 만들면 따라 옮겨 가지만, 태그는 한 번 붙이면 <strong>옮겨 가지 않습니다.</strong></p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th></th>
+<th>브랜치</th>
+<th>태그</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>커밋하면</td>
+<td>따라 움직인다</td>
+<td>그대로 있다</td>
+</tr>
+<tr>
+<td>쓰는 곳</td>
+<td>작업</td>
+<td>수업 단계 표시, 배포 버전(<code>v1.0.0</code>)</td>
+</tr>
+</tbody>
+</table></div>
+<p>강사는 수업의 단계마다 태그를 붙입니다. 이름 규칙은 <strong><code>ch장번호-step단계-내용</code></strong>입니다.</p>
+<pre><code class="language-text">ch10-step1-entity     10장 1단계: Entity까지 완성
+ch10-step2-service    10장 2단계: Service까지 완성
+ch10-step3-controller 10장 3단계: Controller까지 완성
+</code></pre>
+<p>각 절 위쪽의 <strong>코드 태그</strong> 표시가 바로 이 이름입니다.</p>
+<hr />
+<h2>2. 따라하기 — 강사 저장소 받기 (처음 한 번)</h2>
+<p>강사 코드는 조직의 <code>lecture-code</code> 저장소에 있습니다. 내 작업 폴더와 <strong>섞이지 않도록</strong> 따로 받습니다.</p>
+<pre><code class="language-bash"><span class="prompt">$ </span>cd /d/workspace
+<span class="prompt">$ </span>git clone https://github.com/&lt;조직이름&gt;/lecture-code.git
+<span class="prompt">$ </span>cd lecture-code
+</code></pre>
+<p><code>&lt;조직이름&gt;</code>은 강사가 알려 준 GitHub 조직 이름으로 바꿉니다.</p>
+<p><strong>실행 결과</strong> (앞부분)</p>
+<pre><code class="language-text">Cloning into 'lecture-code'...
+</code></pre>
+<p><code>clone</code>은 <strong>저장소 전체(모든 기록과 태그)</strong>를 내 PC로 복사합니다. <code>init</code> + <code>remote add</code> + <code>pull</code>을 한 번에 하는 것과 같습니다.</p>
+<hr />
+<h2>3. 따라하기 — 놓친 단계로 이동</h2>
+<h3>3-1. 새 태그 받기</h3>
+<p>수업 중에 강사가 새 태그를 올렸다면 먼저 받아 옵니다.</p>
+<pre><code class="language-bash"><span class="prompt">$ </span>git fetch --tags
+<span class="prompt">$ </span>git tag
+</code></pre>
+<p><strong>실행 결과</strong> (예시)</p>
+<pre><code class="language-text">From https://github.com/&lt;조직이름&gt;/lecture-code
+ * [new tag]         ch10-step2-service -&gt; ch10-step2-service
+ch10-step1-entity
+ch10-step2-service
+</code></pre>
+<p><code>git tag</code>는 받은 태그 목록을 보여 줍니다.</p>
+<h3>3-2. 그 태그 시점으로 이동</h3>
+<pre><code class="language-bash"><span class="prompt">$ </span>git switch --detach ch10-step2-service
+</code></pre>
+<p><strong>실행 결과</strong> (예시)</p>
+<pre><code class="language-text">HEAD is now at 85cdc97 feat: 게시글 Service 추가
+</code></pre>
+<p>이제 폴더의 파일이 <strong>그 단계가 끝난 시점의 코드</strong>로 바뀌었습니다. IntelliJ에서 이 폴더를 열고 실행해 보면 됩니다.</p>
+<div class="box core">
+<p><strong><code>--detach</code>는 "브랜치 없이 사진만 펼쳐 보기"입니다.</strong> <code>HEAD</code>가 브랜치가 아니라 커밋을 직접 가리킵니다. 이 상태에서 커밋하면 이름표가 없어서 나중에 찾기 어렵습니다. <strong>보기만 하고, 고치지 않습니다.</strong></p>
+</div>
+<h3>3-3. 원래대로 돌아오기</h3>
+<pre><code class="language-bash"><span class="prompt">$ </span>git switch main
+</code></pre>
+<p><strong>실행 결과</strong> (예시)</p>
+<pre><code class="language-text">Previous HEAD position was 85cdc97 feat: 게시글 Service 추가
+Switched to branch 'main'
+</code></pre>
+<blockquote>
+<p>커밋 번호(<code>85cdc97</code>)와 메시지는 저장소마다 다릅니다. 모양만 확인합니다.</p>
+</blockquote>
+<hr />
+<h2>4. 놓쳤을 때 실제 순서</h2>
+<div class="box impl">
+<p><strong>따라잡기 4단계</strong></p>
+<ol>
+<li>"놓쳤다"를 알린다.</li>
+<li><code>lecture-code</code> 폴더에서 <code>git fetch --tags</code></li>
+<li><code>git switch --detach 그-절의-코드-태그</code></li>
+<li>그 코드를 보며 <strong>내 작업 폴더</strong>에서 이어서 친다. (복사보다 비교하며 고치기를 권장)</li>
+</ol>
+</div>
+<p>강사 코드를 내 폴더로 통째로 복사하면 <strong>어디를 놓쳤는지 모른 채</strong> 넘어갑니다. 두 창을 나란히 놓고 차이를 찾아 고치는 것이 가장 빨리 따라잡는 방법입니다.</p>
+<p>단계 사이에 <strong>어떤 파일이 바뀌었는지</strong>는 직접 확인할 수 있습니다.</p>
+<pre><code class="language-bash"><span class="prompt">$ </span>git diff ch10-step1-entity ch10-step2-service --stat
+</code></pre></div></div><div class="pager"><a class="prv" href="11_올리면-안-되는-것과-되돌리기.html"><span class="lbl">← 이전 절</span>올리면 안 되는 것과 되돌리기 — .gitignore · restore · revert</a><a class="nxt" href="13_정리와-체크리스트.html"><span class="lbl">다음 절 →</span>정리와 체크리스트</a></div><footer class="foot"><b>Fullstack Lab</b></footer></div><script src="../assets/app.js"></script></body></html>

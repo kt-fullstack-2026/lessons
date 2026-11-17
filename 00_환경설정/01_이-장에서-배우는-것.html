@@ -1,0 +1,177 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>도구는 한 번에 다 설치하지 않고, 쓰기 직전에 하나씩 — 풀스택 개발 과정</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&display=swap">
+<link rel="stylesheet" href="../assets/style.css">
+</head><body data-prev="" data-next="02_용어-정리.html">
+<div class="topbar"><a class="home" href="../index.html">풀스택 개발 과정</a><span class="ch">0장 · 환경설정 — 과정 전체 개발 도구 설치</span><span class="meta">1 / 9</span><span class="nav-btns"><a class="btn disabled" href="#">← 이전</a><a class="btn" href="../index.html">목차</a><a class="btn" href="02_용어-정리.html">다음 →</a></span><span class="brand">Fullstack Lab</span></div><div class="wrap"><div class="content"><div class="chip-nav"><b>0장 · 환경설정 — 과정 전체 개발 도구 설치</b><a class="cur" href="01_이-장에서-배우는-것.html">도구는 한 번에 다 설치하지 않고, 쓰기 직전에 하나씩</a><a class="" href="02_용어-정리.html">용어 정리</a><a class="" href="03_설치-전-확인.html">설치 전 확인 — 확장자, 작업 폴더</a><a class="" href="04_VS-Code와-확장.html">VS Code와 확장 설치</a><a class="" href="05_Node.js-24-LTS-설치와-확인.html">Node.js 24 LTS 설치와 node -v · npm -v 확인</a><a class="" href="06_JDK-21과-IntelliJ-IDEA-설치.html">JDK 21(Eclipse Temurin)과 IntelliJ IDEA 설치</a><a class="" href="07_Docker-Desktop-설치와-hello-world.html">Docker Desktop(WSL 2) 설치와 docker run hello-world 확인</a><a class="" href="08_PostgreSQL-17-설치와-pgAdmin.html">PostgreSQL 17 설치판과 pgAdmin 4</a><a class="" href="09_정리와-실습-설치-확인-체크리스트.html">정리와 실습 — 설치 확인 체크리스트</a></div><div class="md"><p class="chapter-name">0장. 환경설정 — 과정 전체 개발 도구 설치</p><h1>도구는 한 번에 다 설치하지 않고, 쓰기 직전에 하나씩</h1><div class="lesson-meta"><span>준비</span><span><b>시간</b>10분</span><span><b>개념 지도</b>전체 그림</span></div><h2>한 줄 요약</h2>
+<p>이 과정은 HTML 한 장에서 시작해 React 화면, Node.js · Spring 서버, DB, Docker까지 갑니다. 그만큼 설치할 프로그램도 많습니다. 이 장은 <strong>과정 전체에서 쓰는 개발 도구를 한곳에 모은 설치 안내서</strong>입니다. 다만 한 번에 다 설치하지 않습니다. 처음에 설치한 도구를 몇 달 동안 안 쓰면 버전이 바뀌고, 설정도 잊어버립니다. 그래서 <strong>그 도구를 처음 쓰는 장 바로 전</strong>에 해당 절만 따라 합니다. 마지막 09절의 체크리스트로 "다 잘 설치됐나"를 한 번에 확인합니다.</p>
+<blockquote>
+<p>대상은 <strong>Windows 11</strong>입니다. 작업 폴더는 <strong><code>D:\workspace</code></strong> 하나이고, 모든 장의 프로젝트가 이 아래에 생깁니다. Git과 Git Bash는 1장 03절(사전학습)에서 설치합니다.</p>
+</blockquote>
+<hr />
+<h2>1. 전체 그림</h2>
+<figure class="figure">
+<p><img alt="제목은 &quot;과정 전체에서 쓰는 도구 — 언제 설치하고, 어디에 쓰나&quot;이다. 위쪽에 수업 순서 화살표가 있고 다섯 지점이 있다. 1장 사전학습: Git · Git Bash, GitHub 계정(1장 03절). 2장 첫 수업 전: 03 설치 전 확인, 04 VS Code + 확장, 05 Node.js 24(2~8장 화면 · 5장부터 npm). 9장 전: 08 PostgreSQL 17 + pgAdmin 4(9~13장 DB, 설치판). 10장 전: 06 JDK 21(Eclipse Temurin), IntelliJ IDEA(10장부터 Spring). 14장 전: 07 Docker Desktop(WSL 2, 14장부터 끝까지). 아래 상자 &quot;설치한 도구가 쓰이는 자리 — 2장의 요청과 응답 그림 위에&quot;: 화면(브라우저) 칸은 HTML · CSS · JS · React, 쓰는 곳 VS Code, 돌리는 곳 Chrome, 빌드 · 개발 서버 Node.js. 요청 화살표로 서버 칸: Node.js + Express(9 · 12장)는 VS Code에서 쓰고 Node.js로 돌린다, Spring Boot(10장~)는 IntelliJ에서 쓰고 JDK 21로 돌린다, Gradle · Spring은 따로 설치하지 않는다. SQL 화살표로 DB 칸: PostgreSQL 17(설치판, 5432번), pgAdmin 4 표를 눈으로 본다. 오른쪽 초록 점선 칸 Docker(14장~): 서버 · DB · Redis · Kafka를 설치하지 않고 컨테이너로 띄운다, postgres:17 등 이미지는 그 장에서. 맨 아래: 작업 폴더는 하나 D:\workspace(한글 · 빈칸 없는 경로), 모든 장의 프로젝트가 이 아래에 생긴다. 09절 체크리스트의 버전 명령이 모두 답하면 준비 끝. 설치가 늦어도 그 장 전에만 끝내면 된다" src="img/install_map.svg" /></p>
+<figcaption>위 줄은 "언제 설치하는가", 아래 상자는 "설치한 도구가 어디에 쓰이는가"입니다. 절 번호는 이 장의 절입니다.</figcaption>
+</figure>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>절</th>
+<th>설치하는 것</th>
+<th>언제</th>
+<th>처음 쓰는 곳</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>03절</td>
+<td>(설치 전 확인) 파일 확장자 보이기, <code>D:\workspace</code> 만들기</td>
+<td>2장 첫 수업 전</td>
+<td>2장부터 모든 장</td>
+</tr>
+<tr>
+<td>04절</td>
+<td>VS Code + 확장</td>
+<td>2장 첫 수업 전</td>
+<td>2장 05절 첫 HTML 파일</td>
+</tr>
+<tr>
+<td>05절</td>
+<td>Node.js 24 LTS (npm 함께)</td>
+<td>2장 첫 수업 전</td>
+<td>5장 07절 <code>npm install</code>, 8장 Vite, 9장 서버</td>
+</tr>
+<tr>
+<td>06절</td>
+<td>JDK 21 (Eclipse Temurin), IntelliJ IDEA</td>
+<td><strong>10장 직전</strong></td>
+<td>10장 03절 Java 핵심 요약</td>
+</tr>
+<tr>
+<td>07절</td>
+<td>Docker Desktop (WSL 2)</td>
+<td><strong>14장 직전</strong></td>
+<td>14장 Docker 핵심, 그 뒤 모든 장</td>
+</tr>
+<tr>
+<td>08절</td>
+<td>PostgreSQL 17 설치판 + pgAdmin 4</td>
+<td><strong>9장 직전</strong></td>
+<td>9장 09절 SQL 핵심</td>
+</tr>
+<tr>
+<td>09절</td>
+<td>(확인) 버전 명령 한 번에, 문제 해결</td>
+<td>설치할 때마다</td>
+<td>—</td>
+</tr>
+</tbody>
+</table></div>
+<div class="box core">
+<p><strong>절은 순서대로 따라 하지 않습니다.</strong> 절은 도구의 종류별로 나누어 놓았고, 실제로 설치하는 시점은 위 표의 <strong>"언제"</strong> 칸을 따릅니다. 2장 첫 수업 전에는 03 · 04 · 05절만 합니다. 08절(PostgreSQL)은 9장 직전, 06절(JDK · IntelliJ)은 10장 직전, 07절(Docker)은 14장 직전에 합니다. 미리 해 두어도 됩니다. 그때 버전이 바뀌었으면 큰 번호(Node 24, JDK 21, PostgreSQL 17)만 맞추어 받습니다.</p>
+</div>
+<hr />
+<h2>2. 이 장이 이 과정에서 하는 역할</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>이 장에서 하는 것</th>
+<th>나중에 다시 쓰는 곳</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>D:\workspace</code> 작업 폴더</td>
+<td>모든 장. 교안의 경로는 모두 <code>D:\workspace\...</code>로 적는다</td>
+</tr>
+<tr>
+<td>VS Code · 확장</td>
+<td>2~9 · 12 · 13장, 그 뒤 화면 · Node 코드</td>
+</tr>
+<tr>
+<td>Node.js · npm</td>
+<td>5장 npm, 8장 React, 9 · 12장 서버, 13 · 17 · 26 · 28장</td>
+</tr>
+<tr>
+<td>JDK 21 · IntelliJ</td>
+<td>10장부터 Spring 서버 전부</td>
+</tr>
+<tr>
+<td>Docker Desktop</td>
+<td>14장부터 Compose · 배포 · Redis · Kafka · MSA</td>
+</tr>
+<tr>
+<td>PostgreSQL · pgAdmin</td>
+<td>9 · 10장 DB, 그 뒤 로컬 개발 DB</td>
+</tr>
+<tr>
+<td>09절 버전 확인 명령</td>
+<td>각 장 01절의 "준비물" 표. "안 돼요" 할 때 가장 먼저 치는 명령</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2>3. 나중에 찾아볼 것</h2>
+<div class="box more">
+<p><strong>필요할 때 찾아볼 것</strong>: 명령 한 줄로 설치하는 <code>winget</code>, 여러 Node 버전을 바꿔 쓰는 도구(nvm-windows 등), JetBrains Toolbox App, WSL 2를 따로 쓰는 법(Ubuntu 설치), 환경 변수 <code>PATH</code> · <code>JAVA_HOME</code> 직접 고치기. 필요해지면 각 도구의 공식 문서(<a href="https://nodejs.org/en/download">Node.js</a>, <a href="https://adoptium.net/installation/windows/">Adoptium</a>, <a href="https://www.jetbrains.com/help/idea/installation-guide.html">IntelliJ IDEA</a>, <a href="https://docs.docker.com/desktop/setup/install/windows-install/">Docker Desktop</a>, <a href="https://www.postgresql.org/download/windows/">PostgreSQL</a>)를 봅니다.</p>
+</div>
+<hr />
+<h2>4. 이 장의 버전</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>도구</th>
+<th>이 과정의 버전</th>
+<th>확인한 곳</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>VS Code</td>
+<td>최신 버전 (자동 업데이트)</td>
+<td>code.visualstudio.com</td>
+</tr>
+<tr>
+<td>Node.js</td>
+<td><strong>24 LTS</strong> (확인 때 24.22.1, npm 11.19.1)</td>
+<td>nodejs.org 배포 목록. 26은 아직 LTS가 아니므로 받지 않는다</td>
+</tr>
+<tr>
+<td>JDK</td>
+<td><strong>21 LTS</strong>, Eclipse Temurin (확인 때 21.0.12)</td>
+<td>adoptium.net, <code>eclipse-temurin:21</code> 공식 이미지</td>
+</tr>
+<tr>
+<td>IntelliJ IDEA</td>
+<td>최신 버전 (확인 때 2026.2). 2025.3부터 Community · Ultimate가 <strong>하나로</strong> 합쳐졌다</td>
+<td>JetBrains 문서 · 블로그</td>
+</tr>
+<tr>
+<td>Docker Desktop</td>
+<td>최신 버전 (확인 때 4.97.0), WSL 2 방식</td>
+<td>Docker 문서 · 릴리스 노트</td>
+</tr>
+<tr>
+<td>PostgreSQL</td>
+<td><strong>17</strong> 설치판 (확인 때 17.11) + pgAdmin 4</td>
+<td>postgresql.org</td>
+</tr>
+<tr>
+<td>Git for Windows</td>
+<td>최신 버전</td>
+<td>1장 03절</td>
+</tr>
+</tbody>
+</table></div>
+<p>출처: <a href="https://nodejs.org/dist/index.json">Node.js 배포 목록(index.json)</a>, <a href="https://adoptium.net/installation/windows/">Adoptium — Windows 설치</a>, <a href="https://www.jetbrains.com/help/idea/installation-guide.html">JetBrains — IntelliJ IDEA 설치 안내</a>, <a href="https://blog.jetbrains.com/idea/2025/07/intellij-idea-unified-distribution-plan/">JetBrains 블로그 — 통합 배포 계획</a>, <a href="https://docs.docker.com/desktop/setup/install/windows-install/">Docker 문서 — Windows에 설치</a>, <a href="https://www.postgresql.org/support/versioning/">PostgreSQL — 버전 정책</a></p>
+<hr />
+<h2>핵심 정리</h2>
+<ul>
+<li>0장은 과정 전체에서 쓰는 개발 도구를 모은 설치 안내서다. 한 번에 다 설치하지 않고 <strong>처음 쓰는 장 바로 전</strong>에 그 절만 한다.</li>
+<li>2장 전: 03 설치 전 확인 · 04 VS Code · 05 Node.js 24. 9장 전: 08 PostgreSQL 17. 10장 전: 06 JDK 21 · IntelliJ. 14장 전: 07 Docker Desktop.</li>
+<li>작업 폴더는 <code>D:\workspace</code> 하나. 큰 번호(Node 24, JDK 21, PostgreSQL 17)만 맞춘다.</li>
+<li>설치한 뒤에는 09절의 버전 명령으로 확인한다.</li>
+</ul></div></div><div class="pager"><span class="prv off"><span class="lbl">← 이전 절</span>처음입니다</span><a class="nxt" href="02_용어-정리.html"><span class="lbl">다음 절 →</span>용어 정리</a></div><footer class="foot"><b>Fullstack Lab</b></footer></div><script src="../assets/app.js"></script></body></html>

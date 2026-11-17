@@ -1,0 +1,136 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Node.js 24 LTS 설치와 node -v · npm -v 확인 — 풀스택 개발 과정</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&display=swap">
+<link rel="stylesheet" href="../assets/style.css">
+</head><body data-prev="04_VS-Code와-확장.html" data-next="06_JDK-21과-IntelliJ-IDEA-설치.html">
+<div class="topbar"><a class="home" href="../index.html">풀스택 개발 과정</a><span class="ch">0장 · 환경설정 — 과정 전체 개발 도구 설치</span><span class="meta">5 / 9</span><span class="nav-btns"><a class="btn" href="04_VS-Code와-확장.html">← 이전</a><a class="btn" href="../index.html">목차</a><a class="btn" href="06_JDK-21과-IntelliJ-IDEA-설치.html">다음 →</a></span><span class="brand">Fullstack Lab</span></div><div class="wrap"><div class="content"><div class="chip-nav"><b>0장 · 환경설정 — 과정 전체 개발 도구 설치</b><a class="" href="01_이-장에서-배우는-것.html">도구는 한 번에 다 설치하지 않고, 쓰기 직전에 하나씩</a><a class="" href="02_용어-정리.html">용어 정리</a><a class="" href="03_설치-전-확인.html">설치 전 확인 — 확장자, 작업 폴더</a><a class="" href="04_VS-Code와-확장.html">VS Code와 확장 설치</a><a class="cur" href="05_Node.js-24-LTS-설치와-확인.html">Node.js 24 LTS 설치와 node -v · npm -v 확인</a><a class="" href="06_JDK-21과-IntelliJ-IDEA-설치.html">JDK 21(Eclipse Temurin)과 IntelliJ IDEA 설치</a><a class="" href="07_Docker-Desktop-설치와-hello-world.html">Docker Desktop(WSL 2) 설치와 docker run hello-world 확인</a><a class="" href="08_PostgreSQL-17-설치와-pgAdmin.html">PostgreSQL 17 설치판과 pgAdmin 4</a><a class="" href="09_정리와-실습-설치-확인-체크리스트.html">정리와 실습 — 설치 확인 체크리스트</a></div><div class="md"><p class="chapter-name">0장. 환경설정 — 과정 전체 개발 도구 설치</p><h1>Node.js 24 LTS 설치와 node -v · npm -v 확인</h1><div class="lesson-meta"><span>준비</span><span><b>시간</b>20분</span><span><b>개념 지도</b>05 Node.js</span></div><h2>한 줄 요약</h2>
+<p><strong>Node.js</strong>는 브라우저 밖에서 JavaScript를 실행하는 프로그램이고, 설치하면 남의 코드를 받아 오는 <strong>npm</strong>이 함께 설치됩니다. 5장에서 <code>npm install</code>, 8장에서 React 프로젝트(Vite), 9 · 12장에서 서버를 만들 때 씁니다. 이 과정은 <strong>Node.js 24 LTS</strong>를 씁니다. 공식 사이트에서 <code>.msi</code> 설치 프로그램을 받아 기본값으로 설치하고, VS Code 터미널에서 <code>node -v</code> · <code>npm -v</code>로 확인합니다.</p>
+<blockquote>
+<p><strong>설치 시점: 2장 첫 수업 전.</strong></p>
+</blockquote>
+<hr />
+<h2>1. 어떤 버전을 받나</h2>
+<p><a href="https://nodejs.org/en/download">nodejs.org</a>의 다운로드 화면에는 버전이 여럿 보입니다. 아래를 지킵니다.</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>고를 것</th>
+<th>값</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>버전</td>
+<td><strong>v24.x (LTS)</strong>. 교안을 쓸 때는 24.22.1이었다. 더 높은 버전(26 등)이 보이거나 그것에 LTS가 붙어 있어도 <strong>24</strong>를 고른다. 다운로드 화면의 버전 고르는 칸에서 v24를 찾는다</td>
+</tr>
+<tr>
+<td>운영 체제 · CPU</td>
+<td><strong>Windows</strong>, <strong>x64</strong> (대부분의 노트북이 x64다. <strong>설정 → 시스템 → 정보</strong>의 시스템 종류가 ARM64면 같은 페이지의 <strong>ARM64</strong> 설치 파일을 받는다)</td>
+</tr>
+<tr>
+<td>파일 종류</td>
+<td><strong>Windows Installer (.msi)</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p>받은 파일 이름은 <code>node-v24.22.1-x64.msi</code> 같은 모양입니다.</p>
+<div class="box impl">
+<p><strong>왜 24인가</strong>: 짝수 번호 버전은 나온 지 반년쯤 뒤 LTS(오래 고쳐 주는 버전)가 되고, 몇 년 동안 보안 수정을 받습니다. 이 과정의 코드(9장 <code>.ts</code> 파일 바로 실행, Express 5, Next.js 16)는 모두 Node.js 24로 확인했습니다. 교안을 쓸 때 Node.js 26도 나와 있었지만 아직 LTS가 아니었고, 26이 LTS가 되더라도 24는 2028년 4월까지 보안 수정을 받습니다. 과정 중에는 모두 같은 24를 씁니다.</p>
+<p>출처: <a href="https://nodejs.org/dist/index.json">Node.js — 배포 목록(index.json)</a>, <a href="https://nodejs.org/en/about/previous-releases">Node.js — Releases</a></p>
+</div>
+<hr />
+<h2>2. 설치</h2>
+<p>받은 <code>.msi</code>를 더블클릭하고 아래처럼 진행합니다. <strong>모두 기본값</strong>이고, 한 화면만 확인합니다.</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>화면</th>
+<th>할 일</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Welcome</td>
+<td><strong>Next</strong></td>
+</tr>
+<tr>
+<td>End-User License Agreement</td>
+<td><strong>I accept …</strong> 체크 → <strong>Next</strong></td>
+</tr>
+<tr>
+<td>Destination Folder</td>
+<td>기본값(<code>C:\Program Files\nodejs</code>) 그대로 <strong>Next</strong></td>
+</tr>
+<tr>
+<td>Custom Setup</td>
+<td>기본값 그대로 <strong>Next</strong>. 목록의 <strong>Add to PATH</strong>가 설치되도록 되어 있어야 <code>node</code> 명령을 어디서나 칠 수 있다</td>
+</tr>
+<tr>
+<td>Tools for Native Modules</td>
+<td>"Automatically install the necessary tools…" 체크 칸은 <strong>비워 둔다</strong>. 체크하면 다른 도구를 한참 더 받는데, 이 과정에서는 필요 없다</td>
+</tr>
+<tr>
+<td>Ready to install</td>
+<td><strong>Install</strong> → 사용자 계정 컨트롤 창에서 <strong>예</strong></td>
+</tr>
+<tr>
+<td>Completed</td>
+<td><strong>Finish</strong></td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2>3. 확인 — VS Code 터미널에서</h2>
+<div class="box core">
+<p><strong>설치가 끝나면 VS Code를 완전히 껐다가 다시 켭니다.</strong> 이미 열려 있던 터미널은 설치 <strong>전</strong>의 <code>PATH</code>(02절 용어)를 들고 있어서 <code>node</code>를 못 찾습니다. VS Code를 다시 켜고 터미널을 새로 열어야 합니다.</p>
+</div>
+<p>VS Code에서 <code>D:\workspace</code> 폴더를 열고, <strong>Terminal → New Terminal</strong>(<code>Ctrl + `</code>)에 한 줄씩 칩니다.</p>
+<pre><code class="language-text">node -v
+npm -v
+</code></pre>
+<pre><code class="language-text">v24.22.1
+11.19.1
+</code></pre>
+<p>첫 줄이 <strong><code>v24.</code></strong>로 시작하면 됩니다. 뒤 숫자는 받은 때에 따라 다릅니다. 둘째 줄은 npm의 버전이고, 숫자가 나오기만 하면 됩니다.</p>
+<div class="box impl">
+<p><strong><code>npm -v</code>에서 "이 시스템에서 스크립트를 실행할 수 없으므로 … npm.ps1 파일을 로드할 수 없습니다"가 나오면</strong>: VS Code 터미널의 기본 셸인 PowerShell이 스크립트 실행을 막은 것입니다. 같은 터미널에 아래 한 줄을 입력하고, 물으면 <code>Y</code>를 누른 뒤 <code>npm -v</code>를 다시 칩니다. <strong>내 계정에서만</strong> 내 컴퓨터에서 만든 스크립트를 허용하는 설정입니다. 8장 03절에도 같은 안내가 있습니다.</p>
+<pre><code class="language-text">Set-ExecutionPolicy -Scope CurrentUser RemoteSigned
+</code></pre>
+<p>출처: <a href="https://learn.microsoft.com/powershell/module/microsoft.powershell.core/about/about_execution_policies">Microsoft 문서 — about_Execution_Policies</a></p>
+</div>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>보이는 것</th>
+<th>원인</th>
+<th>할 일</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>'node' 용어가 cmdlet, 함수, 스크립트 파일 또는 실행할 수 있는 프로그램 이름으로 인식되지 않습니다</code></td>
+<td>터미널이 설치 전 것이거나, 설치가 끝나지 않았다</td>
+<td>VS Code를 껐다 켠다. 그래도 같으면 컴퓨터를 다시 시작한다</td>
+</tr>
+<tr>
+<td><code>v20.…</code>, <code>v22.…</code>처럼 다른 버전</td>
+<td>예전에 설치한 Node.js가 남아 있다</td>
+<td><strong>설정 → 앱 → 설치된 앱</strong>에서 Node.js를 지우고 2절을 다시 한다</td>
+</tr>
+<tr>
+<td><code>npm.ps1 파일을 로드할 수 없습니다</code></td>
+<td>PowerShell 실행 정책</td>
+<td>위 상자</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2>핵심 정리</h2>
+<ul>
+<li>nodejs.org에서 <strong>v24 LTS</strong>, Windows x64, <code>.msi</code>를 받는다. 더 높은 버전이 보여도 LTS 24를 고른다.</li>
+<li>설치는 기본값 그대로, Tools for Native Modules 체크 칸만 비워 둔다.</li>
+<li>설치 뒤 VS Code를 다시 켜고 새 터미널에서 <code>node -v</code>(<code>v24.</code>로 시작) · <code>npm -v</code>를 확인한다.</li>
+<li><code>npm.ps1</code>을 로드할 수 없다는 오류는 <code>Set-ExecutionPolicy -Scope CurrentUser RemoteSigned</code> 한 번으로 푼다.</li>
+</ul></div></div><div class="pager"><a class="prv" href="04_VS-Code와-확장.html"><span class="lbl">← 이전 절</span>VS Code와 확장 설치</a><a class="nxt" href="06_JDK-21과-IntelliJ-IDEA-설치.html"><span class="lbl">다음 절 →</span>JDK 21(Eclipse Temurin)과 IntelliJ IDEA 설치</a></div><footer class="foot"><b>Fullstack Lab</b></footer></div><script src="../assets/app.js"></script></body></html>

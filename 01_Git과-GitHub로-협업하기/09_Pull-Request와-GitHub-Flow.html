@@ -1,0 +1,170 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pull Request와 GitHub Flow — 합쳐 달라는 요청서 — 풀스택 개발 과정</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&display=swap">
+<link rel="stylesheet" href="../assets/style.css">
+</head><body data-prev="08_따라하기-충돌-해결.html" data-next="10_GitHub-Organizations-우리-팀-저장소.html">
+<div class="topbar"><a class="home" href="../index.html">풀스택 개발 과정</a><span class="ch">1장 · Git과 GitHub로 협업하기</span><span class="meta">9 / 14</span><span class="nav-btns"><a class="btn" href="08_따라하기-충돌-해결.html">← 이전</a><a class="btn" href="../index.html">목차</a><a class="btn" href="10_GitHub-Organizations-우리-팀-저장소.html">다음 →</a></span><span class="brand">Fullstack Lab</span></div><div class="wrap"><div class="content"><div class="chip-nav"><b>1장 · Git과 GitHub로 협업하기</b><a class="" href="01_이-장에서-배우는-것.html">Git과 GitHub는 왜 첫 장인가</a><a class="" href="02_용어-정리.html">용어 정리 — 이 장에서 처음 만나는 말</a><a class="" href="03_설치와-첫-설정.html">설치와 첫 설정 — Git Bash와 GitHub 계정</a><a class="" href="04_커밋은-사진-한-장-세-영역.html">커밋은 사진 한 장 — 작업 폴더 · 스테이징 · 저장소</a><a class="" href="05_따라하기-첫-저장소와-첫-커밋.html">따라하기 — 첫 저장소와 첫 커밋</a><a class="" href="06_브랜치는-이름표.html">브랜치는 이름표 — switch와 merge</a><a class="" href="07_GitHub와-원격-저장소.html">GitHub와 원격 저장소 — push · clone · fetch · pull</a><a class="" href="08_따라하기-충돌-해결.html">따라하기 — 충돌은 고장이 아니라 대화 요청</a><a class="cur" href="09_Pull-Request와-GitHub-Flow.html">Pull Request와 GitHub Flow — 합쳐 달라는 요청서</a><a class="" href="10_GitHub-Organizations-우리-팀-저장소.html">GitHub Organizations — 우리 과정의 팀 저장소</a><a class="" href="11_올리면-안-되는-것과-되돌리기.html">올리면 안 되는 것과 되돌리기 — .gitignore · restore · revert</a><a class="" href="12_강사-코드-태그로-따라잡기.html">강사 코드 태그로 따라잡기 — clone · tag · switch --detach</a><a class="" href="13_정리와-체크리스트.html">정리와 체크리스트</a><a class="" href="14_실습문제와-힌트.html">실습문제와 힌트 — 기본 · 필수 · 도전</a></div><div class="md"><p class="chapter-name">1장. Git과 GitHub로 협업하기</p><h1>Pull Request와 GitHub Flow — 합쳐 달라는 요청서</h1><div class="lesson-meta"><span>준비</span><span><b>시간</b>1시간 30분</span><span><b>개념 지도</b>GitHub 화면 (원격 저장소)</span></div><h2>한 줄 요약</h2>
+<p><strong>Pull Request(PR)</strong>는 "내 브랜치를 <code>main</code>에 합쳐 주세요"라는 <strong>요청서</strong>입니다. 팀원이 코드를 읽고 의견을 단 뒤 승인하면 합칩니다. PR은 Git이 아니라 <strong>GitHub의 기능</strong>입니다.</p>
+<hr />
+<h2>1. 팀 작업 흐름: GitHub Flow 6단계</h2>
+<figure class="figure">
+<p><img alt="GitHub Flow 6단계: 브랜치, 커밋·푸시, PR, 리뷰 반영, 승인 후 머지, 브랜치 삭제" src="img/github_flow.svg" /></p>
+</figure>
+<p>이 과정의 모든 팀 프로젝트는 아래 순서로만 작업합니다. (<a href="https://docs.github.com/en/get-started/using-github/github-flow">GitHub Docs — GitHub flow</a>)</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>단계</th>
+<th>어디서</th>
+<th>명령 또는 버튼</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1. 브랜치 만들기</td>
+<td>Git Bash</td>
+<td><code>git switch -c feature/12-login</code></td>
+</tr>
+<tr>
+<td>2. 커밋하고 푸시</td>
+<td>Git Bash</td>
+<td><code>git add</code> → <code>git commit</code> → <code>git push -u origin feature/12-login</code></td>
+</tr>
+<tr>
+<td>3. PR 만들기</td>
+<td>GitHub</td>
+<td><strong>Compare &amp; pull request</strong> 버튼 (완성 전이면 <strong>Draft</strong>)</td>
+</tr>
+<tr>
+<td>4. 리뷰 의견 반영</td>
+<td>Git Bash</td>
+<td>고치고 다시 <code>commit</code> → <code>push</code> (PR이 자동 갱신)</td>
+</tr>
+<tr>
+<td>5. 승인 후 머지</td>
+<td>GitHub</td>
+<td>팀원 1명 <strong>Approve</strong> → <strong>Merge pull request</strong></td>
+</tr>
+<tr>
+<td>6. 브랜치 삭제</td>
+<td>GitHub + Git Bash</td>
+<td><strong>Delete branch</strong> → <code>git switch main</code> → <code>git pull</code></td>
+</tr>
+</tbody>
+</table></div>
+<div class="box core">
+<p><strong><code>main</code>에는 PR로만 합칩니다.</strong> 팀 저장소는 <code>main</code>에 직접 <code>push</code>하면 거절되도록 설정되어 있습니다(10절).</p>
+</div>
+<hr />
+<h2>2. 좋은 PR 쓰기</h2>
+<p>팀 저장소에는 PR 템플릿이 들어 있어서, PR을 만들면 아래 칸이 자동으로 나옵니다.</p>
+<pre><code class="language-text">## 무엇을 했나
+- 로그인 API(POST /api/login) 추가
+
+## 어떻게 확인했나
+- curl로 로그인 성공/실패 각각 확인
+
+## 리뷰어가 봐야 할 곳
+- AuthService.issueToken(): 로그인 성공 시 사용자 id로 토큰을 만들고 1시간 뒤 만료되게 한다.
+
+## 관련 이슈
+- closes #12
+</code></pre>
+<ul>
+<li>PR 하나에는 <strong>기능 하나</strong>만 담습니다. 리뷰하는 사람이 10분 안에 읽을 수 있는 크기가 좋습니다.</li>
+<li><code>closes #12</code>라고 쓰면 PR이 합쳐질 때 12번 Issue가 자동으로 닫힙니다.</li>
+</ul>
+<hr />
+<h2>3. 좋은 리뷰 하기</h2>
+<p>리뷰는 <strong>사람이 아니라 코드</strong>에 대해 씁니다. 아래 세 가지만 확인해도 충분합니다.</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>확인할 것</th>
+<th>리뷰 댓글 예시</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>돌아가는가</td>
+<td>"브랜치 받아서 실행해 봤고 로그인 성공 확인했습니다."</td>
+</tr>
+<tr>
+<td>읽히는가</td>
+<td>"<code>check()</code>보다 <code>isPasswordMatched()</code>가 뜻이 더 잘 보일 것 같아요."</td>
+</tr>
+<tr>
+<td>계층 구조를 지키는가</td>
+<td>"Controller에서 Repository를 직접 부르고 있어요. Service로 옮기면 어떨까요?"</td>
+</tr>
+</tbody>
+</table></div>
+<p>모두 괜찮으면 <strong>Approve</strong>, 고칠 게 있으면 <strong>Request changes</strong>를 누릅니다.</p>
+<hr />
+<h2>4. 이름 짓기 규칙</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>대상</th>
+<th>규칙</th>
+<th>예시</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>브랜치</td>
+<td>종류/이슈번호-내용</td>
+<td><code>feature/12-login</code>, <code>fix/15-404-error</code></td>
+</tr>
+<tr>
+<td>커밋 메시지</td>
+<td>종류: 한 일</td>
+<td><code>feat: 로그인 API 추가</code>, <code>fix: 없는 글 404 응답</code>, <code>docs: README 실행 방법</code></td>
+</tr>
+</tbody>
+</table></div>
+<p>커밋 메시지 앞의 <code>feat</code>, <code>fix</code>, <code>docs</code>는 공개 규약인 Conventional Commits의 형식입니다. (<a href="https://www.conventionalcommits.org/ko/v1.0.0/">conventionalcommits.org</a>)</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>종류</th>
+<th>뜻</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>feat</code></td>
+<td>새 기능</td>
+</tr>
+<tr>
+<td><code>fix</code></td>
+<td>버그 수정</td>
+</tr>
+<tr>
+<td><code>docs</code></td>
+<td>문서</td>
+</tr>
+<tr>
+<td><code>refactor</code></td>
+<td>동작은 같고 구조만 개선</td>
+</tr>
+<tr>
+<td><code>test</code></td>
+<td>테스트 추가·수정</td>
+</tr>
+<tr>
+<td><code>chore</code></td>
+<td>설정, 빌드 등 기타</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2>핵심 정리</h2>
+<ul>
+<li>PR은 "합쳐 주세요" 요청서다. GitHub 기능이다.</li>
+<li>브랜치 → 커밋·푸시 → PR → 리뷰 반영 → 승인 후 머지 → 브랜치 삭제.</li>
+<li>PR에는 무엇을 했는지, 어떻게 확인했는지, 리뷰어가 봐야 할 곳을 쓴다.</li>
+<li>브랜치는 <code>feature/12-login</code>, 커밋은 <code>feat: 로그인 API 추가</code>.</li>
+</ul></div></div><div class="pager"><a class="prv" href="08_따라하기-충돌-해결.html"><span class="lbl">← 이전 절</span>따라하기 — 충돌은 고장이 아니라 대화 요청</a><a class="nxt" href="10_GitHub-Organizations-우리-팀-저장소.html"><span class="lbl">다음 절 →</span>GitHub Organizations — 우리 과정의 팀 저장소</a></div><footer class="foot"><b>Fullstack Lab</b></footer></div><script src="../assets/app.js"></script></body></html>

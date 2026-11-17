@@ -1,0 +1,191 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>인터넷 · 브라우저 · 서버 · URL — 주소를 치면 일어나는 일 — 풀스택 개발 과정</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&display=swap">
+<link rel="stylesheet" href="../assets/style.css">
+</head><body data-prev="02_용어-정리.html" data-next="04_HTTP-요청과-응답.html">
+<div class="topbar"><a class="home" href="../index.html">풀스택 개발 과정</a><span class="ch">2장 · 웹의 동작 원리와 개발 도구</span><span class="meta">3 / 7</span><span class="nav-btns"><a class="btn" href="02_용어-정리.html">← 이전</a><a class="btn" href="../index.html">목차</a><a class="btn" href="04_HTTP-요청과-응답.html">다음 →</a></span><span class="brand">Fullstack Lab</span></div><div class="wrap"><div class="content"><div class="chip-nav"><b>2장 · 웹의 동작 원리와 개발 도구</b><a class="" href="01_이-장에서-배우는-것.html">웹은 어떻게 동작하나</a><a class="" href="02_용어-정리.html">용어 정리</a><a class="cur" href="03_인터넷-브라우저-서버-URL.html">인터넷 · 브라우저 · 서버 · URL — 주소를 치면 일어나는 일</a><a class="" href="04_HTTP-요청과-응답.html">HTTP 요청과 응답 — 상태 코드 맛보기</a><a class="" href="05_따라하기-VS-Code-기본-조작.html">따라하기 — VS Code 기본 조작과 첫 HTML 파일</a><a class="" href="06_정리와-체크리스트.html">정리와 체크리스트</a><a class="" href="07_실습문제와-힌트.html">실습문제와 힌트 — 기본 · 필수 · 도전</a></div><div class="md"><p class="chapter-name">2장. 웹의 동작 원리와 개발 도구</p><h1>인터넷 · 브라우저 · 서버 · URL — 주소를 치면 일어나는 일</h1><div class="lesson-meta"><span>1단계 핵심</span><span><b>시간</b>50분</span><span><b>개념 지도</b>① DNS · ④ 화면 그리기</span></div><h2>한 줄 요약</h2>
+<p>URL은 <strong>"어떤 규칙으로, 어느 서버의, 어떤 자원을"</strong> 달라는 주소입니다. 브라우저는 URL을 읽어 서버를 찾아가고, 받은 내용을 화면으로 그립니다.</p>
+<hr />
+<h2>1. 주소창에 Enter를 누르면</h2>
+<p><code>https://www.example.com</code>을 입력했을 때 일어나는 일입니다.</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>단계</th>
+<th>하는 일</th>
+<th>그림 번호</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1. URL 읽기</td>
+<td>브라우저가 스킴(<code>https</code>), 도메인(<code>www.example.com</code>), 경로(<code>/</code>)로 나눈다</td>
+<td>—</td>
+</tr>
+<tr>
+<td>2. IP 찾기</td>
+<td>DNS에 "<code>www.example.com</code>의 IP는?"을 묻는다</td>
+<td>①</td>
+</tr>
+<tr>
+<td>3. 연결 · 요청</td>
+<td>그 IP의 443번 포트에 연결하고 HTTP 요청을 보낸다</td>
+<td>②</td>
+</tr>
+<tr>
+<td>4. 응답 받기</td>
+<td>서버가 상태 코드와 HTML을 돌려준다</td>
+<td>③</td>
+</tr>
+<tr>
+<td>5. 화면 그리기</td>
+<td>브라우저가 HTML을 읽고, 필요한 CSS · JS · 이미지를 <strong>다시 요청</strong>해서 화면을 완성한다</td>
+<td>④</td>
+</tr>
+</tbody>
+</table></div>
+<div class="box core">
+<p><strong>페이지 하나에 요청은 여러 번입니다.</strong> HTML을 받은 뒤, 그 안에 적힌 CSS · JS · 이미지 파일을 하나씩 다시 요청합니다.</p>
+</div>
+<p>출처: <a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Getting_started/Web_standards/How_the_web_works">MDN — How the web works</a></p>
+<hr />
+<h2>2. URL 읽는 법</h2>
+<figure class="figure">
+<p><img alt="URL의 각 부분: 스킴, 도메인, 포트, 경로, 쿼리 문자열, 프래그먼트" src="img/url_parts.svg" /></p>
+</figure>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>부분</th>
+<th>예</th>
+<th>뜻</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>스킴 (scheme)</td>
+<td><code>https</code></td>
+<td>어떤 규칙(프로토콜)으로 통신할지</td>
+</tr>
+<tr>
+<td>도메인 (host)</td>
+<td><code>shop.example.com</code></td>
+<td>어느 서버에 갈지</td>
+</tr>
+<tr>
+<td>포트 (port)</td>
+<td><code>:443</code></td>
+<td>그 서버의 어느 프로그램에게 갈지. 기본값이면 생략</td>
+</tr>
+<tr>
+<td>경로 (path)</td>
+<td><code>/products</code></td>
+<td>서버 안의 어떤 자원인지</td>
+</tr>
+<tr>
+<td>쿼리 문자열 (query)</td>
+<td><code>?page=2</code></td>
+<td>추가 조건. <code>이름=값</code>을 <code>&amp;</code>로 이어 붙인다</td>
+</tr>
+<tr>
+<td>프래그먼트 (fragment)</td>
+<td><code>#top</code></td>
+<td>페이지 안의 위치. <strong>서버로 보내지 않는다</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p>출처: <a href="https://developer.mozilla.org/ko/docs/Learn_web_development/Howto/Web_mechanics/What_is_a_URL">MDN — URL이란?</a></p>
+<h3>예시로 읽어 보기</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>URL</th>
+<th>읽는 법</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>https://search.naver.com/search.naver?query=git</code></td>
+<td><code>search.naver.com</code> 서버의 <code>/search.naver</code>에게, 검색어(<code>query</code>)가 <code>git</code>인 결과를 달라</td>
+</tr>
+<tr>
+<td><code>http://localhost:8080/api/posts/3</code></td>
+<td><strong>내 PC</strong>의 8080번 포트(나중에 만들 Spring 서버)에게 3번 글을 달라</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<p>쿼리 문자열에 한글이 들어가면 주소창에서는 한글로 보여도 실제로는 <code>%EA%B9%83</code>처럼 바뀌어 전송됩니다. 이것을 <strong>URL 인코딩</strong>이라고 합니다. 주소를 복사했을 때 <code>%</code>가 가득한 이유입니다.</p>
+</blockquote>
+<hr />
+<h2>3. 브라우저가 받는 세 가지 파일</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>파일</th>
+<th>역할</th>
+<th>비유</th>
+<th>배우는 장</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>HTML</td>
+<td>내용과 구조</td>
+<td>건물의 기둥과 방 배치</td>
+<td>3장</td>
+</tr>
+<tr>
+<td>CSS</td>
+<td>모양과 배치</td>
+<td>벽지, 가구 배치</td>
+<td>3장</td>
+</tr>
+<tr>
+<td>JavaScript</td>
+<td>동작</td>
+<td>전기, 자동문</td>
+<td>4~7장</td>
+</tr>
+</tbody>
+</table></div>
+<p>브라우저는 서버에서 받은 이 세 가지를 합쳐 화면을 그립니다. 서버가 보내는 것은 <strong>글자로 된 파일</strong>이고, 그것을 그림으로 바꾸는 것은 <strong>브라우저의 일</strong>입니다.</p>
+<hr />
+<h2>4. 정적 페이지와 동적 페이지</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>구분</th>
+<th>정적 (static)</th>
+<th>동적 (dynamic)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>서버가 하는 일</td>
+<td>저장된 파일을 <strong>그대로</strong> 보낸다</td>
+<td>요청마다 <strong>새로 만들어</strong> 보낸다</td>
+</tr>
+<tr>
+<td>예</td>
+<td>회사 소개 페이지, 이 교안 사이트</td>
+<td>내 장바구니, 검색 결과, 게시판 목록</td>
+</tr>
+<tr>
+<td>이 과정에서</td>
+<td>3~7장에서 만드는 HTML 파일</td>
+<td>9장 Node.js, 10장 Spring</td>
+</tr>
+</tbody>
+</table></div>
+<p>검색 결과는 검색어마다 다르므로 미리 파일로 만들어 둘 수 없습니다. 그래서 서버가 DB를 조회해 그때그때 만듭니다. 이 과정의 후반부는 대부분 이 <strong>동적 서버</strong>를 만드는 일입니다.</p>
+<hr />
+<h2>핵심 정리</h2>
+<ul>
+<li>URL = 스킴 + 도메인 + (포트) + 경로 + (쿼리) + (프래그먼트).</li>
+<li>브라우저는 DNS로 IP를 찾고, 서버에 요청하고, 받은 HTML · CSS · JS로 화면을 그린다.</li>
+<li>페이지 하나를 열 때 요청은 여러 번 일어난다.</li>
+<li><code>localhost</code>는 내 PC, 포트 번호로 프로그램을 구분한다.</li>
+</ul></div></div><div class="pager"><a class="prv" href="02_용어-정리.html"><span class="lbl">← 이전 절</span>용어 정리</a><a class="nxt" href="04_HTTP-요청과-응답.html"><span class="lbl">다음 절 →</span>HTTP 요청과 응답 — 상태 코드 맛보기</a></div><footer class="foot"><b>Fullstack Lab</b></footer></div><script src="../assets/app.js"></script></body></html>

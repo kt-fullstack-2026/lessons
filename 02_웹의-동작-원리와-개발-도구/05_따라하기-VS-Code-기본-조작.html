@@ -1,0 +1,111 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>따라하기 — VS Code 기본 조작과 첫 HTML 파일 — 풀스택 개발 과정</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&display=swap">
+<link rel="stylesheet" href="../assets/style.css">
+</head><body data-prev="04_HTTP-요청과-응답.html" data-next="06_정리와-체크리스트.html">
+<div class="topbar"><a class="home" href="../index.html">풀스택 개발 과정</a><span class="ch">2장 · 웹의 동작 원리와 개발 도구</span><span class="meta">5 / 7</span><span class="nav-btns"><a class="btn" href="04_HTTP-요청과-응답.html">← 이전</a><a class="btn" href="../index.html">목차</a><a class="btn" href="06_정리와-체크리스트.html">다음 →</a></span><span class="brand">Fullstack Lab</span></div><div class="wrap"><div class="content"><div class="chip-nav"><b>2장 · 웹의 동작 원리와 개발 도구</b><a class="" href="01_이-장에서-배우는-것.html">웹은 어떻게 동작하나</a><a class="" href="02_용어-정리.html">용어 정리</a><a class="" href="03_인터넷-브라우저-서버-URL.html">인터넷 · 브라우저 · 서버 · URL — 주소를 치면 일어나는 일</a><a class="" href="04_HTTP-요청과-응답.html">HTTP 요청과 응답 — 상태 코드 맛보기</a><a class="cur" href="05_따라하기-VS-Code-기본-조작.html">따라하기 — VS Code 기본 조작과 첫 HTML 파일</a><a class="" href="06_정리와-체크리스트.html">정리와 체크리스트</a><a class="" href="07_실습문제와-힌트.html">실습문제와 힌트 — 기본 · 필수 · 도전</a></div><div class="md"><p class="chapter-name">2장. 웹의 동작 원리와 개발 도구</p><h1>따라하기 — VS Code 기본 조작과 첫 HTML 파일</h1><div class="lesson-meta"><span>1단계 핵심</span><span><b>시간</b>1시간</span><span><b>개념 지도</b>VS Code — HTML 파일을 만드는 에디터</span></div><h2>목표</h2>
+<p>VS Code로 HTML 파일을 하나 만들고 브라우저로 엽니다. 파일을 고치고 저장한 뒤 새로고침해서 바뀐 화면을 확인합니다.</p>
+<hr />
+<h2>1. 자주 쓰는 단축키</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>단축키</th>
+<th>하는 일</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Ctrl + S</code></td>
+<td>저장</td>
+</tr>
+<tr>
+<td><code>Ctrl + P</code></td>
+<td>파일 이름으로 빨리 열기</td>
+</tr>
+<tr>
+<td><code>Ctrl + Shift + P</code></td>
+<td>명령 팔레트 (모든 기능 검색)</td>
+</tr>
+<tr>
+<td><code>Shift + Alt + F</code></td>
+<td>코드 정렬(포맷)</td>
+</tr>
+<tr>
+<td><code>Ctrl + /</code></td>
+<td>주석 넣기 · 빼기</td>
+</tr>
+<tr>
+<td><code>Alt + ↑ / ↓</code></td>
+<td>지금 줄을 위 · 아래로 옮기기</td>
+</tr>
+</tbody>
+</table></div>
+<p>출처: <a href="https://code.visualstudio.com/shortcuts/keyboard-shortcuts-windows.pdf">VS Code 단축키 (Windows, PDF)</a></p>
+<hr />
+<h2>2. 첫 HTML 파일 만들기</h2>
+<p>Windows 탐색기에서 <code>D:\workspace\web-basic</code> 폴더를 만들고, VS Code 메뉴 <strong>File → Open Folder</strong>로 이 폴더를 엽니다. 왼쪽 탐색기의 <strong>새 파일</strong> 버튼으로 <code>index.html</code>을 만들고, 편집기에서 <code>!</code>를 입력한 뒤 <code>Enter</code>(또는 <code>Tab</code>)를 누릅니다. HTML 기본 틀이 한 번에 채워집니다. 이 기능을 <strong>Emmet</strong>이라고 합니다.</p>
+<p><code>lang="en"</code>을 <code>lang="ko"</code>로 바꾸고, <code>&lt;title&gt;</code>과 <code>&lt;body&gt;</code> 안을 아래처럼 고칩니다.</p>
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;ko&quot;&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+    &lt;title&gt;나의 첫 웹 페이지&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;안녕하세요, 나학생입니다&lt;/h1&gt;
+    &lt;p&gt;풀스택 개발자가 되려고 공부하고 있습니다.&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p><code>Ctrl + S</code>로 저장합니다. 태그 하나하나의 뜻은 3장에서 배웁니다. 지금은 <strong><code>&lt;h1&gt;</code>이 큰 제목, <code>&lt;p&gt;</code>가 문단</strong>이라는 것만 알면 됩니다.</p>
+<hr />
+<h2>3. 브라우저로 열기</h2>
+<p>VS Code 탐색기에서 <code>index.html</code>을 오른쪽 클릭 → <strong>Reveal in File Explorer</strong>(파일 탐색기에 표시)를 누릅니다. Windows 탐색기가 열리면 <code>index.html</code>을 <strong>더블클릭</strong>합니다. 기본 브라우저에 페이지가 열립니다.</p>
+<p>주소창에는 아래와 비슷한 주소가 보입니다.</p>
+<pre><code class="language-text">file:///D:/workspace/web-basic/index.html
+</code></pre>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>부분</th>
+<th>뜻</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>file</code></td>
+<td>스킴. 인터넷이 아니라 <strong>내 PC의 파일</strong>을 직접 읽었다</td>
+</tr>
+<tr>
+<td><code>/D:/workspace/web-basic/index.html</code></td>
+<td>파일의 위치(경로)</td>
+</tr>
+</tbody>
+</table></div>
+<div class="box core">
+<p><strong><code>file://</code>로 연 페이지는 서버를 거치지 않습니다.</strong> 브라우저가 내 PC의 파일을 직접 읽었으므로, 1절 그림의 요청 · 응답이 없습니다. HTML · CSS 연습에는 이것으로 충분합니다. 서버와 주고받는 실습은 9장에서 Node.js 서버를 직접 만들면서 합니다.</p>
+</div>
+<hr />
+<h2>4. 고치고, 저장하고, 새로고침</h2>
+<p>VS Code와 브라우저를 나란히 놓습니다. <code>&lt;p&gt;</code> 아래에 한 줄을 추가합니다.</p>
+<pre><code class="language-html">    &lt;p&gt;오늘 배운 것: 요청과 응답&lt;/p&gt;
+</code></pre>
+<ol>
+<li>VS Code에서 <code>Ctrl + S</code>로 저장합니다.</li>
+<li>브라우저에서 <code>F5</code>로 새로고침합니다.</li>
+</ol>
+<p>새 줄이 보이면 성공입니다.</p>
+<blockquote>
+<p>화면이 안 바뀌면 ① 저장했는지(탭 이름 옆에 ● 표시가 있으면 저장 안 됨) ② 새로고침했는지 확인합니다. 저장을 자주 잊는다면 VS Code 메뉴 <strong>File → Auto Save</strong>를 켭니다.</p>
+</blockquote>
+<hr />
+<h2>핵심 정리</h2>
+<ul>
+<li><code>!</code> + <code>Enter</code>로 HTML 기본 틀을 만든다.</li>
+<li>파일을 더블클릭하면 브라우저가 <code>file://</code>로 연다.</li>
+<li>고친 뒤에는 저장(<code>Ctrl + S</code>) → 새로고침(<code>F5</code>).</li>
+</ul></div></div><div class="pager"><a class="prv" href="04_HTTP-요청과-응답.html"><span class="lbl">← 이전 절</span>HTTP 요청과 응답 — 상태 코드 맛보기</a><a class="nxt" href="06_정리와-체크리스트.html"><span class="lbl">다음 절 →</span>정리와 체크리스트</a></div><footer class="foot"><b>Fullstack Lab</b></footer></div><script src="../assets/app.js"></script></body></html>

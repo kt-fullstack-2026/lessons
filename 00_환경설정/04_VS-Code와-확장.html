@@ -1,0 +1,157 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VS Code와 확장 설치 — 풀스택 개발 과정</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&display=swap">
+<link rel="stylesheet" href="../assets/style.css">
+</head><body data-prev="03_설치-전-확인.html" data-next="05_Node.js-24-LTS-설치와-확인.html">
+<div class="topbar"><a class="home" href="../index.html">풀스택 개발 과정</a><span class="ch">0장 · 환경설정 — 과정 전체 개발 도구 설치</span><span class="meta">4 / 9</span><span class="nav-btns"><a class="btn" href="03_설치-전-확인.html">← 이전</a><a class="btn" href="../index.html">목차</a><a class="btn" href="05_Node.js-24-LTS-설치와-확인.html">다음 →</a></span><span class="brand">Fullstack Lab</span></div><div class="wrap"><div class="content"><div class="chip-nav"><b>0장 · 환경설정 — 과정 전체 개발 도구 설치</b><a class="" href="01_이-장에서-배우는-것.html">도구는 한 번에 다 설치하지 않고, 쓰기 직전에 하나씩</a><a class="" href="02_용어-정리.html">용어 정리</a><a class="" href="03_설치-전-확인.html">설치 전 확인 — 확장자, 작업 폴더</a><a class="cur" href="04_VS-Code와-확장.html">VS Code와 확장 설치</a><a class="" href="05_Node.js-24-LTS-설치와-확인.html">Node.js 24 LTS 설치와 node -v · npm -v 확인</a><a class="" href="06_JDK-21과-IntelliJ-IDEA-설치.html">JDK 21(Eclipse Temurin)과 IntelliJ IDEA 설치</a><a class="" href="07_Docker-Desktop-설치와-hello-world.html">Docker Desktop(WSL 2) 설치와 docker run hello-world 확인</a><a class="" href="08_PostgreSQL-17-설치와-pgAdmin.html">PostgreSQL 17 설치판과 pgAdmin 4</a><a class="" href="09_정리와-실습-설치-확인-체크리스트.html">정리와 실습 — 설치 확인 체크리스트</a></div><div class="md"><p class="chapter-name">0장. 환경설정 — 과정 전체 개발 도구 설치</p><h1>VS Code와 확장 설치</h1><div class="lesson-meta"><span>준비</span><span><b>시간</b>35분</span><span><b>개념 지도</b>04 VS Code</span></div><h2>한 줄 요약</h2>
+<p><strong>VS Code</strong>는 2장부터 HTML · CSS · JavaScript · React · Node 코드를 쓰는 편집기입니다. 설치 프로그램으로 설치하고, 처음 한 번 <strong>확장</strong> 몇 개를 더합니다. 이 절에서 설치하는 확장은 코드를 가지런히 정리해 주는 <strong>Prettier</strong>, 실수를 미리 알려 주는 <strong>ESLint</strong>, 그리고 온라인 수업에서 같은 코드를 함께 보고 고치는 <strong>Live Share</strong>입니다. 요청을 보내 보는 <strong>REST Client</strong>는 9장 07절에서 설치합니다.</p>
+<blockquote>
+<p><strong>설치 시점: 2장 첫 수업 전.</strong></p>
+</blockquote>
+<hr />
+<h2>1. VS Code 설치</h2>
+<ol>
+<li><a href="https://code.visualstudio.com/">code.visualstudio.com</a>에서 <strong>Download for Windows</strong>를 누릅니다. <code>VSCodeUserSetup-x64-….exe</code>가 받아집니다.</li>
+<li>받은 파일을 더블클릭합니다. 사용권 계약에 <strong>동의합니다</strong>를 고르고 <strong>다음</strong>을 누릅니다.</li>
+<li>설치 위치와 시작 메뉴 폴더는 기본값 그대로 <strong>다음</strong>을 누릅니다.</li>
+<li><strong>추가 작업 선택</strong> 화면에서 아래처럼 체크하고 <strong>다음 → 설치</strong>를 누릅니다.</li>
+</ol>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>칸 (영어 화면이면 괄호 안)</th>
+<th>고를 것</th>
+<th>이유</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>바탕 화면에 바로 가기 만들기 (Create a desktop icon)</td>
+<td>원하는 대로</td>
+<td>—</td>
+</tr>
+<tr>
+<td>'Code(으)로 열기' 작업을 Windows 탐색기 <strong>파일</strong>의 상황에 맞는 메뉴에 추가 (Add "Open with Code" action to Windows Explorer file context menu)</td>
+<td><strong>체크</strong></td>
+<td>파일을 오른쪽 클릭해 바로 연다</td>
+</tr>
+<tr>
+<td>'Code(으)로 열기' 작업을 Windows 탐색기 <strong>디렉터리</strong>의 상황에 맞는 메뉴에 추가 (… directory context menu)</td>
+<td><strong>체크</strong></td>
+<td>폴더를 오른쪽 클릭해 프로젝트째로 연다</td>
+</tr>
+<tr>
+<td>지원되는 파일 형식에 대한 편집기로 Code를 등록합니다 (Register Code as an editor for supported file types)</td>
+<td>체크</td>
+<td>—</td>
+</tr>
+<tr>
+<td>PATH에 추가 (Add to PATH)</td>
+<td><strong>체크 (기본값)</strong></td>
+<td>터미널에서 <code>code</code> 명령을 쓸 수 있다</td>
+</tr>
+</tbody>
+</table></div>
+<p>마지막 화면에서 <strong>Visual Studio Code 실행</strong>을 체크한 채 <strong>종료</strong>를 누르면 VS Code가 열립니다.</p>
+<p>출처: <a href="https://code.visualstudio.com/docs/setup/windows">VS Code 문서 — Visual Studio Code on Windows</a></p>
+<div class="box impl">
+<p><strong>User 설치와 System 설치</strong>: 파일 이름에 <code>User</code>가 들어 있는 <strong>User 설치</strong>(내 계정에만 설치, 관리자 권한이 덜 필요)를 씁니다. VS Code 문서도 대부분의 사람에게 이것을 권합니다. 업데이트도 VS Code가 알아서 합니다.</p>
+</div>
+<hr />
+<h2>2. 확장 설치</h2>
+<p>VS Code 왼쪽 세로 막대의 <strong>Extensions</strong>(네모 네 개 모양, <code>Ctrl + Shift + X</code>)를 누르면 검색 칸이 나옵니다. 이름을 검색하고, <strong>만든 사람</strong>을 확인한 뒤 <strong>Install</strong>을 누릅니다. 비슷한 이름의 다른 확장이 많으므로 만든 사람과 확장 ID를 꼭 봅니다.</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>확장</th>
+<th>만든 사람 · 확장 ID</th>
+<th>하는 일</th>
+<th>처음 쓰는 곳</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Prettier - Code formatter</strong></td>
+<td>Prettier · <code>esbenp.prettier-vscode</code></td>
+<td>저장할 때 들여쓰기 · 따옴표 · 줄바꿈을 한 모양으로 맞춘다</td>
+<td>2장부터</td>
+</tr>
+<tr>
+<td><strong>ESLint</strong></td>
+<td>Microsoft · <code>dbaeumer.vscode-eslint</code></td>
+<td>JavaScript 코드의 실수(안 쓰는 변수, <code>==</code> 등)에 물결 밑줄을 긋는다. 프로젝트에 ESLint 설정이 있을 때 돈다</td>
+<td>8장 Vite 프로젝트부터</td>
+</tr>
+<tr>
+<td><strong>Live Share</strong></td>
+<td>Microsoft · <code>ms-vsliveshare.vsliveshare</code></td>
+<td>내 VS Code 화면을 다른 사람과 실시간으로 공유하고, 같은 파일을 함께 고친다. 온라인 수업에서 강사가 학생 코드를 보거나 학생이 강사의 코드 세션에 들어갈 때 쓴다. 처음 쓸 때 GitHub 계정(1장 03절)으로 로그인한다</td>
+<td>강사가 안내하는 수업 때. 지금은 설치만 한다</td>
+</tr>
+<tr>
+<td>REST Client</td>
+<td>Huachao Mao · <code>humao.rest-client</code></td>
+<td><code>.http</code> 파일로 요청을 보낸다</td>
+<td><strong>9장 07절에서 설치</strong>한다. 미리 설치해도 된다</td>
+</tr>
+</tbody>
+</table></div>
+<p>출처: <a href="https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode">VS Code Marketplace — Prettier</a>, <a href="https://marketplace.visualstudio.com/items?itemName=ms-vsliveshare.vsliveshare">VS Code Marketplace — Live Share</a>, <a href="https://code.visualstudio.com/learn/collaboration/live-share">VS Code 문서 — Live Share</a></p>
+<hr />
+<h2>3. Prettier를 기본 정리 도구로 정하기</h2>
+<p>Prettier를 설치하기만 하면 쓰이지 않습니다. "정리할 때 Prettier를 써라"와 "저장할 때마다 정리하라"를 설정합니다.</p>
+<ol>
+<li>메뉴 <strong>File → Preferences → Settings</strong>(<code>Ctrl + ,</code>)를 엽니다.</li>
+<li>위 검색 칸에 <code>default formatter</code>를 칩니다. <strong>Editor: Default Formatter</strong>에서 <strong>Prettier - Code formatter</strong>를 고릅니다.</li>
+<li>검색 칸에 <code>format on save</code>를 칩니다. <strong>Editor: Format On Save</strong>를 체크합니다.</li>
+</ol>
+<p>이제 HTML · CSS · JS 파일을 <code>Ctrl + S</code>로 저장할 때마다 Prettier가 모양을 맞춥니다. 2장 05절의 <code>Shift + Alt + F</code>(코드 정렬)도 Prettier로 정리합니다.</p>
+<div class="box impl">
+<p><strong>저장했더니 코드 모양이 바뀌었다면 정상입니다.</strong> 들여쓰기가 2칸으로 바뀌거나, 작은따옴표가 큰따옴표로 바뀌는 것은 Prettier가 정리한 것입니다. 교안의 코드도 대부분 같은 모양(큰따옴표, 문장 끝 <code>;</code>)입니다. 팀 프로젝트에서는 모두 같은 정리 도구를 쓰면 Git에서 "모양만 바뀐 줄"이 덜 생깁니다(1장 충돌).</p>
+</div>
+<hr />
+<h2>4. 확인</h2>
+<ol>
+<li>파일 탐색기에서 <code>D:\workspace</code> 폴더를 오른쪽 클릭 → <strong>Code(으)로 열기</strong>(Open with Code)를 고릅니다. 처음이면 "이 폴더의 작성자를 신뢰합니까?"가 나오는데, 내가 만든 폴더이므로 <strong>Yes, I trust the authors</strong>를 누릅니다.</li>
+<li>메뉴 <strong>Terminal → New Terminal</strong>(<code>Ctrl + `</code>)을 엽니다. 아래쪽에 <code>PS D:\workspace&gt;</code>가 보이면 됩니다. 이것이 <strong>VS Code 터미널</strong>(PowerShell)입니다. 05절에서 여기에 첫 명령을 칩니다.</li>
+<li>왼쪽 Extensions에서 <strong>Installed</strong>를 펼쳐 Prettier · ESLint · Live Share가 보이면 끝입니다.</li>
+</ol>
+<hr />
+<h2>5. Live Share 세션에 참여하기 — 온라인 수업 때</h2>
+<p>강사가 채팅으로 <strong>세션 링크</strong>(<code>https://prod.liveshare.vsengsaas.visualstudio.com/join?...</code>)를 보내면 아래 세 단계로 들어갑니다. 지금 해 볼 필요는 없고, 첫 온라인 수업 때 이 절을 펴 놓고 따라 합니다.</p>
+<ol>
+<li>VS Code 왼쪽 세로 막대의 <strong>Live Share</strong> 아이콘을 누르고 <strong>Session Details</strong>에서 <strong>Join Collaboration session</strong>을 고릅니다. (또는 <code>Ctrl + Shift + P</code>를 누르고 <code>Live Share: Join Collaboration Session</code>을 칩니다.)</li>
+<li>위에 나온 입력 칸에 강사가 보낸 링크를 <strong>붙여 넣고 <code>Enter</code></strong>를 누릅니다.</li>
+<li>처음이면 <strong>GitHub 계정(1장 03절)으로 로그인</strong>하라는 브라우저 창이 열립니다. 로그인하고 VS Code로 돌아옵니다. 강사 화면의 파일이 내 VS Code에 열리면 성공입니다.</li>
+</ol>
+<p>안 될 때</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>증상</th>
+<th>해결</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>로그인 창이 뜨지 않는다</td>
+<td>VS Code를 완전히 껐다 켜고 1부터 다시 한다</td>
+</tr>
+<tr>
+<td>"링크가 만료되었다"는 안내가 나온다</td>
+<td>세션을 연 사람이 다시 열어야 한다. 새 링크가 오면 2부터 다시 한다</td>
+</tr>
+</tbody>
+</table></div>
+<p>출처: <a href="https://code.visualstudio.com/learn/collaboration/live-share">VS Code 문서 — Live Share</a></p>
+<hr />
+<h2>핵심 정리</h2>
+<ul>
+<li>VS Code는 기본 User 설치로 설치하고, "Code(으)로 열기" 두 칸과 PATH 추가를 체크한다.</li>
+<li>확장은 <strong>만든 사람 · 확장 ID</strong>를 확인하고 설치한다. Prettier · ESLint · Live Share는 지금, REST Client는 9장에서.</li>
+<li>Prettier는 Default Formatter로 고르고 Format On Save를 켠다.</li>
+<li>Live Share는 온라인 수업에서 코드를 함께 보고 고칠 때 쓴다. 강사가 보낸 링크를 <strong>Join Collaboration session</strong>에 붙여 넣고, 처음 쓸 때 GitHub 계정으로 로그인한다.</li>
+<li>폴더를 오른쪽 클릭 → Code(으)로 열기, <code>Ctrl + `</code>로 터미널을 연다.</li>
+</ul></div></div><div class="pager"><a class="prv" href="03_설치-전-확인.html"><span class="lbl">← 이전 절</span>설치 전 확인 — 확장자, 작업 폴더</a><a class="nxt" href="05_Node.js-24-LTS-설치와-확인.html"><span class="lbl">다음 절 →</span>Node.js 24 LTS 설치와 node -v · npm -v 확인</a></div><footer class="foot"><b>Fullstack Lab</b></footer></div><script src="../assets/app.js"></script></body></html>

@@ -1,0 +1,215 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>용어 정리 — 풀스택 개발 과정</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&display=swap">
+<link rel="stylesheet" href="../assets/style.css">
+</head><body data-prev="01_이-장에서-배우는-것.html" data-next="03_인터넷-브라우저-서버-URL.html">
+<div class="topbar"><a class="home" href="../index.html">풀스택 개발 과정</a><span class="ch">2장 · 웹의 동작 원리와 개발 도구</span><span class="meta">2 / 7</span><span class="nav-btns"><a class="btn" href="01_이-장에서-배우는-것.html">← 이전</a><a class="btn" href="../index.html">목차</a><a class="btn" href="03_인터넷-브라우저-서버-URL.html">다음 →</a></span><span class="brand">Fullstack Lab</span></div><div class="wrap"><div class="content"><div class="chip-nav"><b>2장 · 웹의 동작 원리와 개발 도구</b><a class="" href="01_이-장에서-배우는-것.html">웹은 어떻게 동작하나</a><a class="cur" href="02_용어-정리.html">용어 정리</a><a class="" href="03_인터넷-브라우저-서버-URL.html">인터넷 · 브라우저 · 서버 · URL — 주소를 치면 일어나는 일</a><a class="" href="04_HTTP-요청과-응답.html">HTTP 요청과 응답 — 상태 코드 맛보기</a><a class="" href="05_따라하기-VS-Code-기본-조작.html">따라하기 — VS Code 기본 조작과 첫 HTML 파일</a><a class="" href="06_정리와-체크리스트.html">정리와 체크리스트</a><a class="" href="07_실습문제와-힌트.html">실습문제와 힌트 — 기본 · 필수 · 도전</a></div><div class="md"><p class="chapter-name">2장. 웹의 동작 원리와 개발 도구</p><h1>용어 정리</h1><div class="lesson-meta"><span>1단계 핵심</span><span><b>시간</b>40분</span><span><b>개념 지도</b>전체 흐름</span></div><h2>1. 클라이언트와 서버</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>용어</th>
+<th>뜻</th>
+<th>예</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>클라이언트</strong> (client)</td>
+<td>서비스를 <strong>요청하는</strong> 쪽</td>
+<td>브라우저, 스마트폰 앱</td>
+</tr>
+<tr>
+<td><strong>서버</strong> (server)</td>
+<td>요청을 받아 <strong>처리하고 응답하는</strong> 쪽</td>
+<td>네이버 서버, 나중에 만들 Spring 서버</td>
+</tr>
+<tr>
+<td><strong>브라우저</strong> (browser)</td>
+<td>웹 문서를 요청하고, 받은 내용을 화면으로 그리는 프로그램</td>
+<td>Chrome, Edge, Whale, Safari</td>
+</tr>
+</tbody>
+</table></div>
+<p>client는 "손님", serve는 "음식을 내다, 시중들다"라는 뜻입니다. 같은 컴퓨터가 상황에 따라 클라이언트도 되고 서버도 됩니다. 9장부터는 내 PC 하나가 둘 다 합니다.</p>
+<hr />
+<h2>2. IP 주소와 DNS</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>용어</th>
+<th>뜻</th>
+<th>예</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>IP 주소</strong></td>
+<td>인터넷에 연결된 기기의 <strong>숫자 주소</strong></td>
+<td><code>203.0.113.10</code> (예시용 주소)</td>
+</tr>
+<tr>
+<td><strong>도메인</strong> (domain)</td>
+<td>사람이 기억하기 쉽게 붙인 <strong>이름 주소</strong></td>
+<td><code>naver.com</code>, <code>example.com</code></td>
+</tr>
+<tr>
+<td><strong>DNS</strong> (Domain Name System)</td>
+<td>도메인을 IP 주소로 바꿔 주는 시스템. <strong>인터넷의 주소록</strong></td>
+<td><code>example.com</code> → IP 주소</td>
+</tr>
+<tr>
+<td><strong>localhost</strong></td>
+<td>"<strong>이 컴퓨터 자신</strong>"을 가리키는 이름. IP로는 <code>127.0.0.1</code></td>
+<td>9장부터 만드는 내 서버</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<p>IP 주소는 바뀔 수 있습니다. 그래서 사람은 도메인을 쓰고, 컴퓨터는 접속할 때마다 DNS로 IP를 찾습니다. 위 표의 IP는 예시입니다.</p>
+</blockquote>
+<hr />
+<h2>3. URL과 포트</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>용어</th>
+<th>뜻</th>
+<th>자세히</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>URL</strong> (Uniform Resource Locator)</td>
+<td>인터넷에 있는 자원(문서, 이미지, 데이터)의 <strong>전체 주소</strong></td>
+<td>3절</td>
+</tr>
+<tr>
+<td><strong>포트</strong> (port)</td>
+<td>한 서버 안에서 <strong>어느 프로그램에게</strong> 갈지 정하는 번호. 건물 주소가 IP라면 포트는 <strong>호수</strong>입니다</td>
+<td>3절</td>
+</tr>
+<tr>
+<td><strong>경로</strong> (path)</td>
+<td>서버 안에서 <strong>어떤 자원</strong>인지 가리키는 부분. <code>/products</code></td>
+<td>3절</td>
+</tr>
+</tbody>
+</table></div>
+<p>자주 보는 포트 번호입니다.</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>포트</th>
+<th>쓰는 곳</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>80</td>
+<td>HTTP 기본</td>
+</tr>
+<tr>
+<td>443</td>
+<td>HTTPS 기본</td>
+</tr>
+<tr>
+<td>5173</td>
+<td>Vite 개발 서버 기본 (8장 React)</td>
+</tr>
+<tr>
+<td>8080</td>
+<td>Spring Boot 기본 (10장)</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2>4. HTTP에 관한 말</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>용어</th>
+<th>뜻</th>
+<th>자세히</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>HTTP</strong> (HyperText Transfer Protocol)</td>
+<td>브라우저와 서버가 요청과 응답을 주고받는 <strong>약속(규칙)</strong></td>
+<td>4절</td>
+</tr>
+<tr>
+<td><strong>HTTPS</strong></td>
+<td>HTTP에 <strong>암호화</strong>를 더한 것. S는 Secure입니다</td>
+<td>4절</td>
+</tr>
+<tr>
+<td><strong>프로토콜</strong> (protocol)</td>
+<td>컴퓨터끼리 통신할 때 지키는 약속</td>
+<td>4절</td>
+</tr>
+<tr>
+<td><strong>요청</strong> (request)</td>
+<td>클라이언트가 서버에 보내는 메시지</td>
+<td>4절</td>
+</tr>
+<tr>
+<td><strong>응답</strong> (response)</td>
+<td>서버가 클라이언트에 돌려주는 메시지</td>
+<td>4절</td>
+</tr>
+<tr>
+<td><strong>메서드</strong> (method)</td>
+<td>요청이 <strong>무엇을 하려는지</strong>. <code>GET</code>(가져오기), <code>POST</code>(새로 만들기) 등</td>
+<td>4절</td>
+</tr>
+<tr>
+<td><strong>상태 코드</strong> (status code)</td>
+<td>응답의 <strong>결과를 알리는 세 자리 숫자</strong>. <code>200</code>(성공), <code>404</code>(없음), <code>500</code>(서버 오류)</td>
+<td>4절</td>
+</tr>
+<tr>
+<td><strong>헤더</strong> (header)</td>
+<td>요청 · 응답에 붙는 <strong>부가 정보</strong>. 내용 종류, 길이 등</td>
+<td>4절</td>
+</tr>
+<tr>
+<td><strong>본문</strong> (body)</td>
+<td>실제로 보내는 내용. HTML, JSON 등</td>
+<td>4절</td>
+</tr>
+</tbody>
+</table></div>
+<p>HyperText는 <strong>링크로 다른 문서와 연결된 글</strong>이라는 뜻입니다. 그래서 웹 문서를 만드는 언어 이름이 HTML(HyperText Markup Language)입니다.</p>
+<hr />
+<h2>5. 도구에 관한 말</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>용어</th>
+<th>뜻</th>
+<th>자세히</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>에디터</strong> (editor)</td>
+<td>코드를 쓰는 프로그램. 이 과정은 웹 쪽은 <strong>VS Code</strong>를 씁니다</td>
+<td>5절</td>
+</tr>
+<tr>
+<td><strong>확장</strong> (extension)</td>
+<td>VS Code에 기능을 더하는 추가 프로그램</td>
+<td>5절</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2>핵심 정리</h2>
+<ul>
+<li>클라이언트는 요청하고, 서버는 응답한다.</li>
+<li>도메인은 DNS를 통해 IP 주소로 바뀐다. <code>localhost</code>는 내 PC 자신이다.</li>
+<li>HTTP는 요청과 응답의 약속이고, 결과는 상태 코드로 알린다.</li>
+</ul></div></div><div class="pager"><a class="prv" href="01_이-장에서-배우는-것.html"><span class="lbl">← 이전 절</span>웹은 어떻게 동작하나</a><a class="nxt" href="03_인터넷-브라우저-서버-URL.html"><span class="lbl">다음 절 →</span>인터넷 · 브라우저 · 서버 · URL — 주소를 치면 일어나는 일</a></div><footer class="foot"><b>Fullstack Lab</b></footer></div><script src="../assets/app.js"></script></body></html>

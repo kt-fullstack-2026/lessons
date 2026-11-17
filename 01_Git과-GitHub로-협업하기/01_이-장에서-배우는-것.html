@@ -1,0 +1,63 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Git과 GitHub는 왜 첫 장인가 — 풀스택 개발 과정</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&display=swap">
+<link rel="stylesheet" href="../assets/style.css">
+</head><body data-prev="../00_환경설정/09_정리와-실습-설치-확인-체크리스트.html" data-next="02_용어-정리.html">
+<div class="topbar"><a class="home" href="../index.html">풀스택 개발 과정</a><span class="ch">1장 · Git과 GitHub로 협업하기</span><span class="meta">1 / 14</span><span class="nav-btns"><a class="btn" href="../00_환경설정/09_정리와-실습-설치-확인-체크리스트.html">← 이전</a><a class="btn" href="../index.html">목차</a><a class="btn" href="02_용어-정리.html">다음 →</a></span><span class="brand">Fullstack Lab</span></div><div class="wrap"><div class="content"><div class="chip-nav"><b>1장 · Git과 GitHub로 협업하기</b><a class="cur" href="01_이-장에서-배우는-것.html">Git과 GitHub는 왜 첫 장인가</a><a class="" href="02_용어-정리.html">용어 정리 — 이 장에서 처음 만나는 말</a><a class="" href="03_설치와-첫-설정.html">설치와 첫 설정 — Git Bash와 GitHub 계정</a><a class="" href="04_커밋은-사진-한-장-세-영역.html">커밋은 사진 한 장 — 작업 폴더 · 스테이징 · 저장소</a><a class="" href="05_따라하기-첫-저장소와-첫-커밋.html">따라하기 — 첫 저장소와 첫 커밋</a><a class="" href="06_브랜치는-이름표.html">브랜치는 이름표 — switch와 merge</a><a class="" href="07_GitHub와-원격-저장소.html">GitHub와 원격 저장소 — push · clone · fetch · pull</a><a class="" href="08_따라하기-충돌-해결.html">따라하기 — 충돌은 고장이 아니라 대화 요청</a><a class="" href="09_Pull-Request와-GitHub-Flow.html">Pull Request와 GitHub Flow — 합쳐 달라는 요청서</a><a class="" href="10_GitHub-Organizations-우리-팀-저장소.html">GitHub Organizations — 우리 과정의 팀 저장소</a><a class="" href="11_올리면-안-되는-것과-되돌리기.html">올리면 안 되는 것과 되돌리기 — .gitignore · restore · revert</a><a class="" href="12_강사-코드-태그로-따라잡기.html">강사 코드 태그로 따라잡기 — clone · tag · switch --detach</a><a class="" href="13_정리와-체크리스트.html">정리와 체크리스트</a><a class="" href="14_실습문제와-힌트.html">실습문제와 힌트 — 기본 · 필수 · 도전</a></div><div class="md"><p class="chapter-name">1장. Git과 GitHub로 협업하기</p><h1>Git과 GitHub는 왜 첫 장인가</h1><div class="lesson-meta"><span>준비</span><span><b>시간</b>30분</span><span><b>개념 지도</b>전체 흐름</span></div><h2>한 줄 요약</h2>
+<p>이 장에서는 코드의 <strong>변경 기록을 남기는 도구(Git)</strong>와 그 기록을 <strong>팀이 함께 쓰는 서비스(GitHub)</strong>를 배웁니다. 이 과정의 모든 실습, 팀 프로젝트, 코드 리뷰가 이 두 가지 위에서 돌아가므로 가장 먼저 배웁니다.</p>
+<blockquote>
+<p><strong>이 장의 실습은 모두 Git Bash에서 명령어로 합니다.</strong> IntelliJ나 VS Code의 Git 버튼은 써도 되지만, 명령어로 먼저 익혀야 버튼이 무슨 일을 하는지 알 수 있습니다.</p>
+</blockquote>
+<hr />
+<h2>1. Git과 GitHub는 다릅니다</h2>
+<p><strong>Git이란?</strong> 파일의 변경 사항을 추적하고, 여러 사람이 같은 파일로 하는 작업을 조율하는 <strong>분산 버전 관리 시스템</strong>입니다.</p>
+<p><strong>GitHub란?</strong> Git 저장소를 인터넷에 올려 두고, 팀이 함께 관리하고 협업할 수 있게 해 주는 <strong>웹 서비스</strong>입니다.</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>구분</th>
+<th>Git</th>
+<th>GitHub</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>정체</td>
+<td>내 PC에 설치하는 <strong>프로그램</strong></td>
+<td>인터넷에 있는 <strong>웹 서비스</strong></td>
+</tr>
+<tr>
+<td>하는 일</td>
+<td>파일의 변경 기록(커밋)을 남긴다</td>
+<td>그 기록을 올려 두고 팀이 함께 본다</td>
+</tr>
+<tr>
+<td>인터넷</td>
+<td>없어도 동작한다</td>
+<td>있어야 한다</td>
+</tr>
+</tbody>
+</table></div>
+<p>Pull Request, Issue, Actions는 Git이 아니라 <strong>GitHub의 기능</strong>입니다. 헷갈리면 "내 PC에서 하는 일인가, 웹 화면에서 하는 일인가?"를 물어보세요.</p>
+<hr />
+<h2>2. 개념 지도 — 파일이 지나가는 길</h2>
+<figure class="figure">
+<p><img alt="작업 폴더에서 add로 스테이징, commit으로 로컬 저장소, push로 GitHub에 올라가는 흐름" src="img/three_areas.svg" /></p>
+</figure>
+<div class="box core">
+<p><strong>파일 수정 → <code>add</code>(고르기) → <code>commit</code>(사진 찍기) → <code>push</code>(올리기)</strong><br>
+팀원이 올린 사진은 <code>pull</code>로 받아 옵니다.</p>
+</div>
+<hr />
+<h2>3. 이 장에서 손으로 익힐 것과 나중에 찾아볼 것</h2>
+<div class="box impl">
+<p><strong>손으로 익힐 것 (핵심 개념 7개)</strong>: 커밋, 세 영역, 브랜치, 로컬과 원격, 충돌, Pull Request, <code>.gitignore</code>와 비밀 정보</p>
+</div>
+<div class="box more">
+<p><strong>필요할 때 찾아볼 것</strong>: <code>rebase</code>, <code>cherry-pick</code>, <code>stash</code>, Git 내부 구조. 처음에는 몰라도 팀 프로젝트를 할 수 있습니다. 필요해지면 공식 문서(git-scm.com/docs)에서 찾아봅니다.</p>
+</div>
+<div class="box core">
+<p><strong>명령은 무슨 일을 하는지 알고 칩니다.</strong> Git 명령은 잘못 치면 기록이 사라질 수 있습니다. 모르는 명령을 복사해 붙여 넣기 전에 <code>git status</code>로 지금 상태부터 확인합니다.</p>
+</div></div></div><div class="pager"><a class="prv" href="../00_환경설정/09_정리와-실습-설치-확인-체크리스트.html"><span class="lbl">← 이전 절</span>정리와 실습 — 설치 확인 체크리스트</a><a class="nxt" href="02_용어-정리.html"><span class="lbl">다음 절 →</span>용어 정리 — 이 장에서 처음 만나는 말</a></div><footer class="foot"><b>Fullstack Lab</b></footer></div><script src="../assets/app.js"></script></body></html>

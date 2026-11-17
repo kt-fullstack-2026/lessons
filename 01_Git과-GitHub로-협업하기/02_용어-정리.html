@@ -1,0 +1,462 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>용어 정리 — 이 장에서 처음 만나는 말 — 풀스택 개발 과정</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&display=swap">
+<link rel="stylesheet" href="../assets/style.css">
+</head><body data-prev="01_이-장에서-배우는-것.html" data-next="03_설치와-첫-설정.html">
+<div class="topbar"><a class="home" href="../index.html">풀스택 개발 과정</a><span class="ch">1장 · Git과 GitHub로 협업하기</span><span class="meta">2 / 14</span><span class="nav-btns"><a class="btn" href="01_이-장에서-배우는-것.html">← 이전</a><a class="btn" href="../index.html">목차</a><a class="btn" href="03_설치와-첫-설정.html">다음 →</a></span><span class="brand">Fullstack Lab</span></div><div class="wrap"><div class="content"><div class="chip-nav"><b>1장 · Git과 GitHub로 협업하기</b><a class="" href="01_이-장에서-배우는-것.html">Git과 GitHub는 왜 첫 장인가</a><a class="cur" href="02_용어-정리.html">용어 정리 — 이 장에서 처음 만나는 말</a><a class="" href="03_설치와-첫-설정.html">설치와 첫 설정 — Git Bash와 GitHub 계정</a><a class="" href="04_커밋은-사진-한-장-세-영역.html">커밋은 사진 한 장 — 작업 폴더 · 스테이징 · 저장소</a><a class="" href="05_따라하기-첫-저장소와-첫-커밋.html">따라하기 — 첫 저장소와 첫 커밋</a><a class="" href="06_브랜치는-이름표.html">브랜치는 이름표 — switch와 merge</a><a class="" href="07_GitHub와-원격-저장소.html">GitHub와 원격 저장소 — push · clone · fetch · pull</a><a class="" href="08_따라하기-충돌-해결.html">따라하기 — 충돌은 고장이 아니라 대화 요청</a><a class="" href="09_Pull-Request와-GitHub-Flow.html">Pull Request와 GitHub Flow — 합쳐 달라는 요청서</a><a class="" href="10_GitHub-Organizations-우리-팀-저장소.html">GitHub Organizations — 우리 과정의 팀 저장소</a><a class="" href="11_올리면-안-되는-것과-되돌리기.html">올리면 안 되는 것과 되돌리기 — .gitignore · restore · revert</a><a class="" href="12_강사-코드-태그로-따라잡기.html">강사 코드 태그로 따라잡기 — clone · tag · switch --detach</a><a class="" href="13_정리와-체크리스트.html">정리와 체크리스트</a><a class="" href="14_실습문제와-힌트.html">실습문제와 힌트 — 기본 · 필수 · 도전</a></div><div class="md"><p class="chapter-name">1장. Git과 GitHub로 협업하기</p><h1>용어 정리 — 이 장에서 처음 만나는 말</h1><div class="lesson-meta"><span>준비</span><span><b>시간</b>40분</span><span><b>개념 지도</b>전체 흐름</span></div><h2>이 절을 읽는 법</h2>
+<p>이 장에서 처음 만나는 용어들입니다. 앞으로 과정 내내 쓰이므로 여기서 정확히 잡고 갑니다. 개발이 처음이라면 이 절이 가장 낯설 수 있습니다. <strong>완벽히 외울 필요는 없습니다.</strong> "이런 게 있구나" 정도로 눈에 익혀 두면 실습하면서 자연스럽게 손에 붙습니다.</p>
+<p>이 절은 두 부분으로 나뉩니다.</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>부분</th>
+<th>내용</th>
+<th>읽는 법</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1~4</td>
+<td>터미널, 셸, CLI, 경로, 명령어 읽는 법</td>
+<td>Git 이전에 필요한 <strong>도구 이야기</strong>. 처음이라면 꼼꼼히</td>
+</tr>
+<tr>
+<td>5~9</td>
+<td>버전 관리, 저장소, 커밋, 브랜치, GitHub 용어</td>
+<td><strong>Git 이야기</strong>. 뒤 절에서 자세히 배우므로 뜻만</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2>1. 터미널(Terminal)과 셸(Shell)</h2>
+<p><strong>터미널</strong>은 마우스 클릭 대신 <strong>글자로 명령을 입력해서</strong> 컴퓨터를 조작하는 창입니다. 폴더를 만들고, 프로그램을 실행하고, 파일을 옮기는 일을 모두 문장으로 시킬 수 있습니다. Git을 비롯한 개발 도구의 상당수가 터미널에서 실행되므로, 개발을 하려면 터미널과 친해져야 합니다.</p>
+<p>'터미널'이라는 이름의 유래를 알면 기억에 남습니다. 옛날 대형 컴퓨터 시절, 사람들은 방 하나를 차지하는 중앙 컴퓨터에 <strong>단말기(terminal)</strong>라는 화면과 키보드를 연결해 명령을 주고받았습니다. 그 단말기 화면을 흉내 낸 프로그램이 오늘날의 터미널입니다. 그래서 지금도 <strong>콘솔(console)</strong>, <strong>명령 프롬프트(command prompt)</strong>, <strong>커맨드 라인(command line)</strong>이 거의 같은 뜻으로 쓰입니다.</p>
+<p><strong>셸(shell)</strong>은 사용자가 입력한 명령을 <strong>해석해 운영체제에 전달하고 실행하는 프로그램</strong>입니다. 이름은 운영체제의 핵심(커널)을 감싸는 '껍데기(shell)'라는 뜻에서 왔습니다.</p>
+<blockquote>
+<p>정리: <strong>터미널</strong>은 명령을 입력하고 결과를 보는 창, <strong>셸</strong>은 그 명령을 해석해 실행하는 프로그램입니다.</p>
+</blockquote>
+<p>셸에도 종류가 있습니다.</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>셸</th>
+<th>어디에</th>
+<th>비고</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>bash / zsh</td>
+<td>macOS·리눅스 기본</td>
+<td>개발 현장에서 널리 쓰입니다. macOS는 zsh가 기본이며 bash와 사용법이 거의 같습니다</td>
+</tr>
+<tr>
+<td>PowerShell / CMD</td>
+<td>Windows 기본</td>
+<td>명령 문법이 bash와 다릅니다</td>
+</tr>
+<tr>
+<td><strong>Git Bash</strong></td>
+<td>Windows에 Git을 설치하면 함께 설치됨</td>
+<td>Windows에서 bash를 쓸 수 있게 해 줍니다. <strong>이 과정의 표준 셸</strong></td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li><strong>bash</strong>는 'Bourne-Again SHell'의 말장난입니다. 유닉스 초창기의 Bourne shell을 잇는다는 뜻과 '다시 태어난(born again) 셸'이라는 뜻을 겹쳐 지은 이름입니다. (<a href="https://www.gnu.org/software/bash/manual/bash.html#What-is-Bash_003f">GNU Bash 매뉴얼</a>)</li>
+<li><strong>zsh</strong>는 macOS가 2019년(Catalina)부터 기본 셸로 쓰고 있습니다. 이 과정의 Git 명령은 zsh에서도 그대로 동작합니다. (<a href="https://support.apple.com/ko-kr/102360">Apple 지원</a>)</li>
+</ul>
+<p><strong>왜 Windows에서 굳이 Git Bash를 쓰나요?</strong> 두 가지 이유입니다.</p>
+<ol>
+<li>인터넷의 Git 자료와 명령 예시는 대부분 <strong>bash 기준</strong>입니다. 같은 "폴더 만들기"도 PowerShell과 bash는 문법이 다릅니다. 모두가 bash를 쓰면 강의 자료 하나로 통일됩니다.</li>
+<li>나중에 배우는 서버(리눅스)와 Docker도 bash 명령을 씁니다. 지금 익힌 명령을 그대로 다시 씁니다.</li>
+</ol>
+<hr />
+<h2>2. CLI와 GUI</h2>
+<p>터미널에서 글자로 실행하는 프로그램을 <strong>CLI</strong>(Command Line Interface, 명령 줄 인터페이스)라고 부릅니다. 마우스로 아이콘을 눌러 쓰는 프로그램인 <strong>GUI</strong>(Graphical User Interface, 그래픽 사용자 인터페이스)와 대비되는 말입니다.</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th></th>
+<th>GUI</th>
+<th>CLI</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>조작</td>
+<td>버튼·메뉴·창을 보고 마우스로</td>
+<td>글자로 명령</td>
+</tr>
+<tr>
+<td>배우기</td>
+<td>쉽다</td>
+<td>처음엔 어렵다</td>
+</tr>
+<tr>
+<td>장점</td>
+<td>한눈에 보인다</td>
+<td>빠르고, 정확하고, <strong>기록하고 반복하기 쉽다</strong></td>
+</tr>
+<tr>
+<td>예</td>
+<td>웹 브라우저, 워드, IntelliJ의 Git 버튼</td>
+<td>Git Bash의 <code>git</code> 명령</td>
+</tr>
+</tbody>
+</table></div>
+<p>"이 폴더의 파일 300개 이름을 한 번에 바꿔라" 같은 일은 마우스로는 300번 클릭이지만 CLI로는 한 줄입니다. 그리고 명령은 글자라서 <strong>채팅창에 붙여 넣어 질문하거나, 팀원에게 그대로 전달할 수 있습니다.</strong> 온라인 수업에서 "제 화면은 이렇게 나와요"를 정확히 공유하기 좋습니다.</p>
+<div class="box core">
+<p><strong>이 과정은 Git을 CLI로 먼저 배웁니다.</strong> IntelliJ나 VS Code의 Git 버튼(GUI)은 안에서 같은 <code>git</code> 명령을 대신 실행합니다. 명령을 알면 버튼이 무슨 일을 하는지 알 수 있지만, 버튼만 알면 문제가 생겼을 때 손을 쓸 수 없습니다.</p>
+</div>
+<hr />
+<h2>3. 경로(Path)와 현재 위치</h2>
+<p><strong>경로</strong>는 파일이나 폴더가 어디 있는지 알려 주는 <strong>주소</strong>입니다. 탐색기 주소창에 보이는 <code>D:\workspace\my-first-repo</code>가 경로입니다.</p>
+<p>터미널은 항상 <strong>어느 한 폴더 안에 서 있습니다.</strong> 이것을 <strong>현재 위치</strong>(작업 디렉터리, working directory)라고 합니다. 명령은 현재 위치를 기준으로 실행됩니다. <code>git init</code>을 엉뚱한 폴더에서 치면 엉뚱한 폴더가 저장소가 됩니다. 그래서 <strong>"지금 내가 어디 있지?"를 확인하는 습관</strong>이 가장 중요합니다.</p>
+<p>Windows와 Git Bash는 같은 주소를 다르게 씁니다.</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>의미</th>
+<th>Windows 탐색기</th>
+<th>Git Bash</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>D 드라이브의 workspace 폴더</td>
+<td><code>D:\workspace</code></td>
+<td><code>/d/workspace</code></td>
+</tr>
+<tr>
+<td>내 사용자 폴더(홈)</td>
+<td><code>C:\Users\내계정</code></td>
+<td><code>~</code></td>
+</tr>
+<tr>
+<td>폴더 구분 기호</td>
+<td><code>\</code> (역슬래시)</td>
+<td><code>/</code> (슬래시)</td>
+</tr>
+</tbody>
+</table></div>
+<p>자주 쓰는 기호와 명령입니다.</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>기호·명령</th>
+<th>뜻</th>
+<th>예</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>pwd</code></td>
+<td>지금 어디 있는지 보기 (print working directory)</td>
+<td><code>/d/workspace</code></td>
+</tr>
+<tr>
+<td><code>ls</code></td>
+<td>지금 폴더 안의 파일 목록 (<code>ls -a</code>는 숨김 파일까지)</td>
+<td><code>.git</code>은 <code>-a</code>를 붙여야 보입니다</td>
+</tr>
+<tr>
+<td><code>cd 폴더</code></td>
+<td>그 폴더로 이동 (change directory)</td>
+<td><code>cd my-first-repo</code></td>
+</tr>
+<tr>
+<td><code>cd ..</code></td>
+<td>한 단계 위 폴더로</td>
+<td><code>..</code>은 "위 폴더"</td>
+</tr>
+<tr>
+<td><code>.</code></td>
+<td>지금 이 폴더</td>
+<td><code>git add .</code> = 지금 폴더 전부</td>
+</tr>
+<tr>
+<td><code>mkdir 이름</code></td>
+<td>폴더 만들기 (make directory)</td>
+<td><code>mkdir my-first-repo</code></td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li><strong>절대 경로</strong>: 맨 위부터 전부 쓴 주소. <code>/d/workspace/my-first-repo</code></li>
+<li><strong>상대 경로</strong>: 현재 위치에서부터 쓴 주소. 지금 <code>/d/workspace</code>에 있다면 <code>my-first-repo</code>만 써도 됩니다.</li>
+</ul>
+<blockquote>
+<p>예시: 현재 위치가 <code>/d/workspace</code>일 때, 상대 경로 <code>my-first-repo/README.md</code>와 절대 경로 <code>/d/workspace/my-first-repo/README.md</code>는 같은 파일입니다.</p>
+</blockquote>
+<hr />
+<h2>4. 명령어 읽는 법</h2>
+<p>Git 명령은 모양이 일정합니다. 한 번 읽는 법을 익히면 처음 보는 명령도 대략 짐작할 수 있습니다.</p>
+<pre><code class="language-bash"><span class="prompt">$ </span>git commit -m &quot;docs: 자기소개 추가&quot;
+</code></pre>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th><code>git</code></th>
+<th><code>commit</code></th>
+<th><code>-m</code></th>
+<th><code>"docs: 자기소개 추가"</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>프로그램</td>
+<td>하위 명령</td>
+<td>옵션</td>
+<td>옵션에 넘기는 값</td>
+</tr>
+</tbody>
+</table></div>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>부분</th>
+<th>뜻</th>
+<th>예</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>프로그램</td>
+<td>어떤 프로그램에게 시키나</td>
+<td><code>git</code></td>
+</tr>
+<tr>
+<td>하위 명령</td>
+<td>무엇을 하라는가</td>
+<td><code>commit</code>, <code>add</code>, <code>push</code></td>
+</tr>
+<tr>
+<td>옵션</td>
+<td>어떻게 하라는가. <code>-</code>로 시작</td>
+<td><code>-m</code>(메시지를 바로 적는다)</td>
+</tr>
+<tr>
+<td>값(인자)</td>
+<td>대상이나 내용</td>
+<td><code>README.md</code>, <code>"메시지"</code></td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li>옵션은 <strong>짧은 형태</strong>(<code>-m</code>)와 <strong>긴 형태</strong>(<code>--message</code>)가 있습니다. 뜻은 같습니다. <code>--global</code>, <code>--oneline</code>처럼 긴 형태만 있는 옵션도 있습니다.</li>
+<li>띄어쓰기가 들어간 값은 <strong>따옴표</strong>로 감쌉니다. <code>-m 첫 커밋</code>이라고 쓰면 Git은 "첫"까지만 메시지로 읽습니다.</li>
+<li>모르는 명령은 <code>git 하위명령 -h</code>로 짧은 도움말을 볼 수 있습니다. 예: <code>git commit -h</code></li>
+</ul>
+<div class="box core">
+<p><strong>명령을 치기 전에 "무엇을, 어디서, 어떻게"를 읽습니다.</strong> 프로그램(<code>git</code>) · 하위 명령(무엇을) · 현재 위치(어디서) · 옵션(어떻게).</p>
+</div>
+<hr />
+<h2>5. 버전 관리와 Git</h2>
+<p><strong>버전 관리</strong>(Version Control)는 파일이 바뀌어 온 기록을 남기고, 필요하면 예전 상태로 돌아갈 수 있게 해 주는 일입니다. <code>보고서_최종.hwp</code>, <code>보고서_최종_진짜최종.hwp</code>처럼 파일을 복사해 두는 것도 일종의 버전 관리입니다. 다만 누가, 언제, 왜 바꿨는지 알 수 없고, 여러 명이 동시에 고치면 합치기가 어렵습니다. 이 일을 프로그램이 대신 해 주는 것이 <strong>버전 관리 시스템</strong>(VCS, Version Control System)이고, 지금 가장 많이 쓰는 것이 <strong>Git</strong>입니다.</p>
+<blockquote>
+<p><strong>Git</strong>: 파일의 변경 사항을 추적하고, 여러 사람이 같은 파일로 하는 작업을 조율하는 분산 버전 관리 시스템.</p>
+</blockquote>
+<ul>
+<li><strong>유래</strong>: Git은 2005년 리눅스를 만든 <strong>리누스 토르발스</strong>가 리눅스 개발에 쓰려고 만들었습니다. 그전에 쓰던 상용 도구를 더 이상 무료로 쓸 수 없게 되자 직접 만든 것입니다. (<a href="https://git-scm.com/book/ko/v2/%ec%8b%9c%ec%9e%91%ed%95%98%ea%b8%b0-%ec%a7%a7%ea%b2%8c-%eb%b3%b4%eb%8a%94-Git%ec%9d%98-%ec%97%ad%ec%82%ac">Pro Git 1.2 — Git의 짧은 역사</a>)</li>
+<li><strong>이름</strong>: Git 공식 설명서에는 토르발스가 이 도구를 "멍청한 내용 추적기(the stupid content tracker)"라고 불렀고, 이름은 기분에 따라 "발음하기 쉬운 세 글자", "영국 속어로 멍청이", "Global Information Tracker의 줄임말"로 읽어도 된다고 적혀 있습니다. (<a href="https://github.com/git/git/blob/master/README.md">Git README</a>)</li>
+<li><strong>분산형</strong>: Git은 <strong>모든 사람의 PC에 전체 기록이 통째로 복사</strong>되는 분산형입니다. 그래서 인터넷이 없어도 커밋할 수 있고, 서버가 고장 나도 누군가의 PC에 기록이 남아 있습니다. 예전에 많이 쓰던 SVN은 기록이 서버 한 곳에만 있는 중앙집중형입니다.</li>
+</ul>
+<hr />
+<h2>6. 저장소(Repository)와 로컬·원격</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>용어</th>
+<th>뜻</th>
+<th>자세히</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>저장소</strong> (repository, 줄여서 <strong>repo</strong>)</td>
+<td>Git이 기록을 관리하는 프로젝트 폴더. 안에 숨김 폴더 <code>.git</code>이 있고, 여기에 모든 기록이 들어 있습니다</td>
+<td>5절</td>
+</tr>
+<tr>
+<td><strong>로컬 저장소</strong></td>
+<td>내 PC에 있는 저장소</td>
+<td>5절</td>
+</tr>
+<tr>
+<td><strong>원격 저장소</strong> (remote)</td>
+<td>인터넷(GitHub)에 있는 저장소. 팀이 함께 씁니다</td>
+<td>7절</td>
+</tr>
+<tr>
+<td><strong>origin</strong></td>
+<td>원격 저장소에 붙이는 <strong>기본 별명</strong>. <code>clone</code>하면 자동으로 붙습니다. 주소 대신 <code>origin</code>이라고 부릅니다 (<a href="https://git-scm.com/book/ko/v2/Git%ec%9d%98-%ea%b8%b0%ec%b4%88-%eb%a6%ac%eb%aa%a8%ed%8a%b8-%ec%a0%80%ec%9e%a5%ec%86%8c">Pro Git 2.5</a>)</td>
+<td>7절</td>
+</tr>
+<tr>
+<td><strong>clone</strong></td>
+<td>원격 저장소를 기록째 내 PC로 복사하기</td>
+<td>7절</td>
+</tr>
+<tr>
+<td><strong>push</strong> / <strong>pull</strong></td>
+<td>내 커밋을 원격에 올리기 / 원격의 새 커밋을 받아 와 합치기</td>
+<td>7절</td>
+</tr>
+<tr>
+<td><strong>fetch</strong></td>
+<td>원격의 새 커밋을 <strong>받아만</strong> 오기 (합치지 않음)</td>
+<td>7절</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2>7. 커밋, 스테이징, 커밋 번호</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>용어</th>
+<th>뜻</th>
+<th>자세히</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>커밋</strong> (commit)</td>
+<td>특정 시점의 프로젝트 파일 상태를 저장한 <strong>기록(스냅샷)</strong>. 누가, 언제, 왜(메시지) 저장했는지가 함께 남습니다</td>
+<td>4절</td>
+</tr>
+<tr>
+<td><strong>작업 폴더</strong> (working tree)</td>
+<td>지금 내가 고치고 있는 파일들</td>
+<td>4절</td>
+</tr>
+<tr>
+<td><strong>스테이징</strong> (staging, <code>add</code>)</td>
+<td>다음 커밋에 넣을 변경을 <strong>고르는</strong> 단계</td>
+<td>4절</td>
+</tr>
+<tr>
+<td><strong>커밋 메시지</strong></td>
+<td>이 커밋을 왜 만들었는지 적는 한 줄. 예: <code>docs: 자기소개 추가</code></td>
+<td>9절</td>
+</tr>
+<tr>
+<td><strong>커밋 번호</strong> (해시, hash)</td>
+<td>커밋마다 붙는 40글자 고유 번호. 보통 앞 7글자(<code>932e50d</code>)만 씁니다</td>
+<td>5절</td>
+</tr>
+<tr>
+<td><strong>diff</strong></td>
+<td>두 상태 사이에 <strong>바뀐 줄</strong>. <code>+</code>는 추가, <code>-</code>는 삭제</td>
+<td>5절</td>
+</tr>
+</tbody>
+</table></div>
+<p>커밋 번호는 커밋 내용(파일, 작성자, 시간, 메시지 등)으로 계산한 <strong>고유 값(SHA-1 해시)</strong>입니다. 내용이 한 글자라도 다르면 번호가 완전히 달라집니다. 그래서 같은 실습을 해도 <strong>사람마다 커밋 번호가 다릅니다.</strong> 교안의 번호와 달라도 정상입니다. (<a href="https://git-scm.com/book/ko/v2/%EC%8B%9C%EC%9E%91%ED%95%98%EA%B8%B0-Git-%EA%B8%B0%EC%B4%88">Pro Git 1.3 — Git은 데이터의 무결성을 보장한다</a>)</p>
+<hr />
+<h2>8. 브랜치, HEAD, main</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>용어</th>
+<th>뜻</th>
+<th>자세히</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>브랜치</strong> (branch)</td>
+<td>커밋 하나를 가리키는 <strong>이름(포인터)</strong>. 새 커밋을 만들면 그 커밋을 가리키도록 자동으로 옮겨 갑니다</td>
+<td>6절</td>
+</tr>
+<tr>
+<td><strong>main</strong></td>
+<td>저장소의 기본 브랜치 이름. 늘 <strong>잘 동작하는 상태</strong>로 둡니다</td>
+<td>6절</td>
+</tr>
+<tr>
+<td><strong>HEAD</strong></td>
+<td>"<strong>지금 내가 보고 있는 곳</strong>"을 가리키는 표시. 보통 지금 브랜치를 가리킵니다</td>
+<td>6절</td>
+</tr>
+<tr>
+<td><strong>merge</strong></td>
+<td>두 브랜치의 작업을 하나로 <strong>합치기</strong></td>
+<td>6절</td>
+</tr>
+<tr>
+<td><strong>충돌</strong> (conflict)</td>
+<td>같은 줄을 서로 다르게 고쳐서, Git이 사람에게 <strong>골라 달라고</strong> 하는 상태</td>
+<td>8절</td>
+</tr>
+<tr>
+<td><strong>태그</strong> (tag)</td>
+<td>특정 커밋에 붙인 <strong>고정된 이름</strong>. 새 커밋을 만들어도 옮겨 가지 않습니다. 강사 코드 단계 표시에 씁니다</td>
+<td>12절</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>main과 master</strong>: 예전에는 기본 브랜치 이름이 <code>master</code>였습니다. 2020년부터 GitHub를 비롯한 여러 곳이 <code>main</code>으로 바꾸기 시작했고, 지금 GitHub에서 새로 만든 저장소의 기본 브랜치는 <code>main</code>입니다. Git 프로그램 자체는 아직 <code>master</code>가 기본이라서, 3절에서 <code>main</code>으로 맞추는 설정을 합니다. 오래된 자료에서 <code>master</code>가 보이면 <code>main</code>과 같은 역할이라고 읽으면 됩니다. (<a href="https://github.com/github/renaming">GitHub — renaming</a>)</p>
+<hr />
+<h2>9. GitHub에서 만나는 말</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>용어</th>
+<th>뜻</th>
+<th>자세히</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>GitHub</strong></td>
+<td>Git 저장소를 인터넷에 올려 두고 팀이 함께 쓰는 웹 서비스. Git과는 다른 회사의 서비스입니다</td>
+<td>1절</td>
+</tr>
+<tr>
+<td><strong>Pull Request</strong> (PR)</td>
+<td>"내 브랜치의 변경을 <strong>가져가서</strong>(pull) <code>main</code>에 합쳐 주세요"라는 <strong>요청서</strong>. 이 위에서 코드 리뷰를 합니다</td>
+<td>9절</td>
+</tr>
+<tr>
+<td><strong>코드 리뷰</strong></td>
+<td>합치기 전에 팀원이 코드를 읽고 의견을 남기는 일</td>
+<td>9절</td>
+</tr>
+<tr>
+<td><strong>Issue</strong></td>
+<td>할 일, 버그, 아이디어를 적어 두는 게시판 글. 번호(<code>#12</code>)로 부릅니다</td>
+<td>9절</td>
+</tr>
+<tr>
+<td><strong>Organization</strong></td>
+<td>여러 사람과 저장소를 묶어 관리하는 <strong>단체 계정</strong>. 이 과정의 팀 저장소가 여기에 있습니다</td>
+<td>10절</td>
+</tr>
+<tr>
+<td><strong><code>.gitignore</code></strong></td>
+<td>Git이 <strong>모른 척할</strong> 파일 목록. 비밀번호, 빌드 결과물을 여기에 적습니다</td>
+<td>11절</td>
+</tr>
+<tr>
+<td><strong>2단계 인증</strong> (2FA)</td>
+<td>비밀번호에 더해 휴대폰 앱 코드로 한 번 더 확인하는 로그인 방식</td>
+<td>3절</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<p>실무 참고: GitLab은 같은 기능을 <strong>Merge Request</strong>(MR)라고 부릅니다. 국내 회사 중에는 사내에 GitLab을 설치해 쓰는 곳도 많습니다. 이름만 다르고 하는 일은 PR과 같습니다. (<a href="https://docs.gitlab.com/user/project/merge_requests/">GitLab Docs — Merge requests</a>)</p>
+</blockquote>
+<hr />
+<h2>핵심 정리</h2>
+<ul>
+<li>터미널은 명령을 입력하는 창, 셸은 명령을 해석해 실행하는 프로그램이다. 이 과정의 셸은 <strong>Git Bash</strong>다.</li>
+<li>명령은 <strong>현재 위치</strong>에서 실행된다. 헷갈리면 <code>pwd</code>.</li>
+<li>명령은 <code>프로그램 하위명령 옵션 값</code> 순서로 읽는다.</li>
+<li>Git은 기록 도구(내 PC), GitHub는 기록을 함께 쓰는 서비스(인터넷)다.</li>
+<li>커밋은 특정 시점의 저장 기록, 브랜치는 커밋을 따라 옮겨 가는 이름, 태그는 고정된 이름이다.</li>
+</ul></div></div><div class="pager"><a class="prv" href="01_이-장에서-배우는-것.html"><span class="lbl">← 이전 절</span>Git과 GitHub는 왜 첫 장인가</a><a class="nxt" href="03_설치와-첫-설정.html"><span class="lbl">다음 절 →</span>설치와 첫 설정 — Git Bash와 GitHub 계정</a></div><footer class="foot"><b>Fullstack Lab</b></footer></div><script src="../assets/app.js"></script></body></html>

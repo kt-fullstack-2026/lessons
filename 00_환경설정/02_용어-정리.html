@@ -1,0 +1,129 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>용어 정리 — 풀스택 개발 과정</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&display=swap">
+<link rel="stylesheet" href="../assets/style.css">
+</head><body data-prev="01_이-장에서-배우는-것.html" data-next="03_설치-전-확인.html">
+<div class="topbar"><a class="home" href="../index.html">풀스택 개발 과정</a><span class="ch">0장 · 환경설정 — 과정 전체 개발 도구 설치</span><span class="meta">2 / 9</span><span class="nav-btns"><a class="btn" href="01_이-장에서-배우는-것.html">← 이전</a><a class="btn" href="../index.html">목차</a><a class="btn" href="03_설치-전-확인.html">다음 →</a></span><span class="brand">Fullstack Lab</span></div><div class="wrap"><div class="content"><div class="chip-nav"><b>0장 · 환경설정 — 과정 전체 개발 도구 설치</b><a class="" href="01_이-장에서-배우는-것.html">도구는 한 번에 다 설치하지 않고, 쓰기 직전에 하나씩</a><a class="cur" href="02_용어-정리.html">용어 정리</a><a class="" href="03_설치-전-확인.html">설치 전 확인 — 확장자, 작업 폴더</a><a class="" href="04_VS-Code와-확장.html">VS Code와 확장 설치</a><a class="" href="05_Node.js-24-LTS-설치와-확인.html">Node.js 24 LTS 설치와 node -v · npm -v 확인</a><a class="" href="06_JDK-21과-IntelliJ-IDEA-설치.html">JDK 21(Eclipse Temurin)과 IntelliJ IDEA 설치</a><a class="" href="07_Docker-Desktop-설치와-hello-world.html">Docker Desktop(WSL 2) 설치와 docker run hello-world 확인</a><a class="" href="08_PostgreSQL-17-설치와-pgAdmin.html">PostgreSQL 17 설치판과 pgAdmin 4</a><a class="" href="09_정리와-실습-설치-확인-체크리스트.html">정리와 실습 — 설치 확인 체크리스트</a></div><div class="md"><p class="chapter-name">0장. 환경설정 — 과정 전체 개발 도구 설치</p><h1>용어 정리</h1><div class="lesson-meta"><span>준비</span><span><b>시간</b>10분</span><span><b>개념 지도</b>전체 그림</span></div><h2>1. 명령과 경로에 관한 말</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>용어</th>
+<th>뜻</th>
+<th>예</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>터미널</strong> (terminal)</td>
+<td>글자로 명령을 쳐서 컴퓨터를 움직이는 창. 이 장에서는 버전을 확인할 때만 쓴다</td>
+<td>VS Code 터미널, IntelliJ Terminal, Git Bash</td>
+</tr>
+<tr>
+<td><strong>PowerShell</strong></td>
+<td>Windows에 들어 있는 터미널 프로그램. VS Code 터미널을 열면 기본으로 이것이 뜬다</td>
+<td><code>PS D:\workspace&gt;</code></td>
+</tr>
+<tr>
+<td><strong>경로</strong> (path)</td>
+<td>파일이나 폴더가 있는 곳을 적은 글자</td>
+<td><code>D:\workspace\board-api</code></td>
+</tr>
+<tr>
+<td><strong><code>PATH</code> 환경 변수</strong></td>
+<td>"명령 이름을 치면 이 폴더들에서 프로그램을 찾아라"라는 <strong>목록</strong>. 설치 프로그램이 여기에 자기 폴더를 더해 주어서 <code>node</code>, <code>java</code>를 어디서나 칠 수 있다</td>
+<td><code>C:\Program Files\nodejs</code></td>
+</tr>
+<tr>
+<td><strong><code>JAVA_HOME</code></strong></td>
+<td>"JDK가 어디 있나"를 알려 주는 환경 변수. Gradle 같은 도구가 이것을 보고 Java를 찾는다</td>
+<td><code>C:\Program Files\Eclipse Adoptium\jdk-21...</code></td>
+</tr>
+<tr>
+<td><strong>확장자</strong></td>
+<td>파일 이름 끝의 <code>.</code> 뒤 글자. 파일의 종류를 나타낸다. Windows는 기본으로 숨긴다</td>
+<td><code>index.html</code>의 <code>html</code>, <code>.env</code></td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2>2. 도구 이름</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>용어</th>
+<th>뜻</th>
+<th>이 과정에서</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>VS Code</strong></td>
+<td>가벼운 코드 편집기. 확장으로 기능을 더한다</td>
+<td>HTML · CSS · JS · React · Node 코드 (2~9 · 12 · 13장 …)</td>
+</tr>
+<tr>
+<td><strong>확장</strong> (extension)</td>
+<td>VS Code에 기능을 더하는 추가 프로그램</td>
+<td>Prettier, ESLint, Live Share, REST Client</td>
+</tr>
+<tr>
+<td><strong>Node.js</strong></td>
+<td>브라우저 밖에서 JavaScript를 실행하는 프로그램</td>
+<td>5장 npm, 8장 Vite, 9 · 12장 서버</td>
+</tr>
+<tr>
+<td><strong>npm</strong></td>
+<td>Node.js와 함께 설치되는 <strong>패키지 관리 도구</strong>. 남이 만든 코드를 받아 온다</td>
+<td><code>npm install</code>, <code>npm run dev</code></td>
+</tr>
+<tr>
+<td><strong>JDK</strong> (Java Development Kit)</td>
+<td>Java로 개발할 때 필요한 도구 묶음(컴파일러 + 실행기)</td>
+<td>JDK 21, Eclipse Temurin</td>
+</tr>
+<tr>
+<td><strong>Eclipse Temurin</strong></td>
+<td>무료로 받을 수 있는 JDK 배포판 하나. Adoptium이라는 단체가 만든다</td>
+<td>10장부터</td>
+</tr>
+<tr>
+<td><strong>IntelliJ IDEA</strong></td>
+<td>Java · Spring 개발용 통합 개발 환경(IDE). 코드 쓰기 · 실행 · 디버깅을 한 창에서</td>
+<td>10장부터</td>
+</tr>
+<tr>
+<td><strong>PostgreSQL</strong></td>
+<td>표에 데이터를 저장하는 DB 서버. 이 과정의 DB</td>
+<td>9장부터</td>
+</tr>
+<tr>
+<td><strong>pgAdmin</strong></td>
+<td>PostgreSQL의 표와 데이터를 화면으로 보고 SQL을 실행하는 프로그램</td>
+<td>9 · 10장</td>
+</tr>
+<tr>
+<td><strong>Docker Desktop</strong></td>
+<td>컨테이너를 만들고 돌리는 Docker를 Windows에서 쓰게 해 주는 프로그램</td>
+<td>14장부터</td>
+</tr>
+<tr>
+<td><strong>WSL 2</strong> (Windows Subsystem for Linux)</td>
+<td>Windows 안에서 Linux를 돌리는 기능. Docker Desktop이 이 위에서 돈다</td>
+<td>07절</td>
+</tr>
+<tr>
+<td><strong>가상화</strong> (virtualization)</td>
+<td>한 컴퓨터 안에 또 다른 컴퓨터(가상 머신)를 만드는 CPU 기능. WSL 2와 Docker에 필요하다</td>
+<td>07절</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2>핵심 정리</h2>
+<ul>
+<li>설치 프로그램이 <code>PATH</code>에 자기 폴더를 더해 주기 때문에 <code>node</code>, <code>java</code>, <code>docker</code>를 어디서나 칠 수 있다. 설치 뒤에는 터미널을 <strong>새로 열어야</strong> 바뀐 <code>PATH</code>가 보인다.</li>
+<li><code>JAVA_HOME</code>은 JDK의 위치를 알려 주는 환경 변수이고, 확장자는 파일 종류를 나타내는 이름 끝 글자다.</li>
+<li>VS Code · Node.js는 화면과 Node 서버, JDK · IntelliJ는 Spring, PostgreSQL · pgAdmin은 DB, Docker Desktop(WSL 2)은 14장부터의 컨테이너에 쓴다.</li>
+</ul></div></div><div class="pager"><a class="prv" href="01_이-장에서-배우는-것.html"><span class="lbl">← 이전 절</span>도구는 한 번에 다 설치하지 않고, 쓰기 직전에 하나씩</a><a class="nxt" href="03_설치-전-확인.html"><span class="lbl">다음 절 →</span>설치 전 확인 — 확장자, 작업 폴더</a></div><footer class="foot"><b>Fullstack Lab</b></footer></div><script src="../assets/app.js"></script></body></html>

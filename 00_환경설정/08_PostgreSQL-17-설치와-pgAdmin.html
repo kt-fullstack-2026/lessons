@@ -1,0 +1,149 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PostgreSQL 17 설치판과 pgAdmin 4 — 풀스택 개발 과정</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&display=swap">
+<link rel="stylesheet" href="../assets/style.css">
+</head><body data-prev="07_Docker-Desktop-설치와-hello-world.html" data-next="09_정리와-실습-설치-확인-체크리스트.html">
+<div class="topbar"><a class="home" href="../index.html">풀스택 개발 과정</a><span class="ch">0장 · 환경설정 — 과정 전체 개발 도구 설치</span><span class="meta">8 / 9</span><span class="nav-btns"><a class="btn" href="07_Docker-Desktop-설치와-hello-world.html">← 이전</a><a class="btn" href="../index.html">목차</a><a class="btn" href="09_정리와-실습-설치-확인-체크리스트.html">다음 →</a></span><span class="brand">Fullstack Lab</span></div><div class="wrap"><div class="content"><div class="chip-nav"><b>0장 · 환경설정 — 과정 전체 개발 도구 설치</b><a class="" href="01_이-장에서-배우는-것.html">도구는 한 번에 다 설치하지 않고, 쓰기 직전에 하나씩</a><a class="" href="02_용어-정리.html">용어 정리</a><a class="" href="03_설치-전-확인.html">설치 전 확인 — 확장자, 작업 폴더</a><a class="" href="04_VS-Code와-확장.html">VS Code와 확장 설치</a><a class="" href="05_Node.js-24-LTS-설치와-확인.html">Node.js 24 LTS 설치와 node -v · npm -v 확인</a><a class="" href="06_JDK-21과-IntelliJ-IDEA-설치.html">JDK 21(Eclipse Temurin)과 IntelliJ IDEA 설치</a><a class="" href="07_Docker-Desktop-설치와-hello-world.html">Docker Desktop(WSL 2) 설치와 docker run hello-world 확인</a><a class="cur" href="08_PostgreSQL-17-설치와-pgAdmin.html">PostgreSQL 17 설치판과 pgAdmin 4</a><a class="" href="09_정리와-실습-설치-확인-체크리스트.html">정리와 실습 — 설치 확인 체크리스트</a></div><div class="md"><p class="chapter-name">0장. 환경설정 — 과정 전체 개발 도구 설치</p><h1>PostgreSQL 17 설치판과 pgAdmin 4</h1><div class="lesson-meta"><span>준비</span><span><b>시간</b>40분</span><span><b>개념 지도</b>08 PostgreSQL · pgAdmin</span></div><h2>한 줄 요약</h2>
+<p>9장부터 메모 · 게시판 데이터를 <strong>PostgreSQL</strong>이라는 DB에 저장합니다. Windows용 설치 프로그램 하나로 DB 서버, 화면으로 DB를 다루는 <strong>pgAdmin 4</strong>, 명령 도구가 함께 설치됩니다. 설치 중 정하는 <strong>비밀번호</strong>와 <strong>포트 번호(5432)</strong>는 9장 <code>.env</code>와 10장 설정 파일에 그대로 다시 씁니다. 그래서 이 절에서 가장 중요한 일은 <strong>비밀번호를 정하고 적어 두기</strong>입니다. 마지막으로 pgAdmin에서 서버에 접속해 봅니다.</p>
+<blockquote>
+<p><strong>설치 시점: 9장 직전.</strong> 설치 프로그램은 EDB라는 회사가 만들어 배포합니다. 14장부터는 같은 DB를 Docker 컨테이너(<code>postgres:17</code>, 5433번)로도 띄우는데, 이 설치판과 따로 돌며 부딪치지 않습니다(07절 그림).</p>
+</blockquote>
+<hr />
+<h2>1. 받기</h2>
+<ol>
+<li><a href="https://www.postgresql.org/download/windows/">postgresql.org — Windows installers</a>를 열고 <strong>Download the installer</strong>를 누릅니다. EDB 내려받기 화면으로 넘어갑니다.</li>
+<li>표에서 PostgreSQL 버전 <strong>17.x</strong> 줄의 <strong>Windows x86-64</strong> 칸을 누릅니다.</li>
+<li><code>postgresql-17.…-windows-x64.exe</code> 같은 이름의 파일이 받아집니다.</li>
+</ol>
+<div class="box impl">
+<p><strong>왜 17인가</strong>: 이 과정의 9 · 10장 화면(pgAdmin 왼쪽의 <strong>PostgreSQL 17</strong>)과 설명이 17 기준이라 17을 받습니다. PostgreSQL은 큰 버전마다 5년 동안 수정 버전을 내므로 17은 과정 내내 충분히 씁니다.</p>
+<p>출처: <a href="https://www.postgresql.org/support/versioning/">PostgreSQL — Versioning Policy</a></p>
+</div>
+<hr />
+<h2>2. 설치 — 화면 순서</h2>
+<p>받은 <code>.exe</code>를 더블클릭하고, 사용자 계정 컨트롤 창에서 <strong>예</strong>를 누릅니다.</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>화면</th>
+<th>할 일</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Welcome</td>
+<td><strong>Next</strong></td>
+</tr>
+<tr>
+<td>Installation Directory</td>
+<td>기본값(<code>C:\Program Files\PostgreSQL\17</code>) 그대로 <strong>Next</strong></td>
+</tr>
+<tr>
+<td>Select Components</td>
+<td>네 칸 <strong>모두 체크된 그대로</strong> (PostgreSQL Server, pgAdmin 4, Stack Builder, Command Line Tools) <strong>Next</strong></td>
+</tr>
+<tr>
+<td>Data Directory</td>
+<td>기본값 그대로 <strong>Next</strong>. 데이터가 실제로 저장되는 폴더다</td>
+</tr>
+<tr>
+<td><strong>Password</strong></td>
+<td>DB 관리자 계정 <code>postgres</code>의 비밀번호를 <strong>Password</strong>와 <strong>Retype Password</strong>에 같게 넣는다. 아래 상자</td>
+</tr>
+<tr>
+<td><strong>Port</strong></td>
+<td><strong>5432</strong> 그대로 <strong>Next</strong>. 바꾸지 않는다</td>
+</tr>
+<tr>
+<td>Advanced Options</td>
+<td><strong>Locale</strong>은 <strong>Default locale</strong> 그대로 <strong>Next</strong></td>
+</tr>
+<tr>
+<td>Pre Installation Summary</td>
+<td>내용을 보고 <strong>Next</strong></td>
+</tr>
+<tr>
+<td>Ready to Install</td>
+<td><strong>Next</strong>. 몇 분 걸린다</td>
+</tr>
+<tr>
+<td>마지막 화면</td>
+<td><strong>Launch Stack Builder at exit?</strong> 체크를 <strong>끄고</strong> <strong>Finish</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p>출처: <a href="https://www.enterprisedb.com/docs/supported-open-source/postgresql/installing/windows/">EDB 문서 — Installing PostgreSQL on Windows</a></p>
+<div class="box core">
+<p><strong>비밀번호는 정하자마자 적어 둡니다.</strong> 이 비밀번호는 다시 볼 방법이 없고, 9장 <code>.env</code>의 <code>DB_PASSWORD</code>, 10장 <code>.env</code>의 같은 칸에 그대로 씁니다. 잊으면 다시 설치하는 것이 가장 빠릅니다.</p>
+<ul>
+<li><strong>영어 소문자와 숫자로만</strong> 8자 이상 짓습니다. <code>#</code> · <code>$</code> · <code>=</code> · 빈칸 같은 기호는 <code>.env</code> 파일에서 다르게 읽힐 수 있어 피합니다.</li>
+<li>내 컴퓨터 안에서만 쓰는 연습용 비밀번호입니다. 다른 사이트 비밀번호를 다시 쓰지 않습니다.</li>
+<li>메모장 · 노트에 "PostgreSQL postgres 계정 비밀번호"라고 적어 둡니다. 이 메모를 GitHub에 올리지는 않습니다.</li>
+</ul>
+</div>
+<div class="box more">
+<p><strong>Stack Builder</strong>는 PostgreSQL에 붙이는 추가 프로그램을 받는 도구입니다. 이 과정에서는 쓰지 않으므로 마지막 화면에서 끕니다. 실수로 켜졌으면 <strong>Cancel</strong>로 닫으면 됩니다. <strong>Command Line Tools</strong>에는 터미널에서 SQL을 치는 <code>psql</code>이 들어 있지만, 이 과정은 SQL을 pgAdmin 화면에서 칩니다.</p>
+</div>
+<hr />
+<h2>3. 켜져 있나 — Windows 서비스</h2>
+<p>PostgreSQL은 창이 없는 프로그램입니다. 설치가 끝나면 Windows <strong>서비스</strong>로 등록되어, 컴퓨터를 켤 때마다 저절로 켜집니다.</p>
+<ol>
+<li>작업 표시줄 검색 칸에 <code>서비스</code>를 치고 <strong>서비스</strong> 앱을 엽니다.</li>
+<li>목록에서 <code>postgresql-x64-17</code>을 찾습니다.</li>
+<li><strong>상태</strong>가 <strong>실행 중</strong>이면 됩니다. 아니면 그 줄을 오른쪽 클릭 → <strong>시작</strong>을 누릅니다.</li>
+</ol>
+<p>10장에서 <code>Connection to localhost:5432 refused</code>가 나오면 여기부터 봅니다.</p>
+<hr />
+<h2>4. pgAdmin 4로 접속해 보기</h2>
+<ol>
+<li>시작 메뉴에서 <strong>pgAdmin 4</strong>를 엽니다. 처음에는 켜지는 데 10~30초 걸립니다.</li>
+<li>왼쪽 <strong>Object Explorer</strong>에서 <strong>Servers</strong>를 펼치고 <strong>PostgreSQL 17</strong>을 누릅니다.</li>
+<li>비밀번호 창에 2절에서 정한 비밀번호를 넣습니다. <strong>Save Password</strong>를 체크하면 다음부터 묻지 않습니다. <strong>OK</strong>.</li>
+<li><strong>PostgreSQL 17</strong> 아래에 <strong>Databases</strong> · <strong>Login/Group Roles</strong> 같은 항목이 펼쳐지고, <strong>Databases</strong> 안에 <code>postgres</code>가 보이면 접속 성공입니다.</li>
+</ol>
+<p>DB와 표를 만드는 일은 9장 09절에서 합니다. 지금은 접속만 확인하고 pgAdmin을 닫습니다.</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>보이는 것</th>
+<th>원인</th>
+<th>할 일</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>password authentication failed for user "postgres"</code></td>
+<td>비밀번호가 틀렸다</td>
+<td>적어 둔 비밀번호를 다시 넣는다. 한/영 키, Caps Lock을 확인한다</td>
+</tr>
+<tr>
+<td><code>connection refused</code> · <code>could not connect to server</code></td>
+<td>DB 서버가 꺼져 있다</td>
+<td>3절에서 서비스를 시작한다</td>
+</tr>
+<tr>
+<td>비밀번호가 끝내 기억나지 않는다</td>
+<td>—</td>
+<td><strong>설정 → 앱 → 설치된 앱</strong>에서 PostgreSQL 17을 지우고 다시 설치한다. 지울 때 데이터 폴더(<code>C:\Program Files\PostgreSQL\17\data</code>)가 남으면 탐색기에서 지운 뒤 설치한다</td>
+</tr>
+<tr>
+<td>pgAdmin 창이 하얗게만 보인다</td>
+<td>아직 켜지는 중</td>
+<td>30초쯤 기다린다. 그래도 같으면 pgAdmin을 닫고 다시 연다</td>
+</tr>
+</tbody>
+</table></div>
+<div class="box impl">
+<p><strong>pgAdmin 메뉴도 영어로 둡니다.</strong> 교안은 <strong>Object Explorer</strong>, <strong>Query Tool</strong>, <strong>Save Password</strong>처럼 영어 이름으로 적습니다. pgAdmin은 <strong>File → Preferences → Miscellaneous → User language</strong>에서 언어를 바꿀 수 있지만, 그대로 English로 둡니다.</p>
+</div>
+<hr />
+<h2>핵심 정리</h2>
+<ul>
+<li>postgresql.org → EDB 설치 프로그램에서 <strong>17.x, Windows x86-64</strong>를 받는다.</li>
+<li>구성 요소는 네 칸 그대로, 포트 <strong>5432</strong>, Locale 기본값. 마지막 화면의 Stack Builder 체크는 끈다.</li>
+<li><code>postgres</code> 계정 비밀번호는 영어 소문자 · 숫자로 짓고 <strong>바로 적어 둔다</strong>. 9 · 10장 <code>.env</code>의 <code>DB_PASSWORD</code>에 쓴다.</li>
+<li><strong>서비스</strong> 앱에서 <code>postgresql-x64-17</code>이 실행 중인지 본다.</li>
+<li>pgAdmin 4 → Servers → PostgreSQL 17 → 비밀번호 → Databases 안에 <code>postgres</code>가 보이면 끝.</li>
+</ul></div></div><div class="pager"><a class="prv" href="07_Docker-Desktop-설치와-hello-world.html"><span class="lbl">← 이전 절</span>Docker Desktop(WSL 2) 설치와 docker run hello-world 확인</a><a class="nxt" href="09_정리와-실습-설치-확인-체크리스트.html"><span class="lbl">다음 절 →</span>정리와 실습 — 설치 확인 체크리스트</a></div><footer class="foot"><b>Fullstack Lab</b></footer></div><script src="../assets/app.js"></script></body></html>

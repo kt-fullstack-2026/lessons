@@ -1,0 +1,153 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Docker Desktop(WSL 2) 설치와 docker run hello-world 확인 — 풀스택 개발 과정</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&display=swap">
+<link rel="stylesheet" href="../assets/style.css">
+</head><body data-prev="06_JDK-21과-IntelliJ-IDEA-설치.html" data-next="08_PostgreSQL-17-설치와-pgAdmin.html">
+<div class="topbar"><a class="home" href="../index.html">풀스택 개발 과정</a><span class="ch">0장 · 환경설정 — 과정 전체 개발 도구 설치</span><span class="meta">7 / 9</span><span class="nav-btns"><a class="btn" href="06_JDK-21과-IntelliJ-IDEA-설치.html">← 이전</a><a class="btn" href="../index.html">목차</a><a class="btn" href="08_PostgreSQL-17-설치와-pgAdmin.html">다음 →</a></span><span class="brand">Fullstack Lab</span></div><div class="wrap"><div class="content"><div class="chip-nav"><b>0장 · 환경설정 — 과정 전체 개발 도구 설치</b><a class="" href="01_이-장에서-배우는-것.html">도구는 한 번에 다 설치하지 않고, 쓰기 직전에 하나씩</a><a class="" href="02_용어-정리.html">용어 정리</a><a class="" href="03_설치-전-확인.html">설치 전 확인 — 확장자, 작업 폴더</a><a class="" href="04_VS-Code와-확장.html">VS Code와 확장 설치</a><a class="" href="05_Node.js-24-LTS-설치와-확인.html">Node.js 24 LTS 설치와 node -v · npm -v 확인</a><a class="" href="06_JDK-21과-IntelliJ-IDEA-설치.html">JDK 21(Eclipse Temurin)과 IntelliJ IDEA 설치</a><a class="cur" href="07_Docker-Desktop-설치와-hello-world.html">Docker Desktop(WSL 2) 설치와 docker run hello-world 확인</a><a class="" href="08_PostgreSQL-17-설치와-pgAdmin.html">PostgreSQL 17 설치판과 pgAdmin 4</a><a class="" href="09_정리와-실습-설치-확인-체크리스트.html">정리와 실습 — 설치 확인 체크리스트</a></div><div class="md"><p class="chapter-name">0장. 환경설정 — 과정 전체 개발 도구 설치</p><h1>Docker Desktop(WSL 2) 설치와 docker run hello-world 확인</h1><div class="lesson-meta"><span>준비</span><span><b>시간</b>40분</span><span><b>개념 지도</b>07 Docker Desktop</span></div><h2>한 줄 요약</h2>
+<p>14장부터 서버 · DB · Redis · Kafka를 <strong>설치하지 않고 컨테이너로</strong> 띄웁니다. 컨테이너는 Linux의 기능으로 돌기 때문에, Windows에서는 <strong>WSL 2</strong>라는 "Windows 안의 작은 Linux" 위에서 Docker가 돕니다. <strong>Docker Desktop</strong>은 이것을 한 번에 준비해 주는 프로그램입니다. 설치할 때 <strong>WSL 2 방식</strong>을 고르고, 처음 켤 때 약관에 동의한 뒤, 터미널에서 <code>docker run hello-world</code>로 첫 컨테이너를 돌려 봅니다.</p>
+<blockquote>
+<p><strong>설치 시점: 14장 직전.</strong> CPU의 가상화 기능이 꺼져 있는 노트북은 드물지만, 4절에서 가상화 오류가 나면 4절의 표대로 BIOS(UEFI)에서 켭니다.</p>
+</blockquote>
+<hr />
+<h2>1. 구조 먼저</h2>
+<figure class="figure">
+<p><img alt="제목은 &quot;Docker Desktop은 Windows 안에 작은 Linux를 두고, 그 위에서 컨테이너를 돌린다&quot;이다. 맨 아래 회색 띠는 내 컴퓨터(CPU · 메모리 8GB 이상)이고, CPU의 가상화 기능이 켜져 있어야 한다, 꺼져 있으면 BIOS(UEFI)에서 켠다고 적혀 있다. 그 위 파란 큰 상자 Windows 11 안에 왼쪽 &quot;내가 쓰는 프로그램&quot; 상자: Docker Desktop 창(고래 아이콘), IntelliJ · VS Code의 Terminal, 명령 docker run hello-world, docker compose up -d, 명령은 Windows에서 친다. 명령 전달 화살표가 오른쪽 초록 상자 &quot;WSL 2 — Windows 안의 작은 Linux(가상 머신)&quot;로 간다. 컨테이너는 Linux 기능으로 돈다, 그래서 Linux가 하나 필요하다. 그 안 흰 상자 Docker 엔진 — &quot;Engine running&quot;이면 켜진 것, 안에 컨테이너 세 개: hello-world(이 절에서), postgres:17(14장), redis · kafka …(21 · 22장). 왼쪽 아래 주황 상자 &quot;설치할 때 고를 것 · 막히는 곳&quot;: 설치 화면 Use WSL 2 instead of Hyper-V, WSL이 낡았으면 wsl --update(관리자), 가상화가 꺼져 있으면 엔진이 안 켜진다, 처음 켤 때 약관(Accept)을 눌러야 돈다, 메모리를 많이 쓴다 → 안 쓸 때는 Quit. 오른쪽 아래 흰 상자 &quot;9장 PostgreSQL(설치판)과는 따로다&quot;: 설치판은 Windows에서 5432번, 14장 컨테이너 DB는 5433번으로 연다, 둘 다 켜져 있어도 번호가 달라 부딪치지 않는다" src="img/docker_wsl.svg" /></p>
+<figcaption>명령은 Windows 터미널에서 치고, 컨테이너는 WSL 2 안의 Docker 엔진이 돌립니다.</figcaption>
+</figure>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>요구 사항 (Docker 문서)</th>
+<th>비고</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Windows 11 64비트, 23H2(빌드 22631) 이상</td>
+<td>최근 2~3년 안에 산 노트북은 대부분 만족한다. 설치가 막히면 <strong>설정 → Windows 업데이트</strong>로 먼저 최신 버전으로 올린다</td>
+</tr>
+<tr>
+<td>하드웨어 가상화가 켜져 있음, 메모리 8GB 이상</td>
+<td>대부분 켜져 있다. 4절에서 가상화 오류가 나면 4절의 표대로 BIOS(UEFI)에서 켠다</td>
+</tr>
+<tr>
+<td>WSL 2.1.5 이상</td>
+<td>아래 2절</td>
+</tr>
+</tbody>
+</table></div>
+<p>출처: <a href="https://docs.docker.com/desktop/setup/install/windows-install/">Docker 문서 — Install Docker Desktop on Windows</a></p>
+<hr />
+<h2>2. WSL 확인 — 필요할 때만 업데이트</h2>
+<p>Windows 11에는 WSL이 들어 있지만 낡은 버전일 수 있습니다. 확인만 해 봅니다.</p>
+<ol>
+<li>시작 버튼을 오른쪽 클릭 → <strong>터미널(관리자)</strong>를 고릅니다. "디바이스를 변경하도록 허용"에 <strong>예</strong>.</li>
+<li>아래를 칩니다.</li>
+</ol>
+<pre><code class="language-text">wsl --version
+</code></pre>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>보이는 것</th>
+<th>할 일</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>WSL 버전: 2.x.x</code> 같은 줄이 여러 개 (2.1.5 이상)</td>
+<td>그대로 3절로</td>
+</tr>
+<tr>
+<td>버전 정보 대신 도움말이 길게 나오거나, 2.1.5보다 낮다</td>
+<td>아래 명령으로 업데이트한다</td>
+</tr>
+</tbody>
+</table></div>
+<pre><code class="language-text">wsl --update
+</code></pre>
+<p>WSL이 아예 없다는 안내가 나오면 <code>wsl --install</code>을 칩니다. 다시 시작하라고 하면 컴퓨터를 다시 시작합니다. 이 관리자 터미널은 이 절에서만 쓰고 닫습니다.</p>
+<p>출처: <a href="https://docs.docker.com/desktop/setup/install/windows-install/#wsl-verification-and-setup">Docker 문서 — WSL: Verification and setup</a>, <a href="https://learn.microsoft.com/windows/wsl/install">Microsoft 문서 — Install WSL</a></p>
+<hr />
+<h2>3. Docker Desktop 설치</h2>
+<ol>
+<li><a href="https://www.docker.com/products/docker-desktop/">docker.com</a>에서 <strong>Download for Windows – AMD64</strong>를 눌러 <code>Docker Desktop Installer.exe</code>를 받습니다.</li>
+<li>받은 파일을 더블클릭합니다. 설치 방식(<strong>내 계정만</strong> · <strong>모든 사용자</strong>)을 물으면 기본값(내 계정만, per-user)을 고릅니다. 관리자 권한 없이 설치 · 업데이트됩니다.</li>
+<li><strong>Configuration</strong> 화면에서 <strong>Use WSL 2 instead of Hyper-V</strong>를 고릅니다. 버전에 따라 WSL 2가 목록의 한 항목으로 나오기도 하는데, 그때도 <strong>WSL 2</strong>를 고릅니다. 이것이 이 과정의 방식입니다.</li>
+<li>안내대로 진행하고, 끝나면 <strong>Close</strong>를 누릅니다. 다시 시작하라는 안내가 나오면 따릅니다.</li>
+</ol>
+<div class="box impl">
+<p><strong>Docker Desktop은 설치 뒤 저절로 켜지지 않습니다.</strong> 다음 4절처럼 직접 켭니다. 그리고 <strong>처음 켤 때 서비스 약관(Docker Subscription Service Agreement)에 Accept를 눌러야</strong> 엔진이 돕니다. Docker Desktop은 개인 · 교육 · 작은 회사(직원 250명 미만이고 연 매출 1천만 달러 미만)에서는 무료입니다. 로그인(Sign in)은 하지 않아도 이 과정의 실습이 됩니다. 15장에서 Docker Hub 계정을 만들 때 다시 봅니다.</p>
+<p>출처: <a href="https://docs.docker.com/desktop/setup/install/windows-install/#start-docker-desktop">Docker 문서 — Start Docker Desktop, 라이선스 요약</a></p>
+</div>
+<hr />
+<h2>4. 켜고 <code>docker run hello-world</code></h2>
+<ol>
+<li>시작 메뉴에서 <strong>Docker Desktop</strong>을 엽니다. 약관 창이 나오면 <strong>Accept</strong>를 누릅니다. 설문 · 로그인 화면은 <strong>Skip</strong>으로 넘어갑니다.</li>
+<li>창 왼쪽 아래가 <strong>Engine running</strong>(초록)이 되고, 작업 표시줄 오른쪽 아래에 <strong>고래 아이콘</strong>이 보이면 켜진 것입니다. 처음에는 1~2분 걸립니다.</li>
+<li>VS Code를 다시 켜고 새 터미널(<code>Ctrl + `</code>)에서 칩니다.</li>
+</ol>
+<pre><code class="language-text">docker --version
+docker compose version
+</code></pre>
+<pre><code class="language-text">Docker version 29.8.2, build 7fc2dff
+Docker Compose version v5.6.0
+</code></pre>
+<p>숫자는 받은 때에 따라 다릅니다. 두 줄 모두 버전이 나오면 됩니다. 이제 첫 컨테이너를 돌립니다.</p>
+<pre><code class="language-text">docker run hello-world
+</code></pre>
+<pre><code class="language-text">Unable to find image 'hello-world:latest' locally
+latest: Pulling from library/hello-world
+…
+Status: Downloaded newer image for hello-world:latest
+
+Hello from Docker!
+This message shows that your installation appears to be working correctly.
+…
+</code></pre>
+<p><strong><code>Hello from Docker!</code></strong>가 보이면 성공입니다. 처음 두 줄은 "내 컴퓨터에 <code>hello-world</code> 이미지가 없어서 Docker Hub에서 받는다"는 뜻이고, 두 번째부터는 바로 <code>Hello from Docker!</code>가 나옵니다. 이미지 · 컨테이너가 무엇인지는 14장에서 배웁니다.</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>보이는 것</th>
+<th>원인</th>
+<th>할 일</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>error during connect</code> · <code>The system cannot find the file specified</code> · <code>docker daemon is not running</code></td>
+<td>Docker Desktop이 꺼져 있거나 아직 켜지는 중</td>
+<td>Docker Desktop을 켜고 <strong>Engine running</strong>이 될 때까지 기다린다</td>
+</tr>
+<tr>
+<td>Docker Desktop이 "Virtualization support not detected" 같은 오류로 멈춘다</td>
+<td>가상화가 꺼져 있다</td>
+<td>노트북을 다시 켜면서 제조사가 안내하는 키(삼성 · LG는 보통 <code>F2</code>)로 BIOS(UEFI)에 들어가, <strong>Virtualization</strong>(Intel VT-x 또는 AMD SVM) 항목을 <strong>Enabled</strong>로 바꾸고 저장한다. 정확한 키와 메뉴 이름은 제조사 지원 페이지에서 "가상화 켜기"로 찾는다. 다른 설정은 바꾸지 않는다</td>
+</tr>
+<tr>
+<td>WSL 관련 오류로 엔진이 안 켜진다</td>
+<td>WSL이 낡았다</td>
+<td>2절 <code>wsl --update</code> 뒤 컴퓨터를 다시 시작한다</td>
+</tr>
+<tr>
+<td><code>'docker' 용어가 … 인식되지 않습니다</code></td>
+<td>터미널이 설치 전 것</td>
+<td>VS Code를 다시 켠다</td>
+</tr>
+</tbody>
+</table></div>
+<div class="box core">
+<p><strong>쓰지 않을 때는 Docker Desktop을 끕니다.</strong> Docker Desktop은 켜 두기만 해도 WSL 2 가상 머신이 메모리를 꽤 씁니다. 13장까지는 쓰지 않으니, 확인이 끝나면 작업 표시줄의 고래 아이콘을 오른쪽 클릭 → <strong>Quit Docker Desktop</strong>으로 끕니다. Windows를 켤 때 저절로 켜지지 않게 하려면 Docker Desktop <strong>Settings → General</strong>의 <strong>Start Docker Desktop when you sign in to your computer</strong>를 끕니다.</p>
+</div>
+<hr />
+<h2>핵심 정리</h2>
+<ul>
+<li>Docker Desktop은 WSL 2(Windows 안의 작은 Linux) 위에서 Docker 엔진을 돌린다. 가상화가 켜져 있어야 하고, 꺼져 있으면 BIOS(UEFI)에서 켠다.</li>
+<li>관리자 터미널에서 <code>wsl --version</code>을 보고, 낡았으면 <code>wsl --update</code>.</li>
+<li>설치는 기본값(내 계정만), Configuration에서 <strong>WSL 2</strong>를 고른다. 처음 켤 때 약관에 Accept.</li>
+<li><strong>Engine running</strong>을 본 뒤 새 터미널에서 <code>docker --version</code> · <code>docker compose version</code> · <code>docker run hello-world</code> → <code>Hello from Docker!</code></li>
+<li>안 쓸 때는 Quit Docker Desktop으로 꺼서 메모리를 아낀다.</li>
+</ul></div></div><div class="pager"><a class="prv" href="06_JDK-21과-IntelliJ-IDEA-설치.html"><span class="lbl">← 이전 절</span>JDK 21(Eclipse Temurin)과 IntelliJ IDEA 설치</a><a class="nxt" href="08_PostgreSQL-17-설치와-pgAdmin.html"><span class="lbl">다음 절 →</span>PostgreSQL 17 설치판과 pgAdmin 4</a></div><footer class="foot"><b>Fullstack Lab</b></footer></div><script src="../assets/app.js"></script></body></html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>커밋은 사진 한 장 — 작업 폴더 · 스테이징 · 저장소 — 풀스택 개발 과정</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&display=swap">
+<link rel="stylesheet" href="../assets/style.css">
+</head><body data-prev="03_설치와-첫-설정.html" data-next="05_따라하기-첫-저장소와-첫-커밋.html">
+<div class="topbar"><a class="home" href="../index.html">풀스택 개발 과정</a><span class="ch">1장 · Git과 GitHub로 협업하기</span><span class="meta">4 / 14</span><span class="nav-btns"><a class="btn" href="03_설치와-첫-설정.html">← 이전</a><a class="btn" href="../index.html">목차</a><a class="btn" href="05_따라하기-첫-저장소와-첫-커밋.html">다음 →</a></span><span class="brand">Fullstack Lab</span></div><div class="wrap"><div class="content"><div class="chip-nav"><b>1장 · Git과 GitHub로 협업하기</b><a class="" href="01_이-장에서-배우는-것.html">Git과 GitHub는 왜 첫 장인가</a><a class="" href="02_용어-정리.html">용어 정리 — 이 장에서 처음 만나는 말</a><a class="" href="03_설치와-첫-설정.html">설치와 첫 설정 — Git Bash와 GitHub 계정</a><a class="cur" href="04_커밋은-사진-한-장-세-영역.html">커밋은 사진 한 장 — 작업 폴더 · 스테이징 · 저장소</a><a class="" href="05_따라하기-첫-저장소와-첫-커밋.html">따라하기 — 첫 저장소와 첫 커밋</a><a class="" href="06_브랜치는-이름표.html">브랜치는 이름표 — switch와 merge</a><a class="" href="07_GitHub와-원격-저장소.html">GitHub와 원격 저장소 — push · clone · fetch · pull</a><a class="" href="08_따라하기-충돌-해결.html">따라하기 — 충돌은 고장이 아니라 대화 요청</a><a class="" href="09_Pull-Request와-GitHub-Flow.html">Pull Request와 GitHub Flow — 합쳐 달라는 요청서</a><a class="" href="10_GitHub-Organizations-우리-팀-저장소.html">GitHub Organizations — 우리 과정의 팀 저장소</a><a class="" href="11_올리면-안-되는-것과-되돌리기.html">올리면 안 되는 것과 되돌리기 — .gitignore · restore · revert</a><a class="" href="12_강사-코드-태그로-따라잡기.html">강사 코드 태그로 따라잡기 — clone · tag · switch --detach</a><a class="" href="13_정리와-체크리스트.html">정리와 체크리스트</a><a class="" href="14_실습문제와-힌트.html">실습문제와 힌트 — 기본 · 필수 · 도전</a></div><div class="md"><p class="chapter-name">1장. Git과 GitHub로 협업하기</p><h1>커밋은 사진 한 장 — 작업 폴더 · 스테이징 · 저장소</h1><div class="lesson-meta"><span>준비</span><span><b>시간</b>50분</span><span><b>개념 지도</b>작업 폴더 · 스테이징 · 로컬 저장소</span></div><h2>한 줄 요약</h2>
+<p><strong>커밋</strong>은 그 순간 프로젝트 전체 파일을 찍은 <strong>사진(스냅샷)</strong>입니다. 사진을 찍기 전에 <strong>무엇을 찍을지 고르는 단계(스테이징)</strong>가 있습니다.</p>
+<hr />
+<h2>1. 커밋은 "사진 한 장"이다</h2>
+<p><strong>커밋이란?</strong> 특정 시점의 프로젝트 파일 상태와 변경 정보(누가, 언제, 왜)를 저장소에 기록한 것입니다. 기록해 둔 커밋으로 언제든 돌아갈 수 있습니다.</p>
+<p>Git은 커밋할 때마다 <strong>그 순간 모든 파일의 모습을 사진처럼 저장</strong>합니다. 바뀌지 않은 파일은 다시 저장하지 않고 이전 사진의 것을 가리키므로, 사진을 많이 찍어도 무겁지 않습니다. (<a href="https://git-scm.com/book/en/v2/Getting-Started-What-is-Git%3F">Pro Git 1.3</a>)</p>
+<div class="box core">
+<p><strong>커밋 = 그 순간 프로젝트 전체의 사진.</strong> 언제든 그 사진으로 돌아갈 수 있습니다.</p>
+</div>
+<hr />
+<h2>2. 사진을 찍기까지 세 영역</h2>
+<figure class="figure">
+<p><img alt="작업 폴더, 스테이징 영역, 로컬 저장소, 원격 저장소" src="img/three_areas.svg" /></p>
+</figure>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>영역</th>
+<th>뜻</th>
+<th>들어가는 명령</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>작업 폴더 (working tree)</td>
+<td>지금 내가 고치고 있는 파일</td>
+<td>파일 수정</td>
+</tr>
+<tr>
+<td>스테이징 영역 (staging area)</td>
+<td>다음 커밋에 넣기로 <strong>고른</strong> 변경</td>
+<td><code>git add</code></td>
+</tr>
+<tr>
+<td>로컬 저장소 (<code>.git</code> 폴더)</td>
+<td>저장한 커밋들</td>
+<td><code>git commit</code></td>
+</tr>
+</tbody>
+</table></div>
+<p>출처: <a href="https://git-scm.com/book/en/v2/Getting-Started-What-is-Git%3F">Pro Git 1.3 — The Three States</a></p>
+<h3>왜 바로 찍지 않고 고르는 단계가 있나</h3>
+<p>로그인 기능을 고치다가 오타 하나를 다른 파일에서 같이 고쳤다고 합시다. 두 변경을 <strong>다른 사진</strong>으로 남기고 싶다면, 로그인 파일만 <code>add</code>해서 먼저 커밋하고, 오타 파일은 나중에 따로 커밋합니다.</p>
+<blockquote>
+<p>한 커밋에는 <strong>한 가지 일</strong>만 담습니다. 나중에 "로그인 기능만 되돌리기"가 쉬워지고, 리뷰하는 팀원도 읽기 쉽습니다.</p>
+</blockquote>
+<hr />
+<h2>3. 파일의 네 가지 상태</h2>
+<p><code>git status</code>는 파일이 지금 어디에 있는지 알려 줍니다.</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th><code>git status</code>에 보이는 말</th>
+<th>뜻</th>
+<th>다음에 할 일</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Untracked files</code></td>
+<td>Git이 아직 모르는 새 파일</td>
+<td><code>git add</code></td>
+</tr>
+<tr>
+<td><code>Changes not staged for commit</code></td>
+<td>고쳤지만 아직 고르지 않음</td>
+<td><code>git add</code></td>
+</tr>
+<tr>
+<td><code>Changes to be committed</code></td>
+<td>골라 둠. 다음 사진에 들어감</td>
+<td><code>git commit</code></td>
+</tr>
+<tr>
+<td><code>nothing to commit, working tree clean</code></td>
+<td>모두 사진으로 찍힘</td>
+<td>다음 작업</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2>핵심 정리</h2>
+<ul>
+<li>커밋은 그 순간 전체 파일의 사진이다.</li>
+<li>작업 폴더 → (<code>add</code>) → 스테이징 → (<code>commit</code>) → 저장소.</li>
+<li>한 커밋에는 한 가지 일만 담는다.</li>
+<li>헷갈리면 언제든 <code>git status</code>.</li>
+</ul></div></div><div class="pager"><a class="prv" href="03_설치와-첫-설정.html"><span class="lbl">← 이전 절</span>설치와 첫 설정 — Git Bash와 GitHub 계정</a><a class="nxt" href="05_따라하기-첫-저장소와-첫-커밋.html"><span class="lbl">다음 절 →</span>따라하기 — 첫 저장소와 첫 커밋</a></div><footer class="foot"><b>Fullstack Lab</b></footer></div><script src="../assets/app.js"></script></body></html>

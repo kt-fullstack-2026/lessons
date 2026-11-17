@@ -1,0 +1,117 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>브랜치는 이름표 — switch와 merge — 풀스택 개발 과정</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&display=swap">
+<link rel="stylesheet" href="../assets/style.css">
+</head><body data-prev="05_따라하기-첫-저장소와-첫-커밋.html" data-next="07_GitHub와-원격-저장소.html">
+<div class="topbar"><a class="home" href="../index.html">풀스택 개발 과정</a><span class="ch">1장 · Git과 GitHub로 협업하기</span><span class="meta">6 / 14</span><span class="nav-btns"><a class="btn" href="05_따라하기-첫-저장소와-첫-커밋.html">← 이전</a><a class="btn" href="../index.html">목차</a><a class="btn" href="07_GitHub와-원격-저장소.html">다음 →</a></span><span class="brand">Fullstack Lab</span></div><div class="wrap"><div class="content"><div class="chip-nav"><b>1장 · Git과 GitHub로 협업하기</b><a class="" href="01_이-장에서-배우는-것.html">Git과 GitHub는 왜 첫 장인가</a><a class="" href="02_용어-정리.html">용어 정리 — 이 장에서 처음 만나는 말</a><a class="" href="03_설치와-첫-설정.html">설치와 첫 설정 — Git Bash와 GitHub 계정</a><a class="" href="04_커밋은-사진-한-장-세-영역.html">커밋은 사진 한 장 — 작업 폴더 · 스테이징 · 저장소</a><a class="" href="05_따라하기-첫-저장소와-첫-커밋.html">따라하기 — 첫 저장소와 첫 커밋</a><a class="cur" href="06_브랜치는-이름표.html">브랜치는 이름표 — switch와 merge</a><a class="" href="07_GitHub와-원격-저장소.html">GitHub와 원격 저장소 — push · clone · fetch · pull</a><a class="" href="08_따라하기-충돌-해결.html">따라하기 — 충돌은 고장이 아니라 대화 요청</a><a class="" href="09_Pull-Request와-GitHub-Flow.html">Pull Request와 GitHub Flow — 합쳐 달라는 요청서</a><a class="" href="10_GitHub-Organizations-우리-팀-저장소.html">GitHub Organizations — 우리 과정의 팀 저장소</a><a class="" href="11_올리면-안-되는-것과-되돌리기.html">올리면 안 되는 것과 되돌리기 — .gitignore · restore · revert</a><a class="" href="12_강사-코드-태그로-따라잡기.html">강사 코드 태그로 따라잡기 — clone · tag · switch --detach</a><a class="" href="13_정리와-체크리스트.html">정리와 체크리스트</a><a class="" href="14_실습문제와-힌트.html">실습문제와 힌트 — 기본 · 필수 · 도전</a></div><div class="md"><p class="chapter-name">1장. Git과 GitHub로 협업하기</p><h1>브랜치는 이름표 — switch와 merge</h1><div class="lesson-meta"><span>준비</span><span><b>시간</b>1시간 30분</span><span><b>개념 지도</b>로컬 저장소 안의 갈림길</span></div><h2>한 줄 요약</h2>
+<p><strong>브랜치</strong>는 커밋을 가리키는 <strong>이름(이름표)</strong>입니다. 파일을 복사하지 않습니다. 이름표를 하나 더 만들어 갈림길에서 마음껏 작업하고, 끝나면 <code>main</code>에 합칩니다(merge).</p>
+<hr />
+<h2>1. 브랜치는 이름표다</h2>
+<figure class="figure">
+<p><img alt="커밋 C1~C5와 main, feature/hobby, HEAD 이름표" src="img/branch_tag.svg" /></p>
+</figure>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>용어</th>
+<th>뜻</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>브랜치</td>
+<td>커밋 하나를 가리키는 이름. 새 커밋을 만들면 그 커밋으로 자동으로 옮겨 간다</td>
+</tr>
+<tr>
+<td><code>main</code></td>
+<td>완성된 코드를 모아 두는 기본 브랜치</td>
+</tr>
+<tr>
+<td><code>HEAD</code></td>
+<td>지금 내가 서 있는 브랜치(또는 커밋)를 가리키는 표시</td>
+</tr>
+</tbody>
+</table></div>
+<div class="box core">
+<p><strong><code>main</code>에서 직접 작업하지 않습니다.</strong> 기능마다 브랜치를 만들고, 끝나면 합칩니다. 갈림길에서 코드를 망가뜨려도 <code>main</code>은 멀쩡합니다.</p>
+</div>
+<hr />
+<h2>2. 따라하기 — 브랜치 만들고 이동하기</h2>
+<p>5절의 <code>my-first-repo</code>에서 이어 합니다.</p>
+<pre><code class="language-bash"><span class="prompt">$ </span>git switch -c feature/hobby
+<span class="prompt">$ </span>git branch
+</code></pre>
+<p><strong>실행 결과</strong></p>
+<pre><code class="language-text">Switched to a new branch 'feature/hobby'
+* feature/hobby
+  main
+</code></pre>
+<p><code>*</code>가 지금 서 있는 브랜치입니다. 여기서 커밋을 하나 찍습니다.</p>
+<pre><code class="language-bash"><span class="prompt">$ </span>printf '취미: 등산\n' &gt;&gt; README.md
+<span class="prompt">$ </span>git add README.md
+<span class="prompt">$ </span>git commit -m &quot;docs: 취미 추가&quot;
+<span class="prompt">$ </span>git log --oneline --graph --all
+</code></pre>
+<pre><code class="language-text">* 73ed024 (HEAD -&gt; feature/hobby) docs: 취미 추가
+* 310a2ea (main) chore: 메모 삭제
+* 5c1d0b7 docs: 메모 추가
+* ef983ad docs: 목표 추가
+* 932e50d docs: 자기소개 README 추가
+</code></pre>
+<p>이제 <code>main</code>으로 돌아가 README를 봅니다.</p>
+<pre><code class="language-bash"><span class="prompt">$ </span>git switch main
+<span class="prompt">$ </span>cat README.md
+</code></pre>
+<pre><code class="language-text"># 자기소개
+
+이름: 나학생
+목표: 풀스택 개발자
+</code></pre>
+<p><strong>취미 줄이 없습니다.</strong> 위 결과에서 <code>(main)</code>이 아직 <code>310a2ea</code>(예전 커밋)를 가리키고 있기 때문입니다.</p>
+<hr />
+<h2>3. 합치기 — <code>git merge</code></h2>
+<pre><code class="language-bash"><span class="prompt">$ </span>git merge feature/hobby
+</code></pre>
+<p><strong>실행 결과</strong></p>
+<pre><code class="language-text">Updating 310a2ea..73ed024
+Fast-forward
+ README.md | 1 +
+ 1 file changed, 1 insertion(+)
+</code></pre>
+<p><code>Fast-forward</code>는 <code>main</code>이 그동안 움직이지 않아서, <strong>이름표만 앞으로 옮겼다</strong>는 뜻입니다. 두 갈림길이 모두 움직였다면 Git이 새로운 "합친 사진(merge commit)"을 찍습니다.</p>
+<hr />
+<h2>4. <code>checkout</code>과 <code>switch</code></h2>
+<p>인터넷 자료에는 <code>git checkout 브랜치</code>가 많이 나옵니다. Git 2.23(2019)부터 <code>checkout</code>이 하던 두 가지 일을 <code>switch</code>(브랜치 이동)와 <code>restore</code>(파일 되돌리기)로 나눴습니다. (<a href="https://github.com/git/git/blob/master/Documentation/RelNotes/2.23.0.adoc">Git 2.23 릴리스 노트</a>)</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>예전 방식</th>
+<th>이 과정에서 쓰는 방식</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>git checkout feature/a</code></td>
+<td><code>git switch feature/a</code></td>
+</tr>
+<tr>
+<td><code>git checkout -b feature/a</code></td>
+<td><code>git switch -c feature/a</code></td>
+</tr>
+<tr>
+<td><code>git checkout -- 파일</code></td>
+<td><code>git restore 파일</code></td>
+</tr>
+</tbody>
+</table></div>
+<p>뜻은 같으니, <code>checkout</code>이 나오면 위 표로 바꿔 읽으면 됩니다.</p>
+<hr />
+<h2>핵심 정리</h2>
+<ul>
+<li>브랜치는 커밋을 가리키는 이름표다.</li>
+<li><code>git switch -c 이름</code>으로 만들고 이동, <code>git switch 이름</code>으로 이동.</li>
+<li><code>git merge 브랜치</code>로 지금 브랜치에 합친다.</li>
+<li><code>main</code>에서 직접 작업하지 않는다.</li>
+</ul></div></div><div class="pager"><a class="prv" href="05_따라하기-첫-저장소와-첫-커밋.html"><span class="lbl">← 이전 절</span>따라하기 — 첫 저장소와 첫 커밋</a><a class="nxt" href="07_GitHub와-원격-저장소.html"><span class="lbl">다음 절 →</span>GitHub와 원격 저장소 — push · clone · fetch · pull</a></div><footer class="foot"><b>Fullstack Lab</b></footer></div><script src="../assets/app.js"></script></body></html>

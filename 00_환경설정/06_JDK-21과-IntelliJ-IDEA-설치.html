@@ -1,0 +1,247 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>JDK 21(Eclipse Temurin)과 IntelliJ IDEA 설치 — 풀스택 개발 과정</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&display=swap">
+<link rel="stylesheet" href="../assets/style.css">
+</head><body data-prev="05_Node.js-24-LTS-설치와-확인.html" data-next="07_Docker-Desktop-설치와-hello-world.html">
+<div class="topbar"><a class="home" href="../index.html">풀스택 개발 과정</a><span class="ch">0장 · 환경설정 — 과정 전체 개발 도구 설치</span><span class="meta">6 / 9</span><span class="nav-btns"><a class="btn" href="05_Node.js-24-LTS-설치와-확인.html">← 이전</a><a class="btn" href="../index.html">목차</a><a class="btn" href="07_Docker-Desktop-설치와-hello-world.html">다음 →</a></span><span class="brand">Fullstack Lab</span></div><div class="wrap"><div class="content"><div class="chip-nav"><b>0장 · 환경설정 — 과정 전체 개발 도구 설치</b><a class="" href="01_이-장에서-배우는-것.html">도구는 한 번에 다 설치하지 않고, 쓰기 직전에 하나씩</a><a class="" href="02_용어-정리.html">용어 정리</a><a class="" href="03_설치-전-확인.html">설치 전 확인 — 확장자, 작업 폴더</a><a class="" href="04_VS-Code와-확장.html">VS Code와 확장 설치</a><a class="" href="05_Node.js-24-LTS-설치와-확인.html">Node.js 24 LTS 설치와 node -v · npm -v 확인</a><a class="cur" href="06_JDK-21과-IntelliJ-IDEA-설치.html">JDK 21(Eclipse Temurin)과 IntelliJ IDEA 설치</a><a class="" href="07_Docker-Desktop-설치와-hello-world.html">Docker Desktop(WSL 2) 설치와 docker run hello-world 확인</a><a class="" href="08_PostgreSQL-17-설치와-pgAdmin.html">PostgreSQL 17 설치판과 pgAdmin 4</a><a class="" href="09_정리와-실습-설치-확인-체크리스트.html">정리와 실습 — 설치 확인 체크리스트</a></div><div class="md"><p class="chapter-name">0장. 환경설정 — 과정 전체 개발 도구 설치</p><h1>JDK 21(Eclipse Temurin)과 IntelliJ IDEA 설치</h1><div class="lesson-meta"><span>준비</span><span><b>시간</b>40분</span><span><b>개념 지도</b>06 JDK · IntelliJ</span></div><h2>한 줄 요약</h2>
+<p>10장부터 Spring 서버를 Java로 만듭니다. Java 코드를 실행하려면 <strong>JDK</strong>가, 편하게 쓰고 실행하려면 <strong>IntelliJ IDEA</strong>가 필요합니다. JDK는 무료 배포판인 <strong>Eclipse Temurin 21</strong>(LTS)을 설치하고, 설치 중 <strong><code>JAVA_HOME</code> 설정</strong> 칸 하나를 켭니다. IntelliJ IDEA는 2025.3부터 무료판과 유료판이 <strong>하나의 프로그램</strong>으로 합쳐졌습니다. 그대로 설치하면 이 과정에 필요한 기능은 모두 무료로 씁니다. 마지막으로 IntelliJ가 JDK 21을 알아보는지 확인합니다.</p>
+<blockquote>
+<p><strong>설치 시점: 10장 직전.</strong></p>
+</blockquote>
+<hr />
+<h2>1. JDK 21 — Eclipse Temurin</h2>
+<h3>1-1. 받기</h3>
+<ol>
+<li><a href="https://adoptium.net/temurin/releases/">adoptium.net</a>의 Temurin 내려받기 화면을 엽니다.</li>
+<li>고르는 칸을 <strong>Operating System: Windows</strong>, <strong>Architecture: x64</strong>, <strong>Package Type: JDK</strong>, <strong>Version: 21 - LTS</strong>로 맞춥니다.</li>
+<li>목록에서 <strong><code>.msi</code></strong> 파일을 받습니다. 이름이 <code>OpenJDK21U-jdk_x64_windows_hotspot_21.0.….msi</code> 같은 모양입니다.</li>
+</ol>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>헷갈리기 쉬운 것</th>
+<th>고를 것</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>JDK와 JRE</td>
+<td><strong>JDK</strong>. JRE는 실행만 하고 컴파일러가 없다</td>
+</tr>
+<tr>
+<td>21과 더 높은 버전(25 등)</td>
+<td><strong>21</strong>. 이 과정의 Spring Boot 4.1 · Gradle 설정은 Java 21로 맞췄다(10장 <code>build.gradle</code>의 <code>JavaLanguageVersion.of(21)</code>)</td>
+</tr>
+<tr>
+<td><code>.msi</code>와 <code>.zip</code></td>
+<td><strong><code>.msi</code></strong>. 설치 프로그램이 <code>PATH</code> · <code>JAVA_HOME</code>까지 설정해 준다</td>
+</tr>
+</tbody>
+</table></div>
+<h3>1-2. 설치 — <code>JAVA_HOME</code> 칸 하나만 켠다</h3>
+<p>받은 <code>.msi</code>를 더블클릭합니다. 사용권에 동의하고 <strong>Next</strong>를 누르면 <strong>Custom Setup</strong> 화면이 나옵니다. 여기서 한 칸만 바꿉니다.</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>항목 (화면 글자)</th>
+<th>기본값</th>
+<th>고를 것</th>
+<th>하는 일</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Add to PATH</td>
+<td>설치</td>
+<td>그대로</td>
+<td><code>java</code> 명령을 어디서나 칠 수 있다</td>
+</tr>
+<tr>
+<td>Associate .jar</td>
+<td>설치</td>
+<td>그대로</td>
+<td><code>.jar</code> 파일을 더블클릭하면 Java로 연다</td>
+</tr>
+<tr>
+<td><strong>Set JAVA_HOME variable</strong></td>
+<td><strong>설치 안 함 (X 표시)</strong></td>
+<td><strong>"Will be installed on local hard drive"로 바꾼다</strong></td>
+<td><code>JAVA_HOME</code>에 JDK 위치를 적는다. Gradle 같은 도구가 이것으로 Java를 찾는다</td>
+</tr>
+<tr>
+<td>JavaSoft (Oracle) registry keys</td>
+<td>설치 안 함</td>
+<td>그대로</td>
+<td>이 과정에서 필요 없다</td>
+</tr>
+</tbody>
+</table></div>
+<p>항목 이름 왼쪽의 아이콘을 누르면 메뉴가 열립니다. <strong>Set JAVA_HOME variable</strong> 왼쪽 아이콘을 눌러 <strong>Will be installed on local hard drive</strong>를 고르면 X 표시가 사라집니다. 그다음 <strong>Next → Install → 예 → Finish</strong>입니다.</p>
+<p>출처: <a href="https://adoptium.net/installation/windows/">Adoptium — Windows MSI 설치 안내(설치 항목 FeatureJavaHome은 기본으로 꺼져 있음)</a></p>
+<h3>1-3. 확인</h3>
+<p>설치 전 열려 있던 터미널은 바뀐 <code>PATH</code>를 모르므로, <strong>VS Code를 다시 켜고</strong> 새 터미널에서 칩니다.</p>
+<pre><code class="language-text">java -version
+</code></pre>
+<pre><code class="language-text">openjdk version &quot;21.0.12.1&quot; 2026-08-18 LTS
+OpenJDK Runtime Environment Temurin-21.0.12.1+1 (build 21.0.12.1+1-LTS)
+OpenJDK 64-Bit Server VM Temurin-21.0.12.1+1 (build 21.0.12.1+1-LTS, mixed mode, sharing)
+</code></pre>
+<p>첫 줄에 <strong><code>"21.</code></strong>, 둘째 줄에 <strong><code>Temurin</code></strong>이 보이면 됩니다. 뒤 숫자와 날짜는 받은 때에 따라 다릅니다.</p>
+<p><code>JAVA_HOME</code>도 확인합니다(PowerShell에서 환경 변수를 읽는 모양입니다).</p>
+<pre><code class="language-text">$env:JAVA_HOME
+</code></pre>
+<p><code>C:\Program Files\Eclipse Adoptium\jdk-21.…-hotspot</code> 같은 경로가 나오면 됩니다. 아무것도 안 나오면 1-2의 칸을 빠뜨린 것입니다. <code>.msi</code>를 다시 실행해 <strong>Change</strong>(바꾸기)를 고르고 그 칸을 켭니다.</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>보이는 것</th>
+<th>원인</th>
+<th>할 일</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>'java' 용어가 … 인식되지 않습니다</code></td>
+<td>터미널이 설치 전 것</td>
+<td>VS Code를 다시 켠다. 그래도 같으면 컴퓨터를 다시 시작한다</td>
+</tr>
+<tr>
+<td><code>java version "1.8.…"</code>, <code>"17.…"</code> 등 다른 버전</td>
+<td>예전에 설치한 Java가 <code>PATH</code>에서 먼저 잡힌다</td>
+<td><strong>설정 → 앱 → 설치된 앱</strong>에서 예전 Java를 지우고, 터미널을 새로 열어 다시 확인한다</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2>2. IntelliJ IDEA</h2>
+<h3>2-1. 어떤 IntelliJ를 받나</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>예전 (2025.2까지)</th>
+<th>지금 (2025.3부터)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Community Edition</strong>(무료)과 <strong>Ultimate</strong>(유료)를 따로 받았다</td>
+<td><strong>IntelliJ IDEA</strong> 하나만 받는다. 구독이 없어도 상업용 · 비상업용 모두 무료로 쓰고, 일부 기능만 구독이 필요하다</td>
+</tr>
+</tbody>
+</table></div>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>이 과정에서 쓰는 것</th>
+<th>구독 없이</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Java 코드 쓰기 · 실행 · 디버깅, Gradle 프로젝트 열기, Terminal, Git</td>
+<td>된다</td>
+</tr>
+<tr>
+<td>Spring 설정 파일 색칠 · 새 Spring 프로젝트 만들기 마법사</td>
+<td>된다 (이 과정은 start.spring.io에서 프로젝트를 받으므로 마법사는 쓰지 않는다)</td>
+</tr>
+<tr>
+<td><code>.http</code> 파일 옆 ▶ 버튼 (<strong>HTTP Client</strong>)</td>
+<td><strong>구독이 필요하다.</strong> 10장 07절의 안내대로 같은 <code>.http</code> 파일을 <strong>VS Code REST Client</strong>(9장)로 보낸다</td>
+</tr>
+<tr>
+<td>DB 표 안의 데이터 보기 · SQL 실행</td>
+<td>구독이 필요하다. 이 과정은 <strong>pgAdmin</strong>(08절)으로 한다</td>
+</tr>
+</tbody>
+</table></div>
+<p>출처: <a href="https://blog.jetbrains.com/idea/2025/07/intellij-idea-unified-distribution-plan/">JetBrains 블로그 — IntelliJ IDEA 통합 배포 계획(2025-07)</a></p>
+<h3>2-2. 받기와 설치</h3>
+<ol>
+<li><a href="https://www.jetbrains.com/idea/download/">jetbrains.com/idea/download</a>에서 <strong>Windows</strong>를 고르고 <strong><code>.exe</code></strong>를 받습니다.</li>
+<li>받은 <code>.exe</code>를 더블클릭하고 <strong>Next</strong>를 누릅니다. 설치 위치는 기본값 그대로 <strong>Next</strong>.</li>
+<li><strong>Installation Options</strong> 화면에서 아래처럼 체크하고 <strong>Next → Install</strong>을 누릅니다.</li>
+</ol>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>칸</th>
+<th>고를 것</th>
+<th>이유</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Create Desktop Shortcut</td>
+<td>원하는 대로</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Update PATH Variable (Add "bin" folder to the PATH)</td>
+<td>비워 둔다</td>
+<td>터미널에서 IntelliJ를 여는 명령. 이 과정에서 쓰지 않는다</td>
+</tr>
+<tr>
+<td>Update Context Menu (Add "Open Folder as Project")</td>
+<td><strong>체크</strong></td>
+<td>폴더를 오른쪽 클릭해 IntelliJ 프로젝트로 연다</td>
+</tr>
+<tr>
+<td>Create Associations (<code>.java</code> 등)</td>
+<td>비워 둔다</td>
+<td><code>.java</code> 파일을 더블클릭할 일이 거의 없다</td>
+</tr>
+</tbody>
+</table></div>
+<p>설치가 끝나면 <strong>Finish</strong>를 누릅니다. 다시 시작하라는 칸이 나오면 그대로 따릅니다.</p>
+<p>출처: <a href="https://www.jetbrains.com/help/idea/installation-guide.html">JetBrains — IntelliJ IDEA 설치 안내(Windows 독립 설치)</a></p>
+<div class="box more">
+<p><strong>JetBrains Toolbox App</strong>: JetBrains는 여러 제품을 설치하고 업데이트하는 Toolbox App을 권합니다. 이 과정은 IntelliJ 하나만 쓰므로 위처럼 바로 설치하는 방법으로 충분합니다. 집에서 다른 JetBrains 제품도 쓴다면 Toolbox로 설치해도 됩니다.</p>
+</div>
+<h3>2-3. 처음 켜기</h3>
+<ol>
+<li>시작 메뉴에서 <strong>IntelliJ IDEA</strong>를 엽니다.</li>
+<li>사용권 동의 · 사용 통계 보내기(보내지 않아도 된다) 화면을 지납니다. 예전 설정을 가져올지 물으면 <strong>Do not import settings</strong> 또는 <strong>Skip</strong>을 고릅니다.</li>
+<li><strong>Welcome to IntelliJ IDEA</strong> 창(가운데에 New Project · Open 버튼)이 보이면 설치 끝입니다.</li>
+</ol>
+<hr />
+<h2>3. IntelliJ가 JDK 21을 알아보나</h2>
+<p>10장 03절에서 처음 프로젝트를 만들 때 JDK 목록에 21이 있어야 합니다. 지금 미리 확인합니다.</p>
+<ol>
+<li>Welcome 창에서 <strong>New Project</strong>를 누릅니다.</li>
+<li>왼쪽에서 <strong>Java</strong>를 고르고, 가운데 <strong>JDK</strong> 칸의 목록을 엽니다.</li>
+<li><strong>21 Eclipse Temurin version 21.0.…</strong>(또는 <code>temurin-21</code>) 같은 줄이 보이면 됩니다. 확인만 하고 창을 <strong>취소</strong>(Cancel)로 닫습니다. 프로젝트는 10장에서 만듭니다.</li>
+</ol>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>보이는 것</th>
+<th>할 일</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>목록에 21이 있다</td>
+<td>끝</td>
+</tr>
+<tr>
+<td>목록에 21이 없다</td>
+<td>같은 목록의 <strong>Add JDK from disk…</strong>를 누르고 <code>C:\Program Files\Eclipse Adoptium\jdk-21…</code> 폴더를 고른다</td>
+</tr>
+<tr>
+<td>디스크에도 없다</td>
+<td>같은 목록의 <strong>Download JDK…</strong>에서 Version <strong>21</strong>, Vendor <strong>Eclipse Temurin</strong>을 고르면 IntelliJ가 받아 준다. 그래도 터미널의 <code>java -version</code>을 위해 1절을 다시 한다</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2>핵심 정리</h2>
+<ul>
+<li>JDK는 adoptium.net에서 <strong>Temurin 21, Windows x64, JDK, <code>.msi</code></strong>를 받는다. 설치 중 <strong>Set JAVA_HOME variable</strong>만 켠다(기본은 꺼져 있다).</li>
+<li>새 터미널에서 <code>java -version</code>이 <code>"21.</code> · <code>Temurin</code>을, <code>$env:JAVA_HOME</code>이 JDK 경로를 보여 주면 된다.</li>
+<li>IntelliJ IDEA는 2025.3부터 하나로 합쳐졌다. 구독 없이 이 과정에 필요한 기능을 쓰고, HTTP Client는 VS Code REST Client로, DB 데이터 보기는 pgAdmin으로 대신한다.</li>
+<li>설치 옵션은 "Open Folder as Project"만 켠다.</li>
+<li>New Project의 JDK 목록에 21이 보이는지 확인한다. 없으면 Add JDK from disk.</li>
+</ul></div></div><div class="pager"><a class="prv" href="05_Node.js-24-LTS-설치와-확인.html"><span class="lbl">← 이전 절</span>Node.js 24 LTS 설치와 node -v · npm -v 확인</a><a class="nxt" href="07_Docker-Desktop-설치와-hello-world.html"><span class="lbl">다음 절 →</span>Docker Desktop(WSL 2) 설치와 docker run hello-world 확인</a></div><footer class="foot"><b>Fullstack Lab</b></footer></div><script src="../assets/app.js"></script></body></html>

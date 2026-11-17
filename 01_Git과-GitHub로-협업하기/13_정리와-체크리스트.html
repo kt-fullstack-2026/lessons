@@ -1,0 +1,124 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>정리와 체크리스트 — 풀스택 개발 과정</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&display=swap">
+<link rel="stylesheet" href="../assets/style.css">
+</head><body data-prev="12_강사-코드-태그로-따라잡기.html" data-next="14_실습문제와-힌트.html">
+<div class="topbar"><a class="home" href="../index.html">풀스택 개발 과정</a><span class="ch">1장 · Git과 GitHub로 협업하기</span><span class="meta">13 / 14</span><span class="nav-btns"><a class="btn" href="12_강사-코드-태그로-따라잡기.html">← 이전</a><a class="btn" href="../index.html">목차</a><a class="btn" href="14_실습문제와-힌트.html">다음 →</a></span><span class="brand">Fullstack Lab</span></div><div class="wrap"><div class="content"><div class="chip-nav"><b>1장 · Git과 GitHub로 협업하기</b><a class="" href="01_이-장에서-배우는-것.html">Git과 GitHub는 왜 첫 장인가</a><a class="" href="02_용어-정리.html">용어 정리 — 이 장에서 처음 만나는 말</a><a class="" href="03_설치와-첫-설정.html">설치와 첫 설정 — Git Bash와 GitHub 계정</a><a class="" href="04_커밋은-사진-한-장-세-영역.html">커밋은 사진 한 장 — 작업 폴더 · 스테이징 · 저장소</a><a class="" href="05_따라하기-첫-저장소와-첫-커밋.html">따라하기 — 첫 저장소와 첫 커밋</a><a class="" href="06_브랜치는-이름표.html">브랜치는 이름표 — switch와 merge</a><a class="" href="07_GitHub와-원격-저장소.html">GitHub와 원격 저장소 — push · clone · fetch · pull</a><a class="" href="08_따라하기-충돌-해결.html">따라하기 — 충돌은 고장이 아니라 대화 요청</a><a class="" href="09_Pull-Request와-GitHub-Flow.html">Pull Request와 GitHub Flow — 합쳐 달라는 요청서</a><a class="" href="10_GitHub-Organizations-우리-팀-저장소.html">GitHub Organizations — 우리 과정의 팀 저장소</a><a class="" href="11_올리면-안-되는-것과-되돌리기.html">올리면 안 되는 것과 되돌리기 — .gitignore · restore · revert</a><a class="" href="12_강사-코드-태그로-따라잡기.html">강사 코드 태그로 따라잡기 — clone · tag · switch --detach</a><a class="cur" href="13_정리와-체크리스트.html">정리와 체크리스트</a><a class="" href="14_실습문제와-힌트.html">실습문제와 힌트 — 기본 · 필수 · 도전</a></div><div class="md"><p class="chapter-name">1장. Git과 GitHub로 협업하기</p><h1>정리와 체크리스트</h1><div class="lesson-meta"><span>준비</span><span><b>시간</b>20분</span><span><b>개념 지도</b>전체 흐름</span></div><h2>1장에서 배운 것</h2>
+<ul>
+<li><strong>Git과 GitHub</strong> — Git은 내 PC의 기록 도구, GitHub는 그 기록을 올려 두고 함께 쓰는 인터넷 서비스다.</li>
+<li><strong>커밋</strong> — 특정 시점의 프로젝트 파일 상태를 저장한 기록. 작업 폴더 → 스테이징(<code>add</code>) → 저장소(<code>commit</code>) 세 영역을 지난다.</li>
+<li><strong>브랜치</strong> — 커밋을 가리키는 이름. 새 커밋을 만들면 따라 옮겨 간다. <code>main</code>은 늘 동작하는 상태로 두고, 일은 새 브랜치에서 한다.</li>
+<li><strong>원격 저장소</strong> — <code>push</code>로 올리고, <code>fetch</code>/<code>pull</code>로 받는다. 올리기 전에 먼저 받는다.</li>
+<li><strong>충돌</strong> — 같은 줄을 다르게 고치면 Git이 사람에게 고르게 한다. 표시를 지우고 고른 뒤 다시 커밋한다.</li>
+<li><strong>Pull Request와 GitHub Flow</strong> — 브랜치 → 커밋 → push → PR → 리뷰 → merge. 팀 프로젝트는 이 순서로만 <code>main</code>에 합친다.</li>
+<li><strong>GitHub Organizations</strong> — 팀 저장소를 조직에 모아 권한과 <code>main</code> 보호 규칙을 한곳에서 관리한다.</li>
+<li><strong>안전하게 되돌리기</strong> — 비밀 정보는 <code>.gitignore</code>로 처음부터 막고, 올린 커밋은 <code>revert</code>로 취소한다.</li>
+<li><strong>태그로 따라잡기</strong> — 놓친 단계는 강사 저장소의 태그로 이동해 비교하며 따라간다.</li>
+</ul>
+<hr />
+<h2>한눈에 보는 핵심</h2>
+<blockquote>
+<p><strong>커밋 = 사진 한 장, 브랜치 = 움직이는 이름표, 태그 = 고정된 이름표</strong></p>
+<p><strong>올리기 전에 먼저 받는다: <code>pull</code> → 작업 → <code>push</code></strong></p>
+<p><strong><code>main</code>에는 PR로만 합친다</strong></p>
+</blockquote>
+<hr />
+<h2>자주 쓰는 명령 한 장 요약</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>하고 싶은 일</th>
+<th>명령</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>처음 설정</td>
+<td><code>git config --global user.name "이름"</code></td>
+</tr>
+<tr>
+<td>저장소 만들기 / 받기</td>
+<td><code>git init</code> / <code>git clone 주소</code></td>
+</tr>
+<tr>
+<td>상태 보기</td>
+<td><code>git status</code>, <code>git diff</code>, <code>git log --oneline --graph</code></td>
+</tr>
+<tr>
+<td>사진 찍기</td>
+<td><code>git add 파일</code>, <code>git commit -m "메시지"</code></td>
+</tr>
+<tr>
+<td>브랜치</td>
+<td><code>git branch</code>, <code>git switch -c 새이름</code>, <code>git switch 이름</code>, <code>git merge 이름</code></td>
+</tr>
+<tr>
+<td>원격</td>
+<td><code>git remote add origin 주소</code>, <code>git push -u origin 브랜치</code>, <code>git fetch</code>, <code>git pull</code></td>
+</tr>
+<tr>
+<td>되돌리기</td>
+<td><code>git restore 파일</code>, <code>git restore --staged 파일</code>, <code>git revert 커밋</code></td>
+</tr>
+<tr>
+<td>태그</td>
+<td><code>git tag</code>, <code>git switch --detach 태그</code></td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2>체크리스트</h2>
+<p>말로 설명할 수 있으면 통과입니다. 오늘 퀴즈는 이 목록에서 나옵니다.</p>
+<ul>
+<li>[ ] Git과 GitHub의 차이를 한 문장으로 말할 수 있다.</li>
+<li>[ ] 세 영역(작업 폴더·스테이징·저장소)과 <code>add</code>, <code>commit</code>이 하는 일을 말할 수 있다.</li>
+<li>[ ] <code>git status</code> 결과를 보고 파일이 어느 영역에 있는지 말할 수 있다.</li>
+<li>[ ] 브랜치가 "이름표"라는 뜻을 그림으로 그릴 수 있다.</li>
+<li>[ ] <code>push</code>가 거절당했을 때 무엇을 먼저 해야 하는지 말할 수 있다.</li>
+<li>[ ] 충돌 표시(<code>&lt;&lt;&lt;&lt;&lt;&lt;&lt;</code>, <code>=======</code>, <code>&gt;&gt;&gt;&gt;&gt;&gt;&gt;</code>)를 지우고 해결 커밋을 만들 수 있다.</li>
+<li>[ ] GitHub Flow 6단계를 순서대로 말할 수 있다.</li>
+<li>[ ] 우리 팀 저장소의 <code>main</code>에 직접 push할 수 없는 이유를 말할 수 있다.</li>
+<li>[ ] 비밀 키를 올렸을 때 지우기만으로 끝나지 않는 이유를 말할 수 있다.</li>
+<li>[ ] <code>revert</code>와 <code>reset --hard</code>의 차이를 말할 수 있다.</li>
+<li>[ ] 강사 코드 태그로 이동했다가 <code>main</code>으로 돌아올 수 있다.</li>
+</ul>
+<hr />
+<h2>자주 막히는 곳 (Windows)</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>증상</th>
+<th>원인</th>
+<th>해결</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>한글 파일 이름이 <code>\354\225\210</code> 처럼 보인다</td>
+<td>경로를 8진수로 표시</td>
+<td><code>git config --global core.quotepath false</code></td>
+</tr>
+<tr>
+<td><code>git pull</code>이 "divergent branches"로 멈춘다</td>
+<td>합치는 방법이 정해지지 않음</td>
+<td><code>git config --global pull.rebase false</code> (3절)</td>
+</tr>
+<tr>
+<td>push 때 비밀번호를 넣었는데 실패한다</td>
+<td>2021년부터 비밀번호 인증 중단</td>
+<td>브라우저 로그인 창(Git Credential Manager)으로 로그인</td>
+</tr>
+<tr>
+<td>커밋 창이 Vim으로 열려 나갈 수 없다</td>
+<td>기본 편집기가 Vim</td>
+<td><code>Esc</code> → <code>:wq</code> → <code>Enter</code>. 앞으로는 <code>-m "메시지"</code> 사용</td>
+</tr>
+<tr>
+<td><code>fatal: not a git repository</code></td>
+<td>저장소가 아닌 폴더에서 실행</td>
+<td><code>pwd</code>로 위치 확인 후 저장소 폴더로 <code>cd</code></td>
+</tr>
+</tbody>
+</table></div></div></div><div class="pager"><a class="prv" href="12_강사-코드-태그로-따라잡기.html"><span class="lbl">← 이전 절</span>강사 코드 태그로 따라잡기 — clone · tag · switch --detach</a><a class="nxt" href="14_실습문제와-힌트.html"><span class="lbl">다음 절 →</span>실습문제와 힌트 — 기본 · 필수 · 도전</a></div><footer class="foot"><b>Fullstack Lab</b></footer></div><script src="../assets/app.js"></script></body></html>

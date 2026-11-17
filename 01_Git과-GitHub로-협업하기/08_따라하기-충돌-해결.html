@@ -1,0 +1,168 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>따라하기 — 충돌은 고장이 아니라 대화 요청 — 풀스택 개발 과정</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&display=swap">
+<link rel="stylesheet" href="../assets/style.css">
+</head><body data-prev="07_GitHub와-원격-저장소.html" data-next="09_Pull-Request와-GitHub-Flow.html">
+<div class="topbar"><a class="home" href="../index.html">풀스택 개발 과정</a><span class="ch">1장 · Git과 GitHub로 협업하기</span><span class="meta">8 / 14</span><span class="nav-btns"><a class="btn" href="07_GitHub와-원격-저장소.html">← 이전</a><a class="btn" href="../index.html">목차</a><a class="btn" href="09_Pull-Request와-GitHub-Flow.html">다음 →</a></span><span class="brand">Fullstack Lab</span></div><div class="wrap"><div class="content"><div class="chip-nav"><b>1장 · Git과 GitHub로 협업하기</b><a class="" href="01_이-장에서-배우는-것.html">Git과 GitHub는 왜 첫 장인가</a><a class="" href="02_용어-정리.html">용어 정리 — 이 장에서 처음 만나는 말</a><a class="" href="03_설치와-첫-설정.html">설치와 첫 설정 — Git Bash와 GitHub 계정</a><a class="" href="04_커밋은-사진-한-장-세-영역.html">커밋은 사진 한 장 — 작업 폴더 · 스테이징 · 저장소</a><a class="" href="05_따라하기-첫-저장소와-첫-커밋.html">따라하기 — 첫 저장소와 첫 커밋</a><a class="" href="06_브랜치는-이름표.html">브랜치는 이름표 — switch와 merge</a><a class="" href="07_GitHub와-원격-저장소.html">GitHub와 원격 저장소 — push · clone · fetch · pull</a><a class="cur" href="08_따라하기-충돌-해결.html">따라하기 — 충돌은 고장이 아니라 대화 요청</a><a class="" href="09_Pull-Request와-GitHub-Flow.html">Pull Request와 GitHub Flow — 합쳐 달라는 요청서</a><a class="" href="10_GitHub-Organizations-우리-팀-저장소.html">GitHub Organizations — 우리 과정의 팀 저장소</a><a class="" href="11_올리면-안-되는-것과-되돌리기.html">올리면 안 되는 것과 되돌리기 — .gitignore · restore · revert</a><a class="" href="12_강사-코드-태그로-따라잡기.html">강사 코드 태그로 따라잡기 — clone · tag · switch --detach</a><a class="" href="13_정리와-체크리스트.html">정리와 체크리스트</a><a class="" href="14_실습문제와-힌트.html">실습문제와 힌트 — 기본 · 필수 · 도전</a></div><div class="md"><p class="chapter-name">1장. Git과 GitHub로 협업하기</p><h1>따라하기 — 충돌은 고장이 아니라 대화 요청</h1><div class="lesson-meta"><span>준비</span><span><b>시간</b>2시간</span><span><b>개념 지도</b>두 갈림길이 만나는 곳 (merge)</span></div><h2>한 줄 요약</h2>
+<p><strong>충돌(conflict)</strong>은 두 사람이 <strong>같은 파일의 같은 줄</strong>을 다르게 고쳤을 때만 생깁니다. Git이 어느 쪽이 맞는지 모르니 사람에게 묻는 것입니다. 표시를 읽고, 원하는 모습으로 고치고, 다시 커밋하면 끝입니다.</p>
+<hr />
+<h2>1. 혼자서 충돌 만들어 보기</h2>
+<p><code>my-first-repo</code>에서 두 브랜치가 같은 줄을 다르게 고치게 만듭니다. 파일은 <strong>편집기로 직접 열어 고칩니다.</strong></p>
+<blockquote>
+<p>편집기 여는 법: 탐색기에서 <code>README.md</code>를 오른쪽 클릭 → <strong>연결 프로그램</strong> → 메모장 또는 VS Code. Git Bash에서 <code>notepad README.md</code>(메모장)나 <code>code README.md</code>(VS Code)로 열어도 됩니다.</p>
+</blockquote>
+<p><strong>① <code>feature/a</code> 브랜치에서 고치기</strong></p>
+<pre><code class="language-bash"><span class="prompt">$ </span>git switch -c feature/a
+</code></pre>
+<p><code>README.md</code>를 열어 <code>목표: 풀스택 개발자</code> 줄을 아래처럼 고치고 <strong>저장한 뒤 편집기를 닫습니다.</strong></p>
+<pre><code class="language-text">목표: 백엔드 개발자
+</code></pre>
+<pre><code class="language-bash"><span class="prompt">$ </span>git diff
+<span class="prompt">$ </span>git commit -am &quot;docs: 목표를 백엔드로&quot;
+</code></pre>
+<p><code>git diff</code>에서 <code>-목표: 풀스택 개발자</code>, <code>+목표: 백엔드 개발자</code> 두 줄이 보이면 제대로 고친 것입니다.</p>
+<p><strong>② <code>main</code> 브랜치에서 같은 줄을 다르게 고치기</strong></p>
+<pre><code class="language-bash"><span class="prompt">$ </span>git switch main
+</code></pre>
+<p><code>README.md</code>를 다시 열면 <code>목표: 풀스택 개발자</code>로 돌아와 있습니다. 브랜치를 바꾸면 폴더의 파일도 그 브랜치의 내용으로 바뀌기 때문입니다. 이번에는 아래처럼 고치고 저장한 뒤 닫습니다.</p>
+<pre><code class="language-text">목표: 프론트엔드 개발자
+</code></pre>
+<pre><code class="language-bash"><span class="prompt">$ </span>git commit -am &quot;docs: 목표를 프론트로&quot;
+</code></pre>
+<p><strong>③ 합치기</strong></p>
+<pre><code class="language-bash"><span class="prompt">$ </span>git merge feature/a
+</code></pre>
+<blockquote>
+<p><code>git commit -am</code>은 "이미 Git이 아는 파일의 수정을 <code>add</code>하고 바로 커밋"입니다. 새 파일에는 쓸 수 없습니다.</p>
+</blockquote>
+<div class="box core">
+<p><strong>브랜치를 바꾸기 전에 편집기에서 저장하고 닫습니다.</strong> 파일을 연 채로 브랜치를 바꾸면, 편집기에 예전 내용이 남아 있다가 그대로 다시 저장될 수 있습니다.</p>
+</div>
+<p><strong>실행 결과</strong></p>
+<pre><code class="language-text">Auto-merging README.md
+CONFLICT (content): Merge conflict in README.md
+Automatic merge failed; fix conflicts and then commit the result.
+</code></pre>
+<hr />
+<h2>2. 충돌 표시 읽기</h2>
+<pre><code class="language-bash"><span class="prompt">$ </span>cat README.md
+</code></pre>
+<pre><code class="language-text"># 자기소개
+
+이름: 나학생
+&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+목표: 프론트엔드 개발자
+=======
+목표: 백엔드 개발자
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; feature/a
+취미: 등산
+</code></pre>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>표시</th>
+<th>뜻</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</code> ~ <code>=======</code></td>
+<td><strong>지금 내 브랜치(main)</strong>의 내용</td>
+</tr>
+<tr>
+<td><code>=======</code> ~ <code>&gt;&gt;&gt;&gt;&gt;&gt;&gt; feature/a</code></td>
+<td><strong>합치려는 브랜치(feature/a)</strong>의 내용</td>
+</tr>
+<tr>
+<td>표시 바깥 줄 (<code>취미: 등산</code>)</td>
+<td>충돌 없이 자동으로 합쳐진 부분</td>
+</tr>
+</tbody>
+</table></div>
+<div class="box core">
+<p><strong>충돌 해결 = 표시 세 줄(<code>&lt;&lt;&lt;&lt;&lt;&lt;&lt;</code>, <code>=======</code>, <code>&gt;&gt;&gt;&gt;&gt;&gt;&gt;</code>)을 지우고, 남길 내용을 사람이 정하는 것.</strong> 한쪽만 남겨도, 둘을 섞어도 됩니다.</p>
+</div>
+<hr />
+<h2>3. 고치고 마무리하기</h2>
+<p>편집기로 README.md를 열어 아래처럼 고칩니다. 표시 세 줄은 반드시 지웁니다.</p>
+<pre><code class="language-text"># 자기소개
+
+이름: 나학생
+목표: 풀스택 개발자 (프론트엔드 + 백엔드)
+취미: 등산
+</code></pre>
+<pre><code class="language-bash"><span class="prompt">$ </span>git add README.md
+<span class="prompt">$ </span>git commit -m &quot;merge: 목표 충돌 해결&quot;
+<span class="prompt">$ </span>git log --oneline --graph
+</code></pre>
+<p><strong>실행 결과</strong></p>
+<pre><code class="language-text">*   56b15e6 (HEAD -&gt; main) merge: 목표 충돌 해결
+|\  
+| * f4be624 (feature/a) docs: 목표를 백엔드로
+* | 12a371f docs: 목표를 프론트로
+|/  
+* 73ed024 (feature/hobby) docs: 취미 추가
+* 310a2ea chore: 메모 삭제
+* 5c1d0b7 docs: 메모 추가
+* ef983ad docs: 목표 추가
+* 932e50d docs: 자기소개 README 추가
+</code></pre>
+<p>두 갈림길이 하나로 합쳐진 모양이 보입니다. 7절 실습을 같은 저장소에서 했다면 커밋과 <code>origin/main</code> 표시가 더 보일 수 있습니다.</p>
+<blockquote>
+<p>해결하다가 꼬였다면 <code>git merge --abort</code>로 merge 직전 상태로 돌아갈 수 있습니다.</p>
+</blockquote>
+<hr />
+<h2>4. 다 같이 충돌 겪기 — 팀 파일 실습</h2>
+<p>과정 Organization에 <code>practice-conflict</code> 저장소를 만들어 두었습니다. 안에는 팀마다 파일이 하나씩 있습니다(<code>team-1.md</code> ~ <code>team-6.md</code>). <strong>내 팀 파일만 고칩니다.</strong> 아래는 3팀(<code>team-3.md</code>)의 예시입니다.</p>
+<pre><code class="language-text"># 3팀 멤버
+
+(여기에 한 줄 소개)
+</code></pre>
+<p><strong>같은 팀원 모두가 같은 3번째 줄</strong>에 자기소개를 써서 Pull Request를 엽니다. 팀에서 첫 PR이 합쳐지는 순간, 같은 팀의 나머지 PR에는 모두 충돌이 생깁니다. 다른 팀의 파일은 건드리지 않으므로 팀 사이에는 충돌이 나지 않습니다.</p>
+<pre><code class="language-bash"><span class="prompt">$ </span>cd /d/workspace
+<span class="prompt">$ </span>git clone https://github.com/&lt;조직이름&gt;/practice-conflict.git
+<span class="prompt">$ </span>cd practice-conflict
+<span class="prompt">$ </span>git switch -c intro/내아이디
+# team-3.md 3번째 줄을 &quot;나학생 — 백엔드가 궁금해서 왔습니다&quot; 처럼 고친다
+<span class="prompt">$ </span>git commit -am &quot;docs: 나학생 자기소개&quot;
+<span class="prompt">$ </span>git push -u origin intro/내아이디
+</code></pre>
+<p>GitHub에서 Pull Request를 엽니다(9절). 팀에서 순서를 정해 <strong>한 번에 한 PR씩</strong> 합칩니다. 첫 PR은 충돌 없이 합쳐집니다. 그 뒤 나머지 팀원의 PR에는 <strong>"This branch has conflicts that must be resolved"</strong>가 나옵니다. 내 PC에서 해결합니다.</p>
+<pre><code class="language-bash"><span class="prompt">$ </span>git pull origin main
+</code></pre>
+<p><strong>실행 결과</strong> (<code>From ...</code>으로 시작하는 줄은 생략)</p>
+<pre><code class="language-text">Auto-merging team-3.md
+CONFLICT (content): Merge conflict in team-3.md
+Automatic merge failed; fix conflicts and then commit the result.
+</code></pre>
+<p><code>team-3.md</code>를 열면 1절과 같은 표시가 보입니다. <code>HEAD</code> 쪽은 내 소개, 반대쪽은 먼저 합쳐진 팀원의 소개입니다. 브랜치 이름 자리에 긴 커밋 번호가 나오는 것은 <code>origin</code>의 <code>main</code>을 받아서 합쳤기 때문입니다.</p>
+<pre><code class="language-text"># 3팀 멤버
+
+&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+나학생 — 백엔드가 궁금해서 왔습니다
+=======
+김팀원 — 프론트엔드에 관심이 있습니다
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; 602c2f94d058b128984a4b75a6cbcd40f4c2c074
+</code></pre>
+<p>표시 세 줄을 지우고 두 사람 소개가 <strong>모두 남도록</strong> 고칩니다. 먼저 합쳐진 팀원을 위에 둡니다.</p>
+<pre><code class="language-text"># 3팀 멤버
+
+김팀원 — 프론트엔드에 관심이 있습니다
+나학생 — 백엔드가 궁금해서 왔습니다
+</code></pre>
+<pre><code class="language-bash"><span class="prompt">$ </span>git add team-3.md
+<span class="prompt">$ </span>git commit -m &quot;merge: main 반영, 자기소개 충돌 해결&quot;
+<span class="prompt">$ </span>git push
+</code></pre>
+<p>push하면 PR이 자동으로 갱신되고 충돌 표시가 사라집니다. 팀원이 이 PR을 합치면, 다음 사람이 같은 순서로 되풀이합니다. 팀원이 늘수록 남길 줄도 늘어납니다.</p>
+<p><strong>확인하는 법</strong>: 팀원 전원의 PR이 합쳐진 뒤 <code>git switch main</code> → <code>git pull</code>로 받은 <code>team-3.md</code>에 팀원 수만큼 소개 줄이 있고, <code>&lt;&lt;&lt;&lt;&lt;&lt;&lt;</code> 같은 표시가 한 줄도 없으면 성공입니다.</p>
+<hr />
+<h2>핵심 정리</h2>
+<ul>
+<li>충돌은 같은 파일의 같은 줄을 다르게 고쳤을 때만 생긴다.</li>
+<li><code>&lt;&lt;&lt;&lt;&lt;&lt;&lt;</code> 위는 내 것, <code>&gt;&gt;&gt;&gt;&gt;&gt;&gt;</code> 앞은 합치려는 것.</li>
+<li>표시를 지우고 남길 내용을 정한 뒤 <code>add</code> → <code>commit</code>.</li>
+<li>꼬이면 <code>git merge --abort</code>.</li>
+</ul></div></div><div class="pager"><a class="prv" href="07_GitHub와-원격-저장소.html"><span class="lbl">← 이전 절</span>GitHub와 원격 저장소 — push · clone · fetch · pull</a><a class="nxt" href="09_Pull-Request와-GitHub-Flow.html"><span class="lbl">다음 절 →</span>Pull Request와 GitHub Flow — 합쳐 달라는 요청서</a></div><footer class="foot"><b>Fullstack Lab</b></footer></div><script src="../assets/app.js"></script></body></html>

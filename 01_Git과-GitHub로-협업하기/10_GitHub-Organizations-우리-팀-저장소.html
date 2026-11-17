@@ -1,0 +1,145 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GitHub Organizations — 우리 과정의 팀 저장소 — 풀스택 개발 과정</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&display=swap">
+<link rel="stylesheet" href="../assets/style.css">
+</head><body data-prev="09_Pull-Request와-GitHub-Flow.html" data-next="11_올리면-안-되는-것과-되돌리기.html">
+<div class="topbar"><a class="home" href="../index.html">풀스택 개발 과정</a><span class="ch">1장 · Git과 GitHub로 협업하기</span><span class="meta">10 / 14</span><span class="nav-btns"><a class="btn" href="09_Pull-Request와-GitHub-Flow.html">← 이전</a><a class="btn" href="../index.html">목차</a><a class="btn" href="11_올리면-안-되는-것과-되돌리기.html">다음 →</a></span><span class="brand">Fullstack Lab</span></div><div class="wrap"><div class="content"><div class="chip-nav"><b>1장 · Git과 GitHub로 협업하기</b><a class="" href="01_이-장에서-배우는-것.html">Git과 GitHub는 왜 첫 장인가</a><a class="" href="02_용어-정리.html">용어 정리 — 이 장에서 처음 만나는 말</a><a class="" href="03_설치와-첫-설정.html">설치와 첫 설정 — Git Bash와 GitHub 계정</a><a class="" href="04_커밋은-사진-한-장-세-영역.html">커밋은 사진 한 장 — 작업 폴더 · 스테이징 · 저장소</a><a class="" href="05_따라하기-첫-저장소와-첫-커밋.html">따라하기 — 첫 저장소와 첫 커밋</a><a class="" href="06_브랜치는-이름표.html">브랜치는 이름표 — switch와 merge</a><a class="" href="07_GitHub와-원격-저장소.html">GitHub와 원격 저장소 — push · clone · fetch · pull</a><a class="" href="08_따라하기-충돌-해결.html">따라하기 — 충돌은 고장이 아니라 대화 요청</a><a class="" href="09_Pull-Request와-GitHub-Flow.html">Pull Request와 GitHub Flow — 합쳐 달라는 요청서</a><a class="cur" href="10_GitHub-Organizations-우리-팀-저장소.html">GitHub Organizations — 우리 과정의 팀 저장소</a><a class="" href="11_올리면-안-되는-것과-되돌리기.html">올리면 안 되는 것과 되돌리기 — .gitignore · restore · revert</a><a class="" href="12_강사-코드-태그로-따라잡기.html">강사 코드 태그로 따라잡기 — clone · tag · switch --detach</a><a class="" href="13_정리와-체크리스트.html">정리와 체크리스트</a><a class="" href="14_실습문제와-힌트.html">실습문제와 힌트 — 기본 · 필수 · 도전</a></div><div class="md"><p class="chapter-name">1장. Git과 GitHub로 협업하기</p><h1>GitHub Organizations — 우리 과정의 팀 저장소</h1><div class="lesson-meta"><span>준비</span><span><b>시간</b>1시간</span><span><b>개념 지도</b>원격 저장소 (과정 Organization)</span></div><h2>한 줄 요약</h2>
+<p><strong>Organization</strong>은 여러 사람이 <strong>함께 소유하는 GitHub 계정</strong>입니다. 이 과정의 강사 코드, 실습 저장소, 6개 팀의 프로젝트 저장소가 모두 과정 Organization 안에 있습니다.</p>
+<hr />
+<h2>1. 개인 계정과 Organization</h2>
+<p><strong>Organization이란?</strong> 여러 GitHub 계정과 저장소를 한곳에 묶어, 권한과 규칙을 함께 관리하는 <strong>단체 계정</strong>입니다.</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>구분</th>
+<th>개인 계정</th>
+<th>Organization</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>주인</td>
+<td>나 한 사람</td>
+<td>과정(강사가 관리)</td>
+</tr>
+<tr>
+<td>사람 묶음</td>
+<td>없음</td>
+<td><strong>팀(Team)</strong> 단위로 묶는다</td>
+</tr>
+<tr>
+<td>권한</td>
+<td>저장소마다 한 명씩 초대</td>
+<td>팀에 권한을 주면 팀원 모두 적용</td>
+</tr>
+</tbody>
+</table></div>
+<figure class="figure">
+<p><img alt="과정 Organization 안의 팀과 저장소 구조" src="img/org_structure.svg" /></p>
+<figcaption>Organization 안에 팀과 저장소가 있고, 팀마다 저장소 권한을 줍니다. 조직 이름은 예시입니다.</figcaption>
+</figure>
+<p>팀은 Organization 멤버를 묶은 그룹이고, 팀 단위로 저장소에 읽기·쓰기·관리 권한을 줍니다. (<a href="https://docs.github.com/en/organizations/organizing-members-into-teams/about-teams">GitHub Docs — About teams</a>)</p>
+<hr />
+<h2>2. 초대 수락하기</h2>
+<ol>
+<li>강사가 Organization에 초대하면 GitHub 가입 이메일로 초대 메일이 옵니다.</li>
+<li>메일의 <strong>Join</strong> 버튼을 누르거나, GitHub 오른쪽 위 알림에서 초대를 수락합니다.</li>
+<li>수락하면 Organization 화면의 <strong>People</strong>에 내 아이디가 보이고, <strong>Teams</strong>에서 내 팀이 보입니다.</li>
+</ol>
+<hr />
+<h2>3. 저장소별로 할 수 있는 일</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>저장소</th>
+<th>내가 할 수 있는 일</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>lecture-code</code></td>
+<td>읽기(clone, fetch)만. 강사 단계별 코드가 태그로 들어 있다 (12절)</td>
+</tr>
+<tr>
+<td><code>practice-conflict</code></td>
+<td>쓰기. 충돌 실습용 (8절)</td>
+</tr>
+<tr>
+<td>우리 팀 저장소 (예: <code>basic-t3</code>)</td>
+<td>쓰기. 단, <code>main</code>에는 PR로만 합칠 수 있다</td>
+</tr>
+<tr>
+<td>다른 팀 저장소</td>
+<td>읽기만. 다른 팀 코드를 보며 배울 수 있다</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2>4. <code>main</code>이 보호되어 있다는 것</h2>
+<p>팀 저장소의 <code>main</code>에는 아래 규칙이 걸려 있습니다.</p>
+<ul>
+<li><code>main</code>에 직접 <code>push</code> 금지 → 반드시 PR로 합친다.</li>
+<li>PR은 <strong>팀원 1명 이상 승인</strong>해야 합칠 수 있다.</li>
+<li><code>main</code> 강제 푸시(<code>--force</code>)와 삭제 금지.</li>
+</ul>
+<p>이런 규칙(브랜치 보호 규칙 또는 rulesets)은 <strong>GitHub Free에서는 공개(Public) 저장소에서만</strong> 쓸 수 있고, 비공개(Private) 저장소에서 쓰려면 GitHub Team 요금제가 필요합니다. 그래서 <strong>이 과정의 팀 저장소는 모두 공개(Public)로 만듭니다.</strong> 강사가 저장소를 공개로 만들고 규칙을 걸어 둡니다. 포트폴리오로 보여 주기에도 좋습니다. (<a href="https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-protected-branches/about-protected-branches">GitHub Docs — About protected branches</a>, <a href="https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-rulesets/about-rulesets">About rulesets</a>)</p>
+<div class="box core">
+<p><strong>공개 저장소이므로 비밀번호·토큰·<code>.env</code> 파일은 절대 올리지 않습니다.</strong> 올린 순간 누구나 볼 수 있습니다(11절).</p>
+</div>
+<p>규칙을 어기고 <code>main</code>에 바로 <code>push</code>하면 아래처럼 거절됩니다.</p>
+<p><strong>실행 결과</strong> (예시. GitHub 쪽 문구는 조금 다를 수 있습니다)</p>
+<pre><code class="language-text">remote: error: GH013: Repository rule violations found for refs/heads/main.
+remote: - Changes must be made through a pull request.
+ ! [remote rejected] main -&gt; main (push declined due to repository rule violations)
+</code></pre>
+<div class="box core">
+<p>이 거절은 <strong>실수로부터 팀을 지키는 안전장치</strong>입니다. 거절되면 당황하지 말고 브랜치를 만들어 다시 올립니다.</p>
+</div>
+<pre><code class="language-bash"><span class="prompt">$ </span>git switch -c feature/13-signup
+<span class="prompt">$ </span>git push -u origin feature/13-signup
+</code></pre>
+<p><code>main</code>에서 이미 커밋을 찍어 버렸어도 괜찮습니다. 위 두 줄이면 그 커밋이 새 브랜치에 그대로 실려 올라갑니다. 그 뒤 PR을 만듭니다.</p>
+<hr />
+<h2>5. 팀 프로젝트 첫날 순서</h2>
+<pre><code class="language-bash"><span class="prompt">$ </span>git clone https://github.com/&lt;조직이름&gt;/basic-t3.git
+<span class="prompt">$ </span>cd basic-t3
+<span class="prompt">$ </span>git switch -c feature/1-project-setup
+# 작업
+<span class="prompt">$ </span>git add .
+<span class="prompt">$ </span>git commit -m &quot;chore: 프로젝트 초기 설정&quot;
+<span class="prompt">$ </span>git push -u origin feature/1-project-setup
+</code></pre>
+<p>이후 GitHub에서 PR → 팀원 승인 → 머지. 다른 팀원은 <code>git switch main</code> → <code>git pull</code>로 받습니다.</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>할 일</th>
+<th>어디서</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>할 일 하나를 Issue로 만들기</td>
+<td>팀 저장소 <strong>Issues</strong></td>
+</tr>
+<tr>
+<td>할 일 보드(칸반)로 진행 상황 보기</td>
+<td>Organization <strong>Projects</strong></td>
+</tr>
+<tr>
+<td>코드 리뷰와 승인</td>
+<td>PR <strong>Files changed</strong> 탭</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2>핵심 정리</h2>
+<ul>
+<li>Organization = 과정이 함께 소유하는 계정, 팀 = 권한을 받는 사람 묶음.</li>
+<li>우리 팀 저장소는 쓰기, 다른 팀은 읽기만.</li>
+<li>팀 저장소는 공개(Public)다. 그래야 무료로 <code>main</code>을 보호할 수 있고, 그래서 비밀번호·토큰·<code>.env</code>는 절대 올리지 않는다.</li>
+<li><code>main</code>은 보호되어 있다. PR + 팀원 1명 승인으로만 합친다.</li>
+<li><code>main</code> push가 거절되면 브랜치를 만들어 다시 올린다.</li>
+</ul></div></div><div class="pager"><a class="prv" href="09_Pull-Request와-GitHub-Flow.html"><span class="lbl">← 이전 절</span>Pull Request와 GitHub Flow — 합쳐 달라는 요청서</a><a class="nxt" href="11_올리면-안-되는-것과-되돌리기.html"><span class="lbl">다음 절 →</span>올리면 안 되는 것과 되돌리기 — .gitignore · restore · revert</a></div><footer class="foot"><b>Fullstack Lab</b></footer></div><script src="../assets/app.js"></script></body></html>
